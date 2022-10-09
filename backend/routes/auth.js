@@ -1,12 +1,9 @@
 const express = require('express');
 const UserModel = require('../db/models/UserModel');
-
+const sha512 = require('js-sha512');
+const tokenHandler = require('../modules/authtoken');
 
 const router = express.Router();
-
-const sha512 = require('js-sha512');
-
-
 
 router.post('/signin', async (req, res) => {
     const data = req.body;
@@ -14,9 +11,29 @@ router.post('/signin', async (req, res) => {
     const encoded = sha512(data.password);
 
     if(await UserModel.exists({login: data.login, password: encoded})) {
-        res.status(200).json({status: 'OK', message: 'Logged in successfully'});
+        const user = await UserModel.findOne({login: data.login, password: encoded});
+        const login = user.login;
+        const id = user.id;
+
+        const token = tokenHandler.generateToken(login, id);
+
+        res.status(200).json({status: 'OK', message: 'Logged in successfully', user: login, token: token});
         return;
     }
+    res.status(400).json({status: 'failed', message: 'Credentials are invalid'});
+
+})
+
+router.post('/verifytoken', async (req, res) => {
+    const data = req.body;
+
+    if(tokenHandler.verifyToken(data.token, data.user)) {
+        const decodedToken = tokenHandler.decodeToken(data.token)
+        console.log(decodedToken.id);
+        res.status(200).json({status: 'OK', message: `Token valid for user with id ${decodedToken.id}`});
+        return;
+    }
+
     res.status(400).json({status: 'failed', message: 'Credentials are invalid'});
 
 })
