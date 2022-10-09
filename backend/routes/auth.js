@@ -28,13 +28,11 @@ router.post('/verifytoken', async (req, res) => {
     const data = req.body;
 
     if(tokenHandler.verifyToken(data.token, data.user)) {
-        const decodedToken = tokenHandler.decodeToken(data.token)
-        console.log(decodedToken.id);
-        res.status(200).json({status: 'OK', message: `Token valid for user with id ${decodedToken.id}`});
+        res.status(200).json({status: 'OK', message: `Token valid for user ${data.user}`});
         return;
     }
 
-    res.status(400).json({status: 'failed', message: 'Credentials are invalid'});
+    res.status(400).json({status: 'failed', message: 'Token invalid'});
 
 })
 
