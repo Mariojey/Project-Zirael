@@ -4,18 +4,27 @@ import Lottie from 'lottie-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-function Splash(){
+function Splash({navigation}){
   return (
     <View style={styles.container}>
-      <Lottie source={require('./assets/splash.json')} autoPlay loop />
-      <StatusBar style="auto" />
+      <Lottie source={require('./assets/splash.json')} 
+        autoPlay 
+        loop={false} 
+        speed={0.5}
+        onAnimationFinish = {()=>{
+          //console.log('Animation Finished');
+          navigation.navigate('Home');
+        }} />
+        <StatusBar style="auto" />
     </View>
   );
 }
 
+
+
 function HomeScreen(){
-  <View style={styles.container}>
-      <Text style={styles.containerText}>Hello Citizen!</Text>
+  <View style={styles.homeContainer}>
+      <Text style={styles.homeText}>Hello Citizen!</Text>
   </View>
 }
 
@@ -26,6 +35,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Splash" component={Splash} />
+        <Stack.Screen name="Home" component={HomeScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -42,5 +52,16 @@ const styles = StyleSheet.create({
   containerText: {
     color: '#fff',
     fontSize: 30,
-  }
+  },
+  homeContainer: {
+    flex: 1,
+    backgroundColor: '#000',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  homeText: {
+    color: '#fff',
+    fontSize: 30,
+  },
 });
