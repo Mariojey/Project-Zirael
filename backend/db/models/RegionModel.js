@@ -1,43 +1,36 @@
 const mongoose = require('mongoose');
 
 const dataSchema = new mongoose.Schema({
-    login: {
-        required: true,
+    POZIOM: {
         type: String
     },
-    password: {
-        required: true,
+    REGION: {
         type: String
     },
-    name: {
-        required: true,
+    WOJ: {
         type: String
     },
-    city: {
-        required: true,
+    PODREG: {
         type: String
     },
-    postalcode: {
-        required: true,
+    POW: {
         type: String
     },
-    gender: {
-        required: true,
+    GMI: {
         type: String
     },
-    age: {
-        required: true,
-        type: Number
+    RODZ: {
+        type: String
     },
-    isAdmin: {
-        type: Boolean,
-        default: false
+    NAZWA: {
+        type: String
     },
-    created: {
-        type: Date,
-        default: Date.now,
+    NAZWA_DOD: {
+        type: String
+    },
+    STAN_NA: {
+        type: String
     }
 })
 
-
-module.exports = mongoose.model('Region', new mongoose.Schema({}), 'regions');
+module.exports = mongoose.model('Region', dataSchema, 'regions');

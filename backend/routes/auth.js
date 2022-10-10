@@ -1,5 +1,7 @@
 const express = require('express');
 const UserModel = require('../db/models/UserModel');
+const RegionModel = require('../db/models/RegionModel');
+
 const sha512 = require('js-sha512');
 const tokenHandler = require('../modules/authtoken');
 
@@ -48,6 +50,26 @@ router.post('/signup', async (req, res) => {
         return;
     }
 
+    const city = req.body.city;
+    const cityid = req.body.cityid;
+
+    
+
+    if(await RegionModel.findById(cityid) === null) {
+        res.status(400).json({status: "failed", message: "There is no region with given id"});
+        return;
+    }
+
+    const regionModel = await RegionModel.findById(cityid);
+    const cityname = regionModel.NAZWA;
+    const subname = regionModel.NAZWA_DOD;
+    const verifyCity = `${cityname}, ${subname}`;
+
+    if(verifyCity !== city) {
+        res.status(400).json({status: "failed", message: "City id does not match city name"});
+        return;
+    }
+
     const encodedPassword = sha512(req.body.password);
 
     const data = new UserModel({
@@ -55,9 +77,10 @@ router.post('/signup', async (req, res) => {
         password: encodedPassword,
         name: req.body.name,
         city: req.body.city,
-        postalcode: req.body.postalcode,
+        cityid: req.body.cityid,
         gender: req.body.gender,
-        age: req.body.age
+        age: req.body.age,
+        profileColor: `#${Math.floor(Math.random()*16777215).toString(16)}`
     })
 
     try {

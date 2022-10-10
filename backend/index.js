@@ -5,6 +5,7 @@ const bodyparser = require('body-parser');
 
 const authRoute = require('./routes/auth');
 const regionRoute = require('./routes/region');
+const userRoute = require('./routes/user');
 
 const port = 3000;
 const app = express();
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRoute);
 app.use('/region', regionRoute);
+app.use('/user', userRoute);
 
 app.listen(port, ()=> {
     console.log(`Listening on port ${port}`);

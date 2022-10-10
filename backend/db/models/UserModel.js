@@ -13,11 +13,15 @@ const dataSchema = new mongoose.Schema({
         required: true,
         type: String
     },
+    description: {
+        type: String,
+        default: ""
+    },
     city: {
         required: true,
         type: String
     },
-    postalcode: {
+    cityid: {
         required: true,
         type: String
     },
@@ -28,6 +32,10 @@ const dataSchema = new mongoose.Schema({
     age: {
         required: true,
         type: Number
+    },
+    profileColor: {
+        type: String,
+        default: `#${Math.floor(Math.random()*16777215).toString(16)}`
     },
     isAdmin: {
         type: Boolean,
