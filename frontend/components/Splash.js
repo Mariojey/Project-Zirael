@@ -3,13 +3,32 @@ import { StyleSheet, View } from 'react-native';
 import Lottie from 'lottie-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {storeToken, storeUser, verifyToken} from '../modules/Tokens';
 
 
-function Splash(){
+function Splash({navigation}){
   return (
     <View style={styles.container}>
-      <Lottie source={require('../assets/splash.json')} autoPlay loop />
-      <StatusBar style="auto" />
+      <Lottie source={require('../assets/splash.json')} 
+        autoPlay 
+        loop={false} 
+        speed={0.5}
+        onAnimationFinish = {()=>{
+          //console.log('Animation Finished');
+          storeToken("razdwatrzy");
+
+          verifyToken().then((value) => {
+            if (value) {
+              navigation.navigate('Home');
+            }
+            else {
+              navigation.navigate('Login');
+            }
+          })
+          
+          //
+        }} />
+        <StatusBar style="auto" />
     </View>
   );
 }
