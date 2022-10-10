@@ -2,10 +2,13 @@
 
 const express = require('express');
 const router = express.Router();
-const db = require('../db/conn');
-
+const RegionModel = require('../db/models/RegionModel');
 router.get('/find/:name', async (req, res) => {
-    res.send("test");
+    const name = req.params.name;
+
+    const regions = await RegionModel.find({name: name});
+    
+    res.send(regions);
 })
 
 module.exports = router
