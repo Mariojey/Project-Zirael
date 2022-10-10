@@ -3,9 +3,11 @@ import { StyleSheet, Text, View, } from 'react-native';
 
 
 function HomeScreen(){
-  <View style={styles.container}>
-      <Text style={styles.containerText}>Hello Citizen!</Text>
-  </View>
+    return(
+        <View style={styles.container}>
+            <Text style={styles.containerText}>Hello Citizen!</Text>
+        </View>
+    )
 }
 
 
