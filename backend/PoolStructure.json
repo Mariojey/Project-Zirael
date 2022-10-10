@@ -1,0 +1,22 @@
+{
+    "id": "id",
+    "author": "authorid",
+    "tags": ["tag1", "tag2"],
+    "title": "title",
+    "description": "description",
+    "options": [
+        {
+            "id": "optionid",
+            "name": "optionname",
+        },
+        {
+            "id": "optionid",
+            "name": "optionname",
+        }
+    ],
+    "resultsPublic": true,
+    "isPinned": false,
+    "range": "local/regional/global",
+    "city": "city",
+    "timestamp": "timestamp"
+}
