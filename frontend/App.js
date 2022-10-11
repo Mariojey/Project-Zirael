@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 
 import Splash from './components/Splash';
 import HomeScreen from './components/Home';
-import { log } from 'react-native-reanimated';
+
 
 /*
 function Splash({navigation}){
