@@ -28,10 +28,25 @@ export async function verifyToken() {
 
         ////fetch(aders).then((response) => response.json())
 
-        if (value === "razdwatry") {
-            return true;
-        }
-        return false;
+        fetch('/auth/verifytoken', {
+            method: 'POST' //,
+        /*  headers: {
+
+            }*/
+            ,
+            body: JSON.stringify({
+                user: user,
+                token: token,
+            })
+         })
+         .then((response) => response.json())
+         .then((response) => {
+            if (response.status === "OK") {
+                return true;
+            }
+            return false;
+         })
+
     } catch (error) {
         return false;
     }
