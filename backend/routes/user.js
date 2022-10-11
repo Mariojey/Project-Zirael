@@ -20,6 +20,33 @@ router.get('/list/:name', async (req, res) => {
 
     res.json(results);
 })
+
+router.get('/profiledata', async (req, res) => {
+    const body = req.body;
+
+    const token = body.token;
+    const user = body.user;
+
+    if(!tokenHandler.verifyToken(token, user)) {
+        res.status(401).json({status: "fail", message: 'Authentication failed'});
+        return;
+    }
+
+    const id = tokenHandler.decodeToken(token).id;
+
+    const userData = await UserModel.findOne({id: id})
+
+    const results = {
+        name: userData.name,
+        city: userData.city,
+        cityid: userData.cityid,
+        gender: userData.gender,
+        age: userData.age,
+        description: userData.description
+    }
+
+    res.json(results);
+})
     
 router.post('/changedata', async (req, res) => {
 

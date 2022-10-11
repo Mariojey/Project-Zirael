@@ -1,0 +1,17 @@
+:root {
+  --rich-black-fogra-29: #04080fff;
+  --rich-black-fogra-29-2: #0e1725ff;
+  --oxford-blue: #17263bff;
+  --indigo-dye: #2a4366ff;
+  --bdazzled-blue: #3d6091ff;
+  --glaucous: #507dbcff;
+  --little-boy-blue: #79a2d3ff;
+  --baby-blue-eyes: #a1c6eaff;
+}
+
+* {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+

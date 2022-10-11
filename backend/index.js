@@ -7,7 +7,7 @@ const authRoute = require('./routes/auth');
 const regionRoute = require('./routes/region');
 const userRoute = require('./routes/user');
 
-const port = 3000;
+const port = 3001;
 const app = express();
 
 

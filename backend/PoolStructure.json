@@ -1,7 +1,6 @@
 {
     "id": "id",
     "author": "authorid",
-    "tags": ["tag1", "tag2"],
     "title": "title",
     "description": "description",
     "options": [
@@ -14,9 +13,11 @@
             "name": "optionname",
         }
     ],
+    "tags": ["tag1", "tag2"],
     "resultsPublic": true,
     "isPinned": false,
     "range": "local/regional/global",
     "city": "city",
+    "cityid": "cityid",
     "timestamp": "timestamp"
 }

@@ -1,0 +1,92 @@
+.mainContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--rich-black-fogra-29);
+}
+
+.loginBox {
+    width: 400px;
+    background-color: var(--rich-black-fogra-29-2);
+    height: 100%;
+    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+    box-sizing: border-box;
+    padding: 0 3em;
+    align-items: center;
+}
+
+.logo {
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    color: white;
+    margin-bottom: 2em;;
+}
+
+.logo h1 {
+    font-size: 2.5rem;
+}
+
+.logo img {
+    height: 100%;
+}
+
+input {
+    width: 100%;
+    height: 1.5em;
+    font-size: 2rem;
+}
+.checkBox {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    gap: 1em;
+    font-weight: bold;
+    user-select: none;
+    color: white;
+}
+
+
+input[type="checkbox"] {
+    width: 20px;
+    text-align: left;
+    height: 20px;
+    cursor: pointer;
+    align-self: flex-start;  
+}
+
+button {
+    width: 100%;
+    height: 1.5em;
+    font-size: 2rem;
+    text-transform: uppercase;
+    background-color: var(--glaucous);
+    border: none;
+    outline: none;
+}
+
+hr {
+    margin: 2em 0;
+    width: 100%;
+}
+
+.registerLink {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    display: inline-block;
+}
