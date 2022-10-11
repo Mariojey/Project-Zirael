@@ -15,9 +15,10 @@ function Splash({navigation}){
         speed={0.5}
         onAnimationFinish = {()=>{
           //console.log('Animation Finished');
-          storeToken("razdwatrzy");
+          
 
           verifyToken().then((value) => {
+            console.log(value)
             if (value) {
               navigation.navigate('Home');
             }

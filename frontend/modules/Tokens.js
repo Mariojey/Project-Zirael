@@ -17,9 +17,17 @@ export async function storeUser(user) {
 }
 
 export async function verifyToken() {
+    console.log("funkcja wywołana")
     try {
         const token = await AsyncStorage.getItem('TOKEN');
         const user = await AsyncStorage.getItem('USER');
+        console.log(token)
+        console.log(user)
+
+        const body = {user, token}
+
+        console.log(body)
+        console.log(JSON.stringify(body))
 
         //fetch /auth/verifytoken
         //w body dajesz token i user
@@ -28,19 +36,17 @@ export async function verifyToken() {
 
         ////fetch(aders).then((response) => response.json())
 
-        fetch('/auth/verifytoken', {
-            method: 'POST' //,
-        /*  headers: {
-
-            }*/
-            ,
-            body: JSON.stringify({
-                user: user,
-                token: token,
-            })
+        return fetch('http://192.168.100.12:3000/auth/verifytoken', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
          })
          .then((response) => response.json())
          .then((response) => {
+            console.log(response)
             if (response.status === "OK") {
                 return true;
             }
