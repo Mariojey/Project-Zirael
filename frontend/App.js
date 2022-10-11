@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Form, Input } from 'react-native';
+import { StyleSheet, Text, View, Form, Input, TextInput, Button } from 'react-native';
 import Lottie from 'lottie-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AsyncStorage } from 'react-native';
+import { Formik } from 'formik';
 
 import Splash from './components/Splash';
 import HomeScreen from './components/Home';
+import { log } from 'react-native-reanimated';
 
 /*
 function Splash({navigation}){
@@ -50,6 +52,30 @@ function LoginScreen(){
   return(
     <View style={styles.homeContainer}>
       <Text style={styles.homeText}>Login!</Text>
+      <Formik
+        initialValues={{user: '', password: ''}}
+        onSubmit={(values) => {
+          //When fronend should send values from form?
+        }}
+      >
+        {(props) => (
+          <View>
+            <TextInput
+              style={styles.input}
+              placeholder='Wpisz nazwę użytkownika...'
+              onChangeText={props.handleChange('user')}
+              value={props.values.title}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder='Podaj hasło...'
+              onChangeText={props.handleChange('password')}
+              value={props.values.title}
+            />
+            <Button title='submit' style={styles.button}>Zaloguj się!</Button>
+          </View>
+        )}
+      </Formik>
     </View>
   )
 }
@@ -90,5 +116,9 @@ const styles = StyleSheet.create({
   homeText: {
     color: '#fff',
     fontSize: 30,
+  },
+  input: {
+    backgroundColor: '#fff',
+    color: '#000'
   },
 });
