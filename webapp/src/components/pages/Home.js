@@ -3,8 +3,16 @@ import * as tokenHandler from '../../modules/TokenHandler';
 
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+
+import NavBar from './NavBar';
+
 function Home(props) {
     const navigation = useNavigate();
+
+    function logout() {
+        tokenHandler.clearTokenData();
+        navigation("/login");
+    }
 
     function verifyCredentials() {
         const data = tokenHandler.getTokenData();
@@ -35,7 +43,9 @@ function Home(props) {
     
     return (
         <div className={styles.mainContainer}>
+            <NavBar />
             <h1>Welcome Home!</h1>
+            <button onClick={logout}>LOG OUT</button>
         </div>
     );
 }

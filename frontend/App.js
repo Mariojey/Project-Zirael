@@ -51,7 +51,7 @@ function HomeScreen(){
 function LoginScreen(){
   function login(user, password) {
     console.log("submit?")
-    fetch('http://192.168.100.12:3000/auth/signin', {
+    fetch('http://192.168.55.9:3001/auth/signin', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

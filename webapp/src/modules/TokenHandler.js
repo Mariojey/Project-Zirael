@@ -14,6 +14,12 @@ export function tempSaveTokenData(user, token) {
     cookies.set('token', token, { path: '/', maxAge: 3600000});
 }
 
+export function clearTokenData() {
+    const cookies = new Cookies();
+
+    cookies.remove('user')
+    cookies.remove('token')
+}
 
 export function getTokenData() {
     const cookies = new Cookies();

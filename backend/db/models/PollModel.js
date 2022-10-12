@@ -47,4 +47,4 @@ const dataSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Region', dataSchema, 'regions');
+module.exports = mongoose.model('Poll', dataSchema);
