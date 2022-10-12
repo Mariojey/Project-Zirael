@@ -10,6 +10,7 @@ import Splash from './components/Splash';
 import HomeScreen from './components/Home';
 import RegistrationScreen from './components/Registration';
 import { storeUser, storeToken } from './modules/Tokens';
+import GlobalVariables from './modules/GlobalVariables';
 
 /*
 function Splash({navigation}){
@@ -52,7 +53,7 @@ function HomeScreen(){
 function LoginScreen({navigation}){
   function login(user, password) {
     console.log("submit?")
-    fetch('http://192.168.55.9:3001/auth/signin', {
+    fetch(`${GlobalVariables.apiUrl}/auth/signin`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -122,11 +123,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Registration" component={RegistrationScreen}/>
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Login" component={LoginScreen}/>
-        
+        <Stack.Screen name="Registration" component={RegistrationScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

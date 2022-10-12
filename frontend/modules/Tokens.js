@@ -36,7 +36,7 @@ export async function verifyToken() {
 
         ////fetch(aders).then((response) => response.json())
 
-        return fetch('http://192.168.55.9:3001/auth/verifytoken', {
+        return fetch(`${GlobalVariables.apiUrl}/auth/verifytoken`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

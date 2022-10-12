@@ -1,14 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TextInput, Button, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { SelectList } from "react-native-dropdown-select-list"
+import SearchableDropdown from 'react-native-searchable-dropdown';
 import React from "react";
+import { Formik } from "formik";
 
 export default function RegistrationScreen(){
-    function register(login, password, name, city, cityid, gender, age) {
+    function register(login, password, name, cityid, gender, age) {
       console.log("submit?")
-      fetch('http://192.168.100.12:3000/auth/signup', {
+      fetch(`${GlobalVariables.apiUrl}/auth/signup`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -18,7 +19,7 @@ export default function RegistrationScreen(){
           login: login,
           password: password,
           name: name,
-          city: city,
+          city: "",
           cityid: cityid,
           gander: gender,
           age: age,
@@ -30,7 +31,6 @@ export default function RegistrationScreen(){
         
         
         if (response.status === 'OK') {
-            console.log('Prawie kurwa sukces!');
         }
       })
       
@@ -39,28 +39,144 @@ export default function RegistrationScreen(){
     const [selected, setSelected] = React.useState("");
 
     const data = [
-        {cityid:'0', city:'Mielec'},
-        {cityid:'1', city:'Tarnobrzeg'},
-        {cityid:'2', city:'Dębica'},
-        {cityid:'3', city:'Stalowa Wola'},
-        {cityid:'4', city:'Przeworsk kurwa'},
-        {cityid:'5', city:'Rzeszów'},
-        {cityid:'6', city:'Jasło'},
-        {cityid:'7', city:'Krosno'},
-        {cityid:'8', city:'Kolbuszowa'},
-        {cityid:'9',city:'Radomyśl Wielki'},
-        {cityid:'10',city:'Sokołów Małopolski'},
-        {cityid:'11',city:'Ropczyce'},
-        {cityid:'12',city:'Sanok'},
+          {
+            id: "6344293cdd60cc39a22f0943",
+            name: "Wartkowice, gmina wiejska"
+          },
+          {
+            id: "6344293cdd60cc39a22f094f",
+            name: "Warta, gmina miejsko-wiejska"
+          },
+          {
+            id: "6344293cdd60cc39a22f0950",
+            name: "Warta, miasto w gminie miejsko-wiejskiej"
+          },
+          {
+            id: "6344293cdd60cc39a22f0951",
+            name: "Warta, obszar wiejski"
+          },
+          {
+            id: "6344293cdd60cc39a22f0986",
+            name: "Świnice Warckie, gmina wiejska"
+          },
+          {
+            id: "6344293cdd60cc39a22f0a55",
+            name: "Warszawa, gmina miejska"
+          },
+          {
+            id: "6344293ddd60cc39a22f0ad1",
+            name: "Warka, gmina miejsko-wiejska"
+          },
+          {
+            id: "6344293ddd60cc39a22f0ad2",
+            name: "Warka, miasto w gminie miejsko-wiejskiej"
+          },
+          {
+            id: "6344293ddd60cc39a22f0ad3",
+            name: "Warka, obszar wiejski"
+          },
+          {
+            id: "6344293ddd60cc39a22f0ad4",
+            name: "Góra Kalwaria, gmina miejsko-wiejska"
+          },
+          {
+            id: "6344293ddd60cc39a22f0ad5",
+            name: "Góra Kalwaria, miasto w gminie miejsko-wiejskiej"
+          },
+          {
+            id: "6344293ddd60cc39a22f0ad6",
+            name: "Góra Kalwaria, obszar wiejski"
+          },
+          {
+            id: "6344293ddd60cc39a22f0c0b",
+            name: "Kalwaria Zebrzydowska, gmina miejsko-wiejska"
+          },
+          {
+            id: "6344293ddd60cc39a22f0c0c",
+            name: "Kalwaria Zebrzydowska, miasto w gminie miejsko-wiejskiej"
+          },
+          {
+            id: "6344293ddd60cc39a22f0c0d",
+            name: "Kalwaria Zebrzydowska, obszar wiejski"
+          },
+          {
+            id: "6344293edd60cc39a22f0ffc",
+            name: "Gowarczów, gmina wiejska"
+          },
+          {
+            id: "6344293edd60cc39a22f1288",
+            name: "Swarzędz, gmina miejsko-wiejska"
+          },
+          {
+            id: "6344293edd60cc39a22f1289",
+            name: "Swarzędz, miasto w gminie miejsko-wiejskiej"
+          },
+          {
+            id: "6344293edd60cc39a22f128a",
+            name: "Swarzędz, obszar wiejski"
+          },
+          {
+            id: "6344293edd60cc39a22f129e",
+            name: "Nowe Miasto nad Wartą, gmina wiejska"
+          },
+          {
+            id: "6344293edd60cc39a22f130b",
+            name: "Warnice, gmina wiejska"
+          },
+          {
+            id: "6344293edd60cc39a22f137a",
+            name: "Nowe Warpno, gmina miejsko-wiejska"
+          },
+          {
+            id: "6344293edd60cc39a22f137b",
+            name: "Nowe Warpno, miasto w gminie miejsko-wiejskiej"
+          },
+          {
+            id: "6344293edd60cc39a22f137c",
+            name: "Nowe Warpno, obszar wiejski"
+          },
+          {
+            id: "6344293edd60cc39a22f139a",
+            name: "Warta Bolesławiecka, gmina wiejska"
+          },
+          {
+            id: "6344293edd60cc39a22f13a4",
+            name: "Kowary, gmina miejska"
+          },
+          {
+            id: "6344293edd60cc39a22f146e",
+            name: "Twardogóra, gmina miejsko-wiejska"
+          },
+          {
+            id: "6344293edd60cc39a22f146f",
+            name: "Twardogóra, miasto w gminie miejsko-wiejskiej"
+          },
+          {
+            id: "6344293edd60cc39a22f1470",
+            name: "Twardogóra, obszar wiejski"
+          },
+          {
+            id: "6344293edd60cc39a22f1605",
+            name: "Warlubie, gmina wiejska"
+          },
+          {
+            id: "6344293edd60cc39a22f1732",
+            name: "Lidzbark Warmiński, gmina miejska"
+          },
+          {
+            id: "6344293edd60cc39a22f1734",
+            name: "Lidzbark Warmiński, gmina wiejska"
+          }
     ]
 
     const [selectedGender, setSelectedGender] = React.useState("");
 
+
     const genders = [
-        {genId:'male',genderName:'mężczyzna'},
-        {genId:'female',genderName:'kobieta'},
-        {genId:'other',genderName:'osoba niebinarna'},
-        {genId:'hidden',genderName:'wolę nie podawać'},
+        {id:'male', name:'mężczyzna'},
+        {id:'female',name:'kobieta'},
+        {id:'other', name:'osoba niebinarna'},
+        {id:'hidden',name:'wolę nie podawać'}
     ]
     return(
       <View style={styles.homeContainer}>
@@ -92,23 +208,60 @@ export default function RegistrationScreen(){
                 onChangeText={props.handleChange('name')}
                 value={props.values.name}
               />
-              <SelectList
-                 data={data}
-                 setSelected={setSelected}
-                 placeholder="Wpisz swoje miejsce zamiekszania..."
-                 />
-              <SelectList
-                 data={genders}
-                 setSelected={setSelectedGender}
-                 placeholder="Wybierz swoją płeć"
-                 />          
+              <SearchableDropdown
+                  onItemSelect={(item) => {
+                    console.log(item)
+                  }}
+                  containerStyle={{ padding: 5 }}
+                  onRemoveItem={(item, index) => {
+                    console.log(item)
+                  }}
+                  itemStyle={{
+                    padding: 10,
+                    marginTop: 2,
+                    backgroundColor: '#ddd',
+                    borderColor: '#bbb',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                  }}
+                  itemTextStyle={{ color: '#222' }}
+                  itemsContainerStyle={{ maxHeight: 140 }}
+                  items={data}
+                  defaultIndex={2}
+                  resetValue={false}
+                  textInputProps={
+                    {
+                      placeholder: "placeholder",
+                      underlineColorAndroid: "transparent",
+                      style: {
+                          padding: 12,
+                          borderWidth: 1,
+                          borderColor: '#ccc',
+                          borderRadius: 5,
+                      },
+                      onTextChange: text => console.log(text)
+                    }
+                  }
+                  listProps={
+                    {
+                      nestedScrollEnabled: true,
+                    }
+                  }
+              />
+              {/* <SearchableDropdown
+                onItemSelect={(item) => {
+                  console.log(item)
+                }}
+                placeholder="Podaj Płeć"
+                items={genders}
+              /> */}
               <TextInput
                 style={styles.input}
                 placeholder='Podaj swój wiek'
                 onChangeText={props.handleChange('age')}
                 value={props.values.age}
               />
-              <Button onPress={() => register(props.values.login, props.values.password, props.value.name, selected.city, selected.cityid, selectedGender.genId, props.value.age)} title='submit' style={styles.button}>Zaloguj się!</Button>
+              <Button onPress={() => register(props.values.login, props.values.password, props.value.name, selected, selectedGender, props.value.age)} title='submit' style={styles.button}>Zaloguj się!</Button>
             </View>
           )}
         </Formik>
