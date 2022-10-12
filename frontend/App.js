@@ -8,6 +8,7 @@ import { Formik } from 'formik';
 
 import Splash from './components/Splash';
 import HomeScreen from './components/Home';
+import RegistrationScreen from './components/Registration';
 import { storeUser, storeToken } from './modules/Tokens';
 
 /*
@@ -48,7 +49,7 @@ function HomeScreen(){
   )
 }
 */
-function LoginScreen(){
+function LoginScreen({navigation}){
   function login(user, password) {
     console.log("submit?")
     fetch('http://192.168.100.12:3000/auth/signin', {
@@ -110,6 +111,7 @@ function LoginScreen(){
           </View>
         )}
       </Formik>
+      <Button onPress={() => navigation.navigate('Registration')} title='move' style={styles.button}>Nie mam konta!</Button>
     </View>
   )
 }
@@ -120,9 +122,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Registration" component={RegistrationScreen}/>
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Login" component={LoginScreen}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
