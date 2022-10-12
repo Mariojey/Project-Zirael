@@ -1,4 +1,4 @@
-import styles from './Home.module.css'
+import styles from './PollList.module.css'
 import * as tokenHandler from '../../modules/TokenHandler';
 
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 import NavBar from './NavBar';
 
-function Home(props) {
+function PollList(props) {
     const navigation = useNavigate();
 
     function logout() {
@@ -50,4 +50,4 @@ function Home(props) {
     );
 }
 
-export default Home;
+export default PollList;
