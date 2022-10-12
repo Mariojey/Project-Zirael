@@ -17,10 +17,28 @@ function Poll(props) {
                 </div>
             </div>
             <div className={styles.options}>
-
+                <div className={styles.option}>
+                    <p>Option A</p>
+                </div>
+                <div className={styles.option}>
+                    <p>Option B</p>
+                </div>
+                <div className={styles.option}>
+                    <p>Option C</p>
+                </div>
+                <div className={styles.option}>
+                    <p>Option D</p>
+                </div>
             </div>
+            <hr></hr>
             <div className={styles.footer}>
-
+                <p>Tags:</p>
+                <div className={styles.tags}>
+                    <p>Tag1</p>
+                    <p>TagTheSecond</p>
+                    <p>Tag3</p>
+                </div>
+                <p className={styles.statistic}>Statistics for this poll are hidden</p>
             </div>
         </div>
     );

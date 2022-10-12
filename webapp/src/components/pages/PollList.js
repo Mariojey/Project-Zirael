@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import NavBar from './NavBar';
+import Poll from '../reusables/Poll';
 
 function PollList(props) {
     const navigation = useNavigate();
@@ -42,10 +43,13 @@ function PollList(props) {
     }, []);
     
     return (
+        
         <div className={styles.mainContainer}>
             <NavBar nav={navigation} />
-            <h1>Welcome Home!</h1>
-            <button onClick={logout}>LOG OUT</button>
+
+            <Poll   />
+            <Poll   />
+            <Poll   />
         </div>
     );
 }
