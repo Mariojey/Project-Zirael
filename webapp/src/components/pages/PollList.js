@@ -1,12 +1,13 @@
-import styles from './Home.module.css'
+import styles from './PollList.module.css'
 import * as tokenHandler from '../../modules/TokenHandler';
 
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import NavBar from './NavBar';
+import Poll from '../reusables/Poll';
 
-function Home(props) {
+function PollList(props) {
     const navigation = useNavigate();
 
     function logout() {
@@ -42,12 +43,15 @@ function Home(props) {
     }, []);
     
     return (
+        
         <div className={styles.mainContainer}>
             <NavBar nav={navigation} />
-            <h1>Welcome Home!</h1>
-            <button onClick={logout}>LOG OUT</button>
+
+            <Poll   />
+            <Poll   />
+            <Poll   />
         </div>
     );
 }
 
-export default Home;
+export default PollList;
