@@ -1,44 +1,80 @@
+import { useEffect, useState } from 'react';
 import styles from './Poll.module.css'
+import * as tokenHandler from '../../modules/TokenHandler'
+import Globals from '../../modules/Globals'
+
 function Poll(props) {
+    const data = props.data
+
+    const [userName, setUserName] = useState("Username");
+    const [profileColor, setProfileColor] = useState("aqua");
+
+    useEffect(() => {
+        const tokenData = tokenHandler.getTokenData();
+
+        fetch(`${Globals.apiUrl}/user/byid`,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: tokenData.user, 
+                token: tokenData.token,
+                id: data.author
+            })
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.status === "OK") {
+                setUserName(res.name);
+                setProfileColor(res.profileColor)
+            }
+        })
+    }, [])
+
     return (
         <div className={styles.mainContainer}>
             <div className={styles.heading}>
                 <div className={styles.title}>
-                    <h2>Title</h2>
+                    <h2>{data.title}</h2>
                     <div className={styles.user}>
-                        <div className={styles.userLogo}>
-                            <p>U</p>
+                        <div style={{backgroundColor: profileColor}} className={styles.userLogo}>
+                            <p>{userName[0].toUpperCase()}</p>
                         </div>
-                        <p>Username</p>
+                        <p>{userName}</p>
                     </div>
                 </div>
                 <div className={styles.description}>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore quia ut laudantium sed perferendis omnis praesentium nihil facilis cupiditate excepturi nemo placeat fuga ab, ea, doloremque quam, deleniti neque accusantium.</p>
+                    <p>{data.description}</p>
                 </div>
             </div>
             <div className={styles.options}>
-                <div className={styles.option}>
-                    <p>Option A</p>
-                </div>
-                <div className={styles.option}>
-                    <p>Option B</p>
-                </div>
-                <div className={styles.option}>
-                    <p>Option C</p>
-                </div>
-                <div className={styles.option}>
-                    <p>Option D</p>
-                </div>
+                {
+                    data.options.map(option => {
+                        return (
+                            <div onClick={()=>console.log(option.id)} className={styles.option}>
+                                <p>{option.name}</p>
+                            </div>
+                        )
+                    })
+                }
+                
             </div>
             <hr></hr>
             <div className={styles.footer}>
                 <p>Tags:</p>
                 <div className={styles.tags}>
-                    <p>Tag1</p>
-                    <p>TagTheSecond</p>
-                    <p>Tag3</p>
+                    {data.tags.map(tag => {
+                        return (
+                            <p>{tag}</p> 
+                        )
+                    })}
                 </div>
-                <p className={styles.statistic}>Statistics for this poll are hidden</p>
+                <p className={styles.statistic}>
+                    {data.resultsPublic ? "Statistic not implemented jet" : "Statistics for this poll are hidden"}
+                </p>
             </div>
         </div>
     );

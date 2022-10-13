@@ -1,6 +1,9 @@
 import styles from './Home.module.css'
 import * as tokenHandler from '../../modules/TokenHandler';
 
+import Globals from '../../modules/Globals'
+
+
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -15,19 +18,7 @@ function Home(props) {
     }
 
     function verifyCredentials() {
-        const data = tokenHandler.getTokenData();
-
-        console.log(data)
-
-        fetch("http://localhost:3001/auth/verifytoken", 
-        {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({user: data.user, token: data.token})
-        }).then(response => response.json())
+        tokenHandler.verifyCredentials()
         .then(data => {
             if(data.status !== "OK")
             {
@@ -38,7 +29,6 @@ function Home(props) {
 
     useEffect(() => {
         verifyCredentials();
-
     }, []);
     
     return (

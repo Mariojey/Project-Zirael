@@ -2,6 +2,7 @@ import styles from './Register.module.css';
 import logo from '../../media/logo.png'
 import AsyncSelect from 'react-select/async'
 
+import Globals from '../../modules/Globals'
 
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -46,7 +47,7 @@ function Register(props) {
         })
     }
     function loadOptions(input, callback) {
-        fetch(`http://localhost:3001/region/find/${input}`)
+        fetch(`${Globals.apiUrl}/region/find/${input}`)
             .then((response) => {
                 return response.json();
             }).then((json) => {
@@ -63,7 +64,7 @@ function Register(props) {
 
 
     function register() {
-        fetch("http://localhost:3001/auth/signup", 
+        fetch(`${Globals.apiUrl}/auth/signup`, 
         {
             method: 'POST',
             headers: {

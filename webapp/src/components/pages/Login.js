@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import * as tokenHandler from '../../modules/TokenHandler';
 
+import Globals from '../../modules/Globals'
+
+
 function Login(props) {
     const navigation = useNavigate();
 
@@ -32,7 +35,7 @@ function Login(props) {
     }
 
     function login() {
-        fetch("http://localhost:3001/auth/signin", 
+        fetch(`${Globals.apiUrl}/auth/signin`, 
         {
             method: 'POST',
             headers: {
