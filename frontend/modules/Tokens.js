@@ -1,3 +1,4 @@
+import GlobalVariabls from './GlobalVariables'
 import { AsyncStorage } from 'react-native';
 
 export async function storeToken(token) {
@@ -8,6 +9,7 @@ export async function storeToken(token) {
     }
 }
 
+
 export async function storeUser(user) {
     try {
         await AsyncStorage.setItem('USER', user);
@@ -15,6 +17,12 @@ export async function storeUser(user) {
         // Error saving data
     }
 }
+
+export async function clearData() {
+    await AsyncStorage.setItem('USER', "");
+    await AsyncStorage.setItem('TOKEN', token);
+}
+
 
 export async function verifyToken() {
     console.log("funkcja wywołana")
@@ -24,7 +32,7 @@ export async function verifyToken() {
         console.log(token)
         console.log(user)
 
-        const body = {user, token}
+        const body = { user, token }
 
         console.log(body)
         console.log(JSON.stringify(body))
@@ -36,26 +44,25 @@ export async function verifyToken() {
 
         ////fetch(aders).then((response) => response.json())
 
-        return fetch(`${GlobalVariables.apiUrl}/auth/verifytoken`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-         })
-         .then((response) => response.json())
-         .then((response) => {
-            console.log("test")
-            console.log(response)
-            if (response.status === "OK") {
-                return true;
-            }
-            return false;
-         })
+        return fetch(`http://192.168.100.12:3001/auth/verifytoken`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log("test")
+                console.log(response)
+                if (response.status === "OK") {
+                    return true;
+                }
+                return false;
+            })
 
     } catch (error) {
         return false;
     }
 }
-

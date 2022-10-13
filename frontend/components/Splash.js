@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {storeToken, storeUser, verifyToken} from '../modules/Tokens';
 
 
-function Splash({navigation}){
+function Splash(props){
   return (
     <View style={styles.container}>
       <Lottie source={require('../assets/splash.json')} 
@@ -20,14 +20,14 @@ function Splash({navigation}){
           verifyToken().then((value) => {
             console.log(value)
             if (value) {
-              navigation.navigate('Home');
+              props.logHandler(true)
             }
             else {
-              navigation.navigate('Login');
+              props.logHandler(false)
             }
           })
-          
-          //
+
+          props.loadingHandler(false)
         }} />
         <StatusBar style="auto" />
     </View>
