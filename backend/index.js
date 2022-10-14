@@ -7,6 +7,7 @@ const authRoute = require('./routes/auth');
 const regionRoute = require('./routes/region');
 const userRoute = require('./routes/user');
 const pollsRoute = require('./routes/polls');
+const votesRoute = require('./routes/votes')
 
 const port = 3001;
 const app = express();
@@ -23,6 +24,7 @@ app.use('/auth', authRoute);
 app.use('/region', regionRoute);
 app.use('/user', userRoute);
 app.use('/polls', pollsRoute);
+app.use('/votes', votesRoute);
 
 app.listen(port, ()=> {
     console.log(`Listening on port ${port}`);
