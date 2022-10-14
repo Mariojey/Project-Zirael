@@ -87,6 +87,30 @@ export default function App() {
                     />
                   ),
               }}/>
+              <Stack.Screen 
+                name="Polls2" 
+                component={PollList}
+                options={{
+                headerRight: () => (
+                    <Button
+                      onPress={() => logOut()}
+                      title="Log Out"
+                      color="#000"
+                    />
+                  ),
+              }}/>
+              <Stack.Screen 
+                name="Polls3" 
+                component={PollList}
+                options={{
+                headerRight: () => (
+                    <Button
+                      onPress={() => logOut()}
+                      title="Log Out"
+                      color="#000"
+                    />
+                  ),
+              }}/>
             </>
               
           ) : (

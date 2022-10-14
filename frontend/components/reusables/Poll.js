@@ -4,12 +4,15 @@ import { StyleSheet, Text, View} from 'react-native';
 
 import GlobalVariables from '../../modules/GlobalVariables';
 
-export default function Poll(){
+export default function Poll(props){
+    const data = props.data;
+
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.heading}>
                 <View style={styles.title}>
-                    <Text style={styles.titleText}>TITLE</Text>
+                    <Text style={styles.titleText}>{data.title}</Text>
                     <View style={styles.user}>
                         <View style={styles.userLogo}>
                             <Text>U</Text>
@@ -18,39 +21,34 @@ export default function Poll(){
                     </View>
                 </View>
                 <View style={styles.description}>
-                    <Text style={styles.descriptionText}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt inventore libero ex nam atque non quas, vitae voluptatum eligendi ad dolorem numquam dolores nostrum, aspernatur magnam architecto accusamus voluptates minus?</Text>
+                    <Text style={styles.descriptionText}>{data.description}</Text>
                 </View>
             </View>
             <View style={styles.options}>
-                <View 
-                    onClick={()=>console.log("")} 
-                    style={styles.option}>
-                    <Text style={styles.optionText}>OPTION</Text>
-                </View>
-                <View 
-                    onClick={()=>console.log("")} 
-                    style={styles.option}>
-                    <Text style={styles.optionText}>OPTION</Text>
-                </View>
-                <View 
-                    onClick={()=>console.log("")} 
-                    style={styles.option}>
-                    <Text style={styles.optionText}>OPTION</Text>
-                </View>
-                <View 
-                    onClick={()=>console.log("")} 
-                    style={styles.option}>
-                    <Text style={styles.optionText}>OPTION</Text>
-                </View>
+                {
+                    data.options.map((option, index) => {
+                        return(
+                            <View 
+                                key={index} 
+                                onPress={()=>console.log(option.id)} 
+                                style={styles.option}>
+                                <Text style={styles.optionText}>{option.name}</Text>
+                            </View>
+                        )
+                    })
+                }
             </View>
 
             <View style={styles.footer}>
                 <Text style={styles.tagsText}>Tags:</Text>
                 <View style={styles.tags}>
-                    <Text style={styles.tagText}>TAG</Text> 
-                    <Text style={styles.tagText}>TAG</Text> 
-                    <Text style={styles.tagText}>TAG</Text> 
-                    <Text style={styles.tagText}>TAG</Text> 
+                    {
+                        data.tags.map((tag, index) => {
+                            return (
+                                <Text key={index} style={styles.tagText}>{tag}</Text> 
+                            )
+                        })
+                    } 
                 </View>
                 <Text style={styles.statistic}>
                     Statistic not implemented jet

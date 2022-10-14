@@ -1,49 +1,50 @@
-import { React } from "react";
+import React from "react";
 import Poll from './reusables/Poll'
 
 import { StyleSheet, Text, View, Image} from 'react-native';
-import CardsSwipe from 'react-native-cards-swipe';
+import Swiper from 'react-native-swiper';
 
 import GlobalVariables from '../modules/GlobalVariables';
 
 export default function PollList(){
-  function getPolls(){
-    fetch(`${GlobalVariables.apiUrl}/polls/listall`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({
-        
-      })
-    })
-  }
+  const [polls, setPolls] = React.useState([]);
   
-  const cardsData = [
-    // { src: require('../assets/Madej_w_swzkol.png') },
-    // { src: require('../assets/c3xfc0va8vt21.jpg') },
-    { src: <Poll /> },
-    { src: <Poll /> },
-  ];
+  function getPolls(){
+    fetch(`${GlobalVariables.apiUrl}/polls/listall`)
+        .then(response => response.json())
+        .then(res => {
+          setPolls(res)
+        })
+  }
+
+  React.useEffect(()=> {
+    getPolls();
+  }, [])
   
   return (
-    <View style={styles.container}>
+     <Swiper showsButtons={true}>
+      {polls.map((pollData, index) => {
+          return(
+            <View key={index} style={styles.container}>
+              <Poll data={pollData} />
+            </View>
+          )
+      })}
+     </Swiper>
+    )
+}
+/*|
+<View style={styles.container}>
       <CardsSwipe
         cards={cardsData}
         onSwipeStart={() => console.log("SWIPE")}
         cardContainerStyle={styles.cardContainer}
         renderCard={(card) => card.src}
       />
-    </View>
-    )
-}
-
+    </View>*/
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#000',
-      display: 'flex',
       alignItems: 'center',
       flexDirection: 'column',
     },
