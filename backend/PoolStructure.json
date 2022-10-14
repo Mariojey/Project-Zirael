@@ -1,23 +1,43 @@
 {
-    "id": "id",
-    "author": "authorid",
-    "title": "title",
-    "description": "description",
-    "options": [
+    "total": {
+        "votes": 0,
+        "chartdata": [
+            {
+                "age": "0-4",
+                "male": 0,
+                "female": 0,
+                "other": 0,
+                "hidden": 0
+            },
+            {
+                "age": "5-9",
+                "male": 0,
+                "female": 0,
+                "other": 0,
+                "hidden": 0
+            }
+        ]
+    },
+    "byOption": [
         {
-            "id": "optionid",
-            "name": "optionname"
-        },
-        {
-            "id": "optionid",
-            "name": "optionname"
+            "option": "optionid",
+            "votes": 0,
+            "chartdata": [
+                {
+                    "age": "0-4",
+                    "male": 0,
+                    "female": 0,
+                    "other": 0,
+                    "hidden": 0
+                },
+                {
+                    "age": "0-4",
+                    "male": 0,
+                    "female": 0,
+                    "other": 0,
+                    "hidden": 0
+                }
+            ]
         }
-    ],
-    "tags": ["tag1", "tag2"],
-    "resultsPublic": true,
-    "isPinned": false,
-    "range": "local/regional/global",
-    "city": "city",
-    "cityid": "cityid",
-    "timestamp": "timestamp"
+    ]
 }
