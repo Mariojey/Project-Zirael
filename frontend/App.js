@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Form, Input, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {Ionicons} from 'react-native-vector-icons';
 
 import Splash from './components/Splash';
 import HomeScreen from './components/Home';
@@ -44,7 +45,19 @@ export default function App() {
   else {
     return (
       <NavigationContainer>
-        <Stack.Navigator headerMode={'none'}>
+        <Stack.Navigator
+         headerMode={'none'}
+         screenOptions={({route}) => ({
+          tabBarIcon: ({focused, size, color}) => {
+            let iconName;
+            if (route.name === 'Home') {
+              iconName = focused ? 'home' : 'home-outline';
+            } else if (route.name === "Polls"){
+              iconName = focused ? 'podium':'podium-outline';
+            }
+            return <Ionicons name={iconName} size={size} color={color}/>;
+          },
+         })}>
           {isLogged ? (
             <>
               <Stack.Screen 
