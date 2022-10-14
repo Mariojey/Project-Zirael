@@ -61,7 +61,8 @@ router.post('/byid', async (req, res) => {
 
     const id = body.id;
 
-    const userData = await UserModel.findOne({id: id})
+    const userData = await UserModel.findById(id)
+    console.log(id)
 
     if(userData === null) {
         res.status(401).json({status: "fail", message: 'User not found'});

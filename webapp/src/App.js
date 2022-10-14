@@ -10,6 +10,7 @@ import Login from './components/pages/Login'
 import Register from './components/pages/Register';
 import Home from './components/pages/Home';
 import PollList from './components/pages/PollList';
+import PollCreator from './components/pages/PollCreator';
 
 function App() {
   const navigation = useNavigate();
@@ -39,6 +40,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/home" element={<Home />} />
       <Route path="/polls" element={<PollList />} />
+      <Route path="/create" element={<PollCreator />} />
     </Routes>
   );
 }

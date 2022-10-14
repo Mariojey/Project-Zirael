@@ -35,7 +35,6 @@ function Home(props) {
         <div className={styles.mainContainer}>
             <NavBar nav={navigation} />
             <h1>Welcome Home!</h1>
-            <button onClick={logout}>LOG OUT</button>
         </div>
     );
 }

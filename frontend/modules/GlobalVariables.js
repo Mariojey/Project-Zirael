@@ -1,3 +1,3 @@
 export default variables = {
-    apiUrl: "http://192.168.100.12:3000"
+    apiUrl: "http://192.168.55.9:3001"
 }

@@ -57,8 +57,6 @@ router.post('/create', async (req, res) => {
         cityid: body.cityid 
     })
 
-    res.json(data)
-
     try {
         const dataToSave = data.save();
         res.status(200).json({ status: "OK", message: "Poll created successfully" })

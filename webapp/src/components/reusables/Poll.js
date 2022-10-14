@@ -28,6 +28,7 @@ function Poll(props) {
         .then(response => response.json())
         .then(res => {
             if(res.status === "OK") {
+                console.log(res)
                 setUserName(res.name);
                 setProfileColor(res.profileColor)
             }
