@@ -1,5 +1,5 @@
 import Cookies from 'universal-cookie';
-
+import Globals from './Globals'
 export function saveTokenData(user, token) {
     const cookies = new Cookies();
 
@@ -28,5 +28,19 @@ export function getTokenData() {
     const token = cookies.get('token') ?? "";
 
     return {user, token}
+}
+
+export function verifyCredentials() {
+    const data = getTokenData();
+
+    return fetch(`${Globals.apiUrl}/auth/verifytoken`, 
+    {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user: data.user, token: data.token})
+    }).then(response => response.json())
 }
 
