@@ -4,6 +4,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Form, Input, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {DarkTheme} from '@react-navigation/native'; 
+
 import {Ionicons} from 'react-native-vector-icons';
 
 import Splash from './components/Splash';
@@ -44,7 +46,7 @@ export default function App() {
   }
   else {
     return (
-      <NavigationContainer>
+      <NavigationContainer theme={DarkTheme}>
         <Stack.Navigator
          headerMode={'none'}
          screenOptions={({route}) => ({
