@@ -47,6 +47,29 @@ router.post('/vote', async (req, res) => {
     }
 })
 
+router.post('/unvote', async (req, res) => {
+    const body = req.body;
+
+    const user = body.user;
+    const token = body.token;
+
+    if(!tokenHandler.verifyToken(token, user)) {
+        res.status(401).json({status: "fail", message: 'Authentication failed'});
+        return;
+    }
+
+    const userid = tokenHandler.decodeToken(token).id;
+    const pollid = body.pollid;
+
+    if(await VoteModel.findOne({userid: userid, pollid: pollid}) !== null) {
+        await VoteModel.findOneAndRemove({userid: userid, pollid: pollid})
+        res.status(200).json({ status: "OK", message: "Vote deleted" })
+        return;
+    }
+        
+    res.status(400).json({ status: "fail", message: "Vote not found" })
+})
+
 router.post('/getuservote', async (req, res) => {
     const body = req.body;
     
