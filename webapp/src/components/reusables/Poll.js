@@ -6,6 +6,7 @@ import Globals from '../../modules/Globals'
 function Poll(props) {
     const data = props.data
 
+    const [optionSelected, setOptionSelected] = useState(-1);
     const [userName, setUserName] = useState("Username");
     const [profileColor, setProfileColor] = useState("aqua");
 
@@ -33,7 +34,54 @@ function Poll(props) {
                 setProfileColor(res.profileColor)
             }
         })
+
+        fetch(`${Globals.apiUrl}/votes/getuservote`,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: tokenData.user, 
+                token: tokenData.token,
+                pollid: data._id
+            })
+        })
+        .then(response => response.json())
+        .then(res => {
+            console.log(res)
+            if(res.status === "OK") {
+                
+                setOptionSelected(res.optionid)
+            }
+        })
     }, [])
+
+    function vote(id) {
+        const tokenData = tokenHandler.getTokenData();
+
+        fetch(`${Globals.apiUrl}/votes/vote`,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: tokenData.user, 
+                token: tokenData.token,
+                pollid: data._id,
+                optionid: id
+            })
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.status === "OK") {
+                setOptionSelected(id)
+            }
+        })
+    }
 
     return (
         <div className={styles.mainContainer}>
@@ -55,7 +103,9 @@ function Poll(props) {
                 {
                     data.options.map(option => {
                         return (
-                            <div onClick={()=>console.log(option.id)} className={styles.option}>
+                            <div 
+                                onClick={()=>vote(option.id)} 
+                                className={`${styles.option} ${option.id === optionSelected ? styles.selectedOption : ""}`}>
                                 <p>{option.name}</p>
                             </div>
                         )

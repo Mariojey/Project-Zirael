@@ -22,7 +22,7 @@ router.post('/vote', async (req, res) => {
     const pollid = body.pollid;
     const optionid = body.optionid;
 
-    if(isNan(optionid) || optionid < 0) {
+    if(isNaN(optionid) || optionid < 0) {
         res.status(401).json({status: "fail", message: 'Incorrect option'});
         return;
     }
@@ -80,7 +80,7 @@ async function getStats(votes) {
         chartdata: []
     }
 
-    const userIds = votes.map(vote => mongoose.Types.ObjectId(vode.userid))
+    const userIds = votes.map(vote => mongoose.Types.ObjectId(vote.userid))
 
     for(let i = 0; i<20; i++) {
         let agefilter = {$gte: i, $lte: (i+4)}
@@ -166,7 +166,7 @@ router.post('/stats', async (req, res) => {
     res.status(200).json({
         status: "OK", 
         message: 'Statistic list generated',
-        statistics: resonse
+        statistics: response
     });
 })
 

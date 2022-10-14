@@ -5,21 +5,13 @@ const dataSchema = new mongoose.Schema({
         required: true,
         type: String
     },
-    poolid: {
+    pollid: {
         required: true,
         type: String
     },
     optionid: {
         required: true,
         type: Number
-    },
-    age: {
-        required: true,
-        type: Number
-    },
-    gender: {
-        required: true,
-        type: String
     },
     timestamp: {
         type: Date,
