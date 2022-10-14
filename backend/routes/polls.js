@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/listall', async (req, res) => {
-    const data = await PollModel.find({});
+    const data = await PollModel.find({}).sort({timestamp: -1});
 
     res.json(data);
 })

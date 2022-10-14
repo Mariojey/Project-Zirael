@@ -122,7 +122,7 @@ async function getStats(votes) {
     return results;
 }
 
-router.post('/stats', async (req, res) => {
+router.post('/fullstats', async (req, res) => {
     const body = req.body;
     
     const token = body.token;
@@ -168,6 +168,57 @@ router.post('/stats', async (req, res) => {
     res.status(200).json({
         status: "OK", 
         message: 'Statistic list generated',
+        statistics: response
+    });
+})
+
+router.post('/votecount', async (req, res) => {
+    const body = req.body;
+    
+    const token = body.token;
+    const user = body.user;
+
+    if(!tokenHandler.verifyToken(token, user)) {
+        res.status(401).json({status: "fail", message: 'Authentication failed'});
+        return;
+    }
+
+    const userid = tokenHandler.decodeToken(token).id;
+    const pollid = body.pollid
+
+    const poll = await PollModel.findById(pollid);
+
+    if(poll === null) {
+        res.status(400).json({status: "fail", message: 'No matching data found'});
+        return;
+    }
+
+    const userModel = await UserModel.findById(userid);
+
+    if(!poll.resultsPublic && poll.author !== userid && !userModel.isAdmin) {
+        res.status(400).json({status: "fail", message: 'You dont have permission to view the results!'});
+        return;
+    }
+
+    const votes = await VoteModel.find({pollid: pollid});
+
+    var response = {
+        total: votes.length,
+        byOption: []
+    }
+
+    const byOption = await Promise.all(poll.options.map(async (option) => {
+        const optionvote = await VoteModel.find({pollid: pollid, optionid: option.id});
+        const optionData = optionvote.length
+        
+        return(optionData);
+    }))
+
+    response.byOption = byOption;
+
+    res.status(200).json({
+        status: "OK", 
+        message: 'Vote count generated',
         statistics: response
     });
 })
