@@ -74,7 +74,6 @@ router.post('/getuservote', async (req, res) => {
 })
 
 async function getStats(votes) {
-
     var results = {
         votes: votes.length,
         chartdata: []
@@ -83,10 +82,10 @@ async function getStats(votes) {
     const userIds = votes.map(vote => mongoose.Types.ObjectId(vote.userid))
 
     for(let i = 0; i<20; i++) {
-        let agefilter = {$gte: i, $lte: (i+4)}
+        let agefilter = {$gte: i*5, $lte: ((i*5)+4)}
 
         if(i === 19) {
-            agefilter = {$gte: i}
+            agefilter = {$gte: i*5}
         }
 
         let foundMales = await UserModel.find({
@@ -119,8 +118,7 @@ async function getStats(votes) {
         }
 
         results.chartdata.push(dataCell);
-    }
-
+    }    
     return results;
 }
 
@@ -158,10 +156,14 @@ router.post('/stats', async (req, res) => {
         byOption: []
     }
 
-    await poll.options.forEach(async (option) => {
+    const byOption = await Promise.all(poll.options.map(async (option) => {
         const optionvote = await VoteModel.find({pollid: pollid, optionid: option.id});
-        response.byOption.push(await getStats(optionvote))
-    })
+        const optionData = await getStats(optionvote)
+        
+        return(optionData);
+    }))
+
+    response.byOption = byOption;
 
     res.status(200).json({
         status: "OK", 
