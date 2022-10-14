@@ -1,3 +1,5 @@
-export default variables = {
-    apiUrl: "http://192.168.55.9:3001"
+const GlobalVariables = {
+    apiUrl: "http://192.168.100.12:3001"
 }
+
+export default GlobalVariables;

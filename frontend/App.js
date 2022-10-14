@@ -1,135 +1,95 @@
+import React from "react";
+
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Form, Input, TextInput, Button } from 'react-native';
-import Lottie from 'lottie-react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AsyncStorage } from 'react-native';
-import { Formik } from 'formik';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Splash from './components/Splash';
 import HomeScreen from './components/Home';
 import RegistrationScreen from './components/Registration';
-import { storeUser, storeToken } from './modules/Tokens';
+import Login from './components/Login'
+import PollList from './components/PollList'
+
+import { storeUser, storeToken, clearData } from './modules/Tokens';
 import GlobalVariables from './modules/GlobalVariables';
 
-/*
-function Splash({navigation}){
-  return (
-    <View style={styles.container}>
-      <Lottie source={require('./assets/splash.json')} 
-        autoPlay 
-        loop={false} 
-        speed={0.5}
-        onAnimationFinish = {()=>{
-          //console.log('Animation Finished');
-          storeToken("razdwatrzy");
+export default function App() {
+  const Stack = createBottomTabNavigator();
 
-          verifyToken().then((value) => {
-            if (value) {
-              navigation.navigate('Home');
-            }
-            else {
-              navigation.navigate('Login');
-            }
-          })
-          
-          //
-        }} />
-        <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLogged, setIsLogged] = React.useState(false);
 
-
-
-function HomeScreen(){
-  return(
-    <View style={styles.homeContainer}>
-        <Text style={styles.homeText}>Hello Citizen!</Text>
-    </View>
-  )
-}
-*/
-function LoginScreen({navigation}){
-  function login(user, password) {
-    console.log("submit?")
-    fetch(`${GlobalVariables.apiUrl}/auth/signin`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({
-        login: user,
-        password: password,
-      })
-    })
-    .then((response) => response.json())
-    .then((response) => {
-      console.log(response);
-      
-      
-      if (response.status === 'OK') {
-        const user = response.user;
-        const token = response.token;
-
-        console.log(user);
-        console.log(token);
-
-        storeUser(user);
-        storeToken(token);
-      }
-    })
-    
+  function setLoggedHandler(state) {
+      setIsLogged(state);
   }
 
+  function setLoadingHandler(state) {
+    setIsLoading(state);
+  }
 
-  return(
-    <View style={styles.homeContainer}>
-      <Text style={styles.homeText}>Login!</Text>
-      <Formik
-        initialValues={{user: '', password: ''}}
-        onSubmit={(values) => {
-          //When f  ronend should send values from form?
-          console.log("nie dziala")
-        }}
-      >
-        {(props) => (
-          <View>
-            <TextInput
-              style={styles.input}
-              placeholder='Wpisz nazwę użytkownika...'
-              onChangeText={props.handleChange('user')}
-              value={props.values.user}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder='Podaj hasło...'
-              onChangeText={props.handleChange('password')}
-              value={props.values.password}
-            />
-            <Button onPress={() => login(props.values.user, props.values.password)} title='submit' style={styles.button}>Zaloguj się!</Button>
-          </View>
-        )}
-      </Formik>
-      <Button onPress={() => navigation.navigate('Registration')} title='move' style={styles.button}>Nie mam konta!</Button>
-    </View>
-  )
-}
+  function logOut() {
+    clearData();
+    setLoggedHandler(false);
+  }
 
-const Stack = createNativeStackNavigator();
+  if(isLoading) {
+    return (
+      <Splash 
+        loadingHandler={setLoadingHandler}
+        logHandler={setLoggedHandler}
+      />
+    )
+  }
+  else {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator headerMode={'none'}>
+          {isLogged ? (
+            <>
+              <Stack.Screen 
+                name="Home" 
+                component={HomeScreen}
+                options={{
+                headerRight: () => (
+                    <Button
+                      onPress={() => logOut()}
+                      title="Log Out"
+                      color="#000"
+                    />
+                  ),
+              }}/>
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Splash" component={Splash} />
-        <Stack.Screen name="Home" component={HomeScreen}/>
-        <Stack.Screen name="Login" component={LoginScreen}/>
-        <Stack.Screen name="Registration" component={RegistrationScreen}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+              <Stack.Screen 
+                name="Polls" 
+                component={PollList}
+                options={{
+                headerRight: () => (
+                    <Button
+                      onPress={() => logOut()}
+                      title="Log Out"
+                      color="#000"
+                    />
+                  ),
+              }}/>
+            </>
+              
+          ) : (
+            <>
+              <Stack.Screen
+               name="Login" 
+               component={Login} 
+               initialParams={{logHandler: setLoggedHandler}}/>
+              <Stack.Screen
+               name="Registration" 
+               component={RegistrationScreen}/>
+            </>
+          )}
+          
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
