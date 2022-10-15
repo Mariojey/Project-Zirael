@@ -56,6 +56,10 @@ export default function App() {
               iconName = focused ? 'home' : 'home-outline';
             } else if (route.name === "Polls"){
               iconName = focused ? 'podium':'podium-outline';
+            } else if (route.name === 'Login'){
+              iconName = focused ? 'ios-arrow-redo-circle-sharp':'ios-arrow-redo-circle-outline';
+            } else if (route.name === 'Registration'){
+              iconName = focused ? 'ios-person-add':'ios-person-add-outline';
             }
             return <Ionicons name={iconName} size={size} color={color}/>;
           },
