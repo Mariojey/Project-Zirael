@@ -19,7 +19,10 @@ function PollCreator(props) {
         filterOptions: [
           { value: "lifestyle", label: "lifestyle" },
           { value: "polityka", label: "polityka" },
-          { value: "rozrywka", label: "rozrywka" }
+          { value: "rozrywka", label: "rozrywka" },
+          { value: "nauka", label: "nauka" },
+          { value: "technika", label: "technika" },
+          { value: "społeczność", label: "społeczność" },
         ]
       })
 

@@ -105,11 +105,21 @@ function Poll(props) {
         .then(res => {
             if(res.status === "OK") {
 
-                if(optionSelected !== -1) {
-                    voteStats.byOption[optionSelected] -= 1
-                }
+                setVoteStats(prevState => {
+                    var temp = prevState;
+                    if(temp.byOption === undefined) {
+                        setOptionSelected(-1)
+                        return temp
+                    }
+                    
+                    if(optionSelected !== -1) {
+                        temp.byOption[optionSelected] -= 1
+                        temp.total -=1
+                    }
+                    setOptionSelected(-1)
 
-                setOptionSelected(-1)
+                    return temp
+                })
             }
         })
     }
@@ -140,12 +150,24 @@ function Poll(props) {
         .then(res => {
             if(res.status === "OK") {
 
-                if(optionSelected !== -1) {
-                    voteStats.byOption[optionSelected] -= 1
-                }
+                setVoteStats(prevState => {
+                    var temp = prevState;
+                    if(temp.total === undefined) {
+                        setOptionSelected(id)
+                        return temp
+                    }
+                    
+                    if(optionSelected !== -1) {
+                        temp.byOption[optionSelected] -= 1
+                        temp.total -=1
+                    }
+                    temp.byOption[id] += 1
+                    temp.total +=1
 
-                voteStats.byOption[id] += 1
-                setOptionSelected(id)
+                    setOptionSelected(id)
+
+                    return temp
+                })
             }
         })
     }
@@ -175,7 +197,7 @@ function Poll(props) {
                                 <div 
                                     onClick={()=>vote(option.id)} 
                                     className={`${styles.option} ${option.id === optionSelected ? styles.selectedOption : ""}`}>
-                                    {voteStats !== {} && optionSelected !== -1 ? (
+                                    {voteStats.total !== undefined && optionSelected !== -1 ? (
                                     <>
                                         <div 
                                             style={{
