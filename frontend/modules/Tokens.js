@@ -9,7 +9,6 @@ export async function storeToken(token) {
     }
 }
 
-
 export async function storeUser(user) {
     try {
         await AsyncStorage.setItem('USER', user);
@@ -23,6 +22,15 @@ export async function clearData() {
     await AsyncStorage.setItem('TOKEN', token);
 }
 
+export async function getTokenData() {
+    const token = await AsyncStorage.getItem('TOKEN') ?? "";
+    const user = await AsyncStorage.getItem('USER') ?? "";
+
+    return {
+        user, 
+        token
+    }
+}
 
 export async function verifyToken() {
     console.log("funkcja wywołana")

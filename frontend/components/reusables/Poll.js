@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         alignItems:'center',
-        height: 48
+        minHeight: 48
     },
     titleText: {
         fontSize: 25,
