@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3bf538'
     },
     userName: {
+        flex: 0,
         color: "#fff",
     },
     description: {

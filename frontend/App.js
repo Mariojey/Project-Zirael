@@ -14,6 +14,7 @@ import RegistrationScreen from './components/Registration';
 import Login from './components/Login'
 import PollList from './components/PollList'
 import CreatePoll from './components/CreatePoll'
+import Account from "./components/Account";
 
 import { storeUser, storeToken, clearData } from './modules/Tokens';
 import GlobalVariables from './modules/GlobalVariables';
@@ -63,6 +64,8 @@ export default function App() {
               iconName = focused ? 'ios-person-add':'ios-person-add-outline';
             } else if(route.name === 'Creator'){
               iconName = focused ? 'ios-add-circle' : 'ios-add';
+            } else if(route.name === 'MyAccount'){
+              iconName = focused ? 'person-sharp':'person-outline';
             }
             return <Ionicons name={iconName} size={size} color={color}/>;
           },
@@ -90,6 +93,7 @@ export default function App() {
                     <Button
                       onPress={() => logOut()}
                       title="Log Out"
+                      //name="LogOut"
                       color="#000"
                     />
                   ),
@@ -106,6 +110,19 @@ export default function App() {
                     />
                   ),
               }}/>
+              <Stack.Screen
+                name="MyAccount"
+                component={Account}
+                options={{
+                  headerRight: () => (
+                    <Button
+                      onPress={() => logOut()}
+                      title="Log Out"
+                      color="#000"
+                    />
+                  ),
+                }}
+              />
             </>
               
           ) : (
