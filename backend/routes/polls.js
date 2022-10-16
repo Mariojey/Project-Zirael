@@ -66,4 +66,39 @@ router.post('/create', async (req, res) => {
     }
 })
 
+router.post('/delete', async (req, res) => {
+    const body = req.body;
+    
+    const token = body.token;
+    const user = body.user;
+
+    if(!tokenHandler.verifyToken(token, user)) {
+        res.status(401).json({status: "fail", message: 'Authentication failed'});
+        return;
+    }
+
+    const id = tokenHandler.decodeToken(token).id;
+    const pollid = body.pollid;
+
+    const data = new PollModel({
+        author: id,
+        title: body.title,
+        description: body.description, 
+        options: poolOptions,
+        tags: body.tags,
+        resultsPublic: body.resultsPublic,
+        range: body.range,
+        city: body.city,
+        cityid: body.cityid 
+    })
+
+    try {
+        const dataToSave = data.save();
+        res.status(200).json({ status: "OK", message: "Poll created successfully" })
+    } 
+    catch (error) {
+        res.status(400).json({ status: "fail", message: error.message })
+    }
+})
+
 module.exports = router

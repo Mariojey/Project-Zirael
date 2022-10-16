@@ -22,7 +22,12 @@ export default function PollList(){
   }, [])
   
   return (
-     <Swiper showsPagination={false} showsButtons={false}>
+     <Swiper 
+        showsPagination={false} 
+        showsButtons={false}
+        loop={true}
+        index={0}
+      >
       {polls.map((pollData, index) => {
           return(
             <View key={index} style={styles.container}>

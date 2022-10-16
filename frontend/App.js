@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Form, Input, TextInput, Button } from 'react-native';
+import { StyleSheet, Image, Text, View, Form, Input, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {DarkTheme} from '@react-navigation/native'; 
@@ -15,6 +15,8 @@ import Login from './components/Login'
 import PollList from './components/PollList'
 import CreatePoll from './components/CreatePoll'
 import Account from "./components/Account";
+
+import logo from "./assets/logo.png"
 
 import { storeUser, storeToken, clearData } from './modules/Tokens';
 import GlobalVariables from './modules/GlobalVariables';
@@ -76,6 +78,17 @@ export default function App() {
                 name="Home" 
                 component={HomeScreen}
                 options={{
+                  headerTitle: () => (
+                    <Image
+                      source={logo}
+                      style={{
+                        height: 40,
+                        width: 40,
+                        marginLeft: 10,
+                        flex: 0
+                      }}
+                    />
+                  ),
                 headerRight: () => (
                     <Button
                       onPress={() => logOut()}
@@ -89,19 +102,41 @@ export default function App() {
                 name="Polls" 
                 component={PollList}
                 options={{
-                headerRight: () => (
-                    <Button
-                      onPress={() => logOut()}
-                      title="Log Out"
-                      //name="LogOut"
-                      color="#000"
+                  headerTitle: () => (
+                    <Image
+                      source={logo}
+                      style={{
+                        height: 40,
+                        width: 40,
+                        marginLeft: 10,
+                        flex: 0
+                      }}
                     />
                   ),
+                  headerRight: () => (
+                      <Button
+                        onPress={() => logOut()}
+                        title="Log Out"
+                        //name="LogOut"
+                        color="#000"
+                      />
+                    ),
               }}/>
               <Stack.Screen 
                 name="Creator" 
                 component={CreatePoll}
                 options={{
+                  headerTitle: () => (
+                    <Image
+                      source={logo}
+                      style={{
+                        height: 40,
+                        width: 40,
+                        marginLeft: 10,
+                        flex: 0
+                      }}
+                    />
+                  ),
                 headerRight: () => (
                     <Button
                       onPress={() => logOut()}
@@ -114,6 +149,17 @@ export default function App() {
                 name="MyAccount"
                 component={Account}
                 options={{
+                  headerTitle: () => (
+                    <Image
+                      source={logo}
+                      style={{
+                        height: 40,
+                        width: 40,
+                        marginLeft: 10,
+                        flex: 0
+                      }}
+                    />
+                  ),
                   headerRight: () => (
                     <Button
                       onPress={() => logOut()}
@@ -130,9 +176,35 @@ export default function App() {
               <Stack.Screen
                name="Login" 
                component={Login} 
+               options={{
+                headerTitle: () => (
+                  <Image
+                    source={logo}
+                    style={{
+                      height: 40,
+                      width: 40,
+                      marginLeft: 10,
+                      flex: 0
+                    }}
+                  />
+                ),
+              }}
                initialParams={{logHandler: setLoggedHandler}}/>
               <Stack.Screen
                name="Registration" 
+               options={{
+                headerTitle: () => (
+                  <Image
+                    source={logo}
+                    style={{
+                      height: 40,
+                      width: 40,
+                      marginLeft: 10,
+                      flex: 0
+                    }}
+                  />
+                )
+              }}
                component={RegistrationScreen}/>
             </>
           )}
