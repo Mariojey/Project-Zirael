@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './Poll.module.css'
 import * as tokenHandler from '../../modules/TokenHandler'
 import Globals from '../../modules/Globals'
+import PollStatistics from './PollStatistics';
 
 function Poll(props) {
     const data = props.data
@@ -12,9 +13,15 @@ function Poll(props) {
     const [userName, setUserName] = useState("Username");
     const [profileColor, setProfileColor] = useState("aqua");
     const [voteStats, setVoteStats] = useState({});
+    const [popupStats, setPopupStats] = useState(false);
 
+    function handlePopup() {
+        setPopupStats(p=>!p)
+    }
+
+    const tokenData = tokenHandler.getTokenData();
     useEffect(() => {
-        const tokenData = tokenHandler.getTokenData();
+        
 
         fetch(`${Globals.apiUrl}/user/byid`,
         {
@@ -86,7 +93,6 @@ function Poll(props) {
     }, [])
 
     function unvote() {
-        const tokenData = tokenHandler.getTokenData();
 
         fetch(`${Globals.apiUrl}/votes/unvote`,
         {
@@ -176,6 +182,7 @@ function Poll(props) {
         <div className={styles.mainContainer}>
         {loading.user && loading.uservote && loading.votecount ? (
         <>
+            {popupStats && <PollStatistics title={data.title} options={data.options} closePopup={handlePopup} pollid={data._id} />}
             <div className={styles.heading}>
                 <div className={styles.title}>
                     <h2>{data.title}</h2>
@@ -189,6 +196,7 @@ function Poll(props) {
                 <div className={styles.description}>
                     <p>{data.description}</p>
                 </div>
+                
                 </div>
                 <div className={styles.options}>
                     {
@@ -229,7 +237,13 @@ function Poll(props) {
                     
                 </div>
                 <hr></hr>
+                {voteStats.total !== undefined ? (
+                    <p className={styles.voteCount}>{`Głosów: ${voteStats.total}`}</p>
+                ) : (
+                    <br></br>
+                )}
                 <div className={styles.footer}>
+                
                 <p>Tags:</p>
                 <div className={styles.tags}>
                     {data.tags.map(tag => {
@@ -241,6 +255,11 @@ function Poll(props) {
                 <p className={styles.statistic}>
                     {data.resultsPublic ? "Statistic not implemented jet" : "Statistics for this poll are hidden"}
                 </p>
+                <div className={styles.buttons}>
+                    {voteStats.total !== undefined && <div onClick={handlePopup} className={styles.button}></div>}
+                    
+                    <div className={styles.button}></div>
+                </div>
             </div>
         </>
         ) : (
