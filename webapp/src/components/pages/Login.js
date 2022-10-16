@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import * as tokenHandler from '../../modules/TokenHandler';
 
+import { toast } from 'react-toastify';
+
 import Globals from '../../modules/Globals'
 
 
@@ -35,6 +37,17 @@ function Login(props) {
     }
 
     function login() {
+        const loginalert = toast.loading("Logowanie...", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        })
+
         fetch(`${Globals.apiUrl}/auth/signin`, 
         {
             method: 'POST',
@@ -57,11 +70,39 @@ function Login(props) {
                     tokenHandler.tempSaveTokenData(user, token)
                 }
                 
+                toast.update(loginalert, { 
+                    render: "Sukces!", 
+                    type: "success", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
+
                 navigation("/home")
             }
-            else(
+            else {
+                toast.update(loginalert, { 
+                    render: "Logowanie nie powiodło się!", 
+                    type: "error",
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark", 
+                }
+                );
                 console.log(data.message)
-            )
+            }
         })
     }
 

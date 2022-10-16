@@ -3,11 +3,18 @@ import styles from './Poll.module.css'
 import * as tokenHandler from '../../modules/TokenHandler'
 import Globals from '../../modules/Globals'
 import PollStatistics from './PollStatistics';
+import statsIcon from '../../media/stats-icon.png'
+import trashIcon from '../../media/trash-icon.png'
+import { toast } from 'react-toastify';
+
 
 function Poll(props) {
     const data = props.data
 
+    console.log(props.accountData)
 
+
+    const [deleted, setDeleted] = useState(false)
     const [loading, setLoading] = useState({user: false, uservote: false, votecount: false});
     const [optionSelected, setOptionSelected] = useState(-1);
     const [userName, setUserName] = useState("Username");
@@ -21,8 +28,6 @@ function Poll(props) {
 
     const tokenData = tokenHandler.getTokenData();
     useEffect(() => {
-        
-
         fetch(`${Globals.apiUrl}/user/byid`,
         {
             method: 'POST',
@@ -39,7 +44,6 @@ function Poll(props) {
         .then(response => response.json())
         .then(res => {
             if(res.status === "OK") {
-                console.log(res)
                 setUserName(res.name);
                 setProfileColor(res.profileColor)
             }
@@ -61,7 +65,6 @@ function Poll(props) {
         })
         .then(response => response.json())
         .then(res => {
-            console.log(res)
             if(res.status === "OK") {
                 
                 setOptionSelected(res.optionid)
@@ -84,7 +87,6 @@ function Poll(props) {
         })
         .then(response => response.json())
         .then(res => {
-            console.log(res)
             if(res.status === "OK") {
                 setVoteStats(res.statistics)
             }
@@ -92,7 +94,20 @@ function Poll(props) {
         })
     }, [])
 
+    function deletePoll() {
+        setDeleted(true)
+    }
+
     function unvote() {
+        const loginalert = toast.loading("Logowanie...", {
+            position: "bottom-right",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        })
 
         fetch(`${Globals.apiUrl}/votes/unvote`,
         {
@@ -111,6 +126,19 @@ function Poll(props) {
         .then(res => {
             if(res.status === "OK") {
 
+                toast.update(loginalert, { 
+                    render: "Sukces!", 
+                    type: "success", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
                 setVoteStats(prevState => {
                     var temp = prevState;
                     if(temp.byOption === undefined) {
@@ -126,6 +154,23 @@ function Poll(props) {
 
                     return temp
                 })
+
+                
+            }
+            else {
+                toast.update(loginalert, { 
+                    render: "Niepowodzenie!", 
+                    type: "error", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
             }
         })
     }
@@ -137,6 +182,16 @@ function Poll(props) {
             unvote()
             return;
         }
+
+        const loginalert = toast.loading("Logowanie...", {
+            position: "bottom-right",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        })
 
         fetch(`${Globals.apiUrl}/votes/vote`,
         {
@@ -155,7 +210,19 @@ function Poll(props) {
         .then(response => response.json())
         .then(res => {
             if(res.status === "OK") {
-
+                toast.update(loginalert, { 
+                    render: "Sukces!", 
+                    type: "success", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
                 setVoteStats(prevState => {
                     var temp = prevState;
                     if(temp.total === undefined) {
@@ -174,10 +241,37 @@ function Poll(props) {
 
                     return temp
                 })
+
+                
+            }
+            else {
+                toast.update(loginalert, { 
+                    render: "Niepowodzenie!", 
+                    type: "error", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
             }
         })
     }
 
+    if(deleted) {
+        return (
+            <div className={styles.mainContainer}>
+                <div className={styles.loading}>
+                    <h2>Ankieta usunięta</h2>
+                </div>
+            </div>
+        )
+    }
+    else
     return (
         <div className={styles.mainContainer}>
         {loading.user && loading.uservote && loading.votecount ? (
@@ -256,9 +350,18 @@ function Poll(props) {
                     {data.resultsPublic ? "Statistic not implemented jet" : "Statistics for this poll are hidden"}
                 </p>
                 <div className={styles.buttons}>
-                    {voteStats.total !== undefined && <div onClick={handlePopup} className={styles.button}></div>}
+                    {voteStats.total !== undefined && (
+                        <div onClick={handlePopup} className={styles.button}>
+                            <img src={statsIcon} alt="stats" />
+                        </div>
+                    )}
                     
-                    <div className={styles.button}></div>
+                    {props.accountData !== null && (data.author === props.accountData.id || props.accountData.isAdmin) && (
+                        <div onClick={deletePoll} className={styles.button}>
+                            <img src={trashIcon} alt="delete" />
+                        </div>
+                    )}
+                    
                 </div>
             </div>
         </>

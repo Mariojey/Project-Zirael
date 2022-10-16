@@ -14,7 +14,8 @@ function PollList(props) {
     const navigation = useNavigate();
 
     const [pollList, setPollList] = useState([]);
-
+    const tokenData = tokenHandler.getTokenData();
+    const [accountData, setAccountData] = useState(null);
     function logout() {
         tokenHandler.clearTokenData();
         navigation("/login");
@@ -38,6 +39,27 @@ function PollList(props) {
         .then(res => {
             setPollList(res)
         })
+
+
+        fetch(`${Globals.apiUrl}/user/profiledata`,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: tokenData.user, 
+                token: tokenData.token,
+            })
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.status === "OK") {
+                console.log(res)
+                setAccountData(res.accountData);
+            }
+        })
     }, []);
     
     return (
@@ -46,7 +68,10 @@ function PollList(props) {
             <NavBar nav={navigation} />
 
             {pollList.map(pollData => {
-                return <Poll data={pollData}/>
+                return <Poll 
+                    accountData={accountData}
+                    data={pollData}
+                />
             })}
             
         </div>

@@ -206,6 +206,8 @@ hr {
     cursor: pointer;
     background-color: rgba(255,255,255,0.3);
     border-radius: 5px;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
 .button:hover {
@@ -214,6 +216,10 @@ hr {
 
 .button:active {
     background-color: rgba(255,255,255,0.5);
+}
+
+.button img {
+    width: 100%;
 }
   
 @keyframes spin {

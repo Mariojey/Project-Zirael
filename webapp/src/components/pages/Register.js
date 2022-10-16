@@ -4,6 +4,8 @@ import AsyncSelect from 'react-select/async'
 
 import Globals from '../../modules/Globals'
 
+import { toast } from 'react-toastify';
+
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 function Register(props) {
@@ -64,6 +66,17 @@ function Register(props) {
 
 
     function register() {
+        const loginalert = toast.loading("Logowanie...", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        })
+
         fetch(`${Globals.apiUrl}/auth/signup`, 
         {
             method: 'POST',
@@ -77,11 +90,36 @@ function Register(props) {
             console.log(data)
             if(data.status === "OK")
             {
+                toast.update(loginalert, { 
+                    render: "Sukces!", 
+                    type: "success", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
                 navigation("/login")
             }
-            else(
-                console.log(data.message)
-            )
+            else {
+                toast.update(loginalert, { 
+                    render: `${data.message}!`, 
+                    type: "error", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
+            }
         })
     }
 

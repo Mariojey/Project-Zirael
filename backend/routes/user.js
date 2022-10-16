@@ -21,7 +21,7 @@ router.get('/list/:name', async (req, res) => {
     res.json(results);
 })
 
-router.get('/profiledata', async (req, res) => {
+router.post('/profiledata', async (req, res) => {
     const body = req.body;
 
     const token = body.token;
@@ -34,18 +34,20 @@ router.get('/profiledata', async (req, res) => {
 
     const id = tokenHandler.decodeToken(token).id;
 
-    const userData = await UserModel.findOne({id: id})
+    const userData = await UserModel.findById(id)
 
     const results = {
+        id: userData.id,
         name: userData.name,
+        isAdmin: userData.isAdmin,
         city: userData.city,
         cityid: userData.cityid,
         gender: userData.gender,
         age: userData.age,
-        description: userData.description
+        description: userData.description,
     }
 
-    res.json(results);
+    res.json({status: "OK", message: "User data fetched", accountData: results});
 })
 
 router.post('/byid', async (req, res) => {
