@@ -1,4 +1,4 @@
-import { React } from "react";
+import  React  from "react";
 
 import { StyleSheet, Text, View} from 'react-native';
 
@@ -7,6 +7,28 @@ import GlobalVariables from '../../modules/GlobalVariables';
 export default function Poll(props){
     const data = props.data;
 
+    const [users, setUsers] = React.useState([]);
+
+    function getUser(){
+            fetch(`${GlobalVariables.apiUrl}/user/list`)
+                .then(response => response.json())
+                .then(res => {
+                  setUsers(res)
+                })
+    }
+    React.useEffect(() => {
+        getUser();
+    }, [])
+
+    function getUsername(){
+        users.forEach(item => {
+            if (data.author === item.id) {
+                return item.name
+            }
+        })
+    }
+    
+    const nameOfUser = getUsername();
 
     return (
         <View style={styles.mainContainer}>
@@ -17,7 +39,7 @@ export default function Poll(props){
                         <View style={styles.userLogo}>
                             <Text>U</Text>
                         </View>
-                        <Text style={styles.userName}>Username</Text>
+                        <Text style={styles.userName}>{nameOfUser}</Text>
                     </View>
                 </View>
                 <View style={styles.description}>
@@ -118,6 +140,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3bf538'
     },
     userName: {
+        flex: 0,
         color: "#fff",
     },
     description: {
