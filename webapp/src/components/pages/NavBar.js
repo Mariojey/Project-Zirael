@@ -38,9 +38,9 @@ function NavBar(props) {
                     <img src={placeholder} alt=""></img>
                     <p>Create</p>
                 </div>
-                <div onClick={() => goTo('/users')} className={styles.navItem}>
+                <div onClick={() => goTo('/mypolls')} className={styles.navItem}>
                     <img src={placeholder} alt=""></img>
-                    <p>Users</p>
+                    <p>My Polls</p>
                 </div>
             </div>
             <div className={styles.userOptions}>

@@ -1,5 +1,5 @@
 const variables = {
-    apiUrl: "http://localhost:3001"
+    apiUrl: "http://132.226.47.177:42069"
 }
 
 export default variables;

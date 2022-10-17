@@ -1,4 +1,4 @@
-import styles from './PollList.module.css'
+import styles from './UserPolls.module.css'
 import * as tokenHandler from '../../modules/TokenHandler';
 
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ import Globals from '../../modules/Globals'
 import NavBar from './NavBar';
 import Poll from '../reusables/Poll';
 
-function PollList(props) {
+function UserPolls(props) {
     const navigation = useNavigate();
 
     const [pollList, setPollList] = useState([]);
@@ -34,7 +34,7 @@ function PollList(props) {
     useEffect(() => {
         verifyCredentials();
 
-        fetch(`${Globals.apiUrl}/polls/list`,
+        fetch(`${Globals.apiUrl}/polls/mypolls`,
         {
             method: 'POST',
             headers: {
@@ -74,7 +74,7 @@ function PollList(props) {
             }
         })
     }, []);
-    
+
     if(pollList.length === 0) {
         return (
             <div className={styles.mainContainer}>
@@ -87,7 +87,7 @@ function PollList(props) {
             </div>
         )
     }
-
+    
     return (
         
         <div className={styles.mainContainer}>
@@ -104,4 +104,4 @@ function PollList(props) {
     );
 }
 
-export default PollList;
+export default UserPolls;

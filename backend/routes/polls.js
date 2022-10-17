@@ -1,15 +1,105 @@
 const express = require('express');
+const mongoose = require('mongoose')
 const tokenHandler = require('../modules/authtoken');
 const PollModel = require('../db/models/PollModel');
 const UserModel = require('../db/models/UserModel');
-const VoteModel = require('../db/models/VoteModel')
+const VoteModel = require('../db/models/VoteModel');
+const RegionModel = require('../db/models/RegionModel');
 const router = express.Router();
 
 
-router.get('/listall', async (req, res) => {
-    const data = await PollModel.find({}).sort({timestamp: -1});
+// router.get('/listall', async (req, res) => {
+//     const data = await PollModel.find({}).sort({timestamp: -1});
 
-    res.json(data);
+//     res.json(data);
+// })
+
+router.post('/list', async (req, res) => {
+    const body = req.body;
+    
+    const token = body.token;
+    const user = body.user;
+
+    if(!tokenHandler.verifyToken(token, user)) {
+        res.status(401).json({status: "fail", message: 'Authentication failed'});
+        return;
+    }
+
+    const userid = tokenHandler.decodeToken(token).id;
+    const userModel = await UserModel.findById(userid);
+    
+    if(userModel.isAdmin) {
+        const data = await PollModel.find({}).sort({timestamp: -1});
+        res.status(200).json({status: "OK", message: "Polls fetched", polls: data});
+        return;
+    }
+
+    const region = await RegionModel.findById(userModel.cityid);
+    
+    const data = []
+
+    //global
+    const globalPolls = await PollModel.find({range: 'global'})
+    data.push(...globalPolls);
+    
+    //provintional
+    const provintionalRegions = await RegionModel.find({
+        POZIOM: region.POZIOM, 
+        REGION: region.REGION,
+        WOJ: region.WOJ
+    })
+    
+    if(Array.isArray(provintionalRegions)) {
+        const provintionRegions = provintionalRegions.map(reg => mongoose.Types.ObjectId(reg.id));
+        const provintionalPolls = await PollModel.find({_id: {$in: provintionRegions}, region: 'provintional'})
+        data.push(...provintionalPolls);
+    }
+
+    
+    
+    //regional
+    const regionRegions = await RegionModel.find({
+        POZIOM: region.POZIOM, 
+        REGION: region.REGION,
+        WOJ: region.WOJ,
+        PODREG: region.PODREG,
+        POW: region.POW
+    })
+    
+    if(Array.isArray(regionRegions)) {
+        const regionalRegions = regionRegions.map(reg => mongoose.Types.ObjectId(reg.id));
+        const regionalPolls = await PollModel.find({_id: {$in: regionalRegions}, region: 'regional'})
+        data.push(...regionalPolls);
+    }
+    
+
+    //local
+    const localPolls = await PollModel.find({cityid: userModel.cityid})
+    data.push(...localPolls);
+
+    data.sort((a,b) => {
+        return new Date(b.timestamp) - new Date(a.timestamp);
+    })
+
+    res.status(200).json({status: "OK", message: "Polls fetched", polls: data})
+})
+
+router.post('/mypolls', async (req, res) => {
+    const body = req.body;
+    
+    const token = body.token;
+    const user = body.user;
+
+    if(!tokenHandler.verifyToken(token, user)) {
+        res.status(401).json({status: "fail", message: 'Authentication failed'});
+        return;
+    }
+
+    const userid = tokenHandler.decodeToken(token).id;
+    
+    const data = await PollModel.find({author: userid}).sort({timestamp: -1});
+    res.status(200).json({status: "OK", message: "Polls fetched", polls: data});
+    return;
 })
 
 router.post('/create', async (req, res) => {
