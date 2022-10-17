@@ -1,0 +1,73 @@
+
+.overlay {
+    overscroll-behavior: contain;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 5;
+    padding: 5rem 5rem 2rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    width: 400px;
+    padding: 1.5rem;
+    height: 200px;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 20px;
+    background-color: var(--rich-black-fogra-29-2);
+}
+
+.mainContainer p {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 50%
+}
+
+.buttons {
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: space-between;
+
+}
+
+.button {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    height: 3rem;
+    width: 120px;
+    border-radius: 10px;
+    opacity: 0.8;
+    cursor: pointer;;
+    background-color: red;
+}
+
+.button:hover {
+    opacity: 1;
+}

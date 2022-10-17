@@ -1,6 +1,8 @@
 const express = require('express');
 const tokenHandler = require('../modules/authtoken');
 const PollModel = require('../db/models/PollModel');
+const UserModel = require('../db/models/UserModel');
+const VoteModel = require('../db/models/VoteModel')
 const router = express.Router();
 
 
@@ -80,24 +82,21 @@ router.post('/delete', async (req, res) => {
     const id = tokenHandler.decodeToken(token).id;
     const pollid = body.pollid;
 
-    const data = new PollModel({
-        author: id,
-        title: body.title,
-        description: body.description, 
-        options: poolOptions,
-        tags: body.tags,
-        resultsPublic: body.resultsPublic,
-        range: body.range,
-        city: body.city,
-        cityid: body.cityid 
-    })
+    const userData = await UserModel.findById(id);
+    const pollData = await PollModel.findById(pollid);
+
+    if(!(pollData.author === id || userData.isAdmin)) {
+        res.status(400).json({ status: "fail", message: `Insufficient permissions` })
+        return;
+    }
 
     try {
-        const dataToSave = data.save();
-        res.status(200).json({ status: "OK", message: "Poll created successfully" })
+        await PollModel.findByIdAndDelete(pollid)
+        await VoteModel.deleteMany({pollid: pollid})
+        res.status(200).json({ status: "OK", message: "Poll deleted successfully" })
     } 
     catch (error) {
-        res.status(400).json({ status: "fail", message: error.message })
+        res.status(400).json({ status: "fail", message: "Internal server error occured" })
     }
 })
 

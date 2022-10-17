@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import styles from './Poll.module.css'
 import * as tokenHandler from '../../modules/TokenHandler'
 import Globals from '../../modules/Globals'
+
 import PollStatistics from './PollStatistics';
+import PopupModal from './PopupModal';
+
 import statsIcon from '../../media/stats-icon.png'
 import trashIcon from '../../media/trash-icon.png'
 import { toast } from 'react-toastify';
@@ -21,9 +24,14 @@ function Poll(props) {
     const [profileColor, setProfileColor] = useState("aqua");
     const [voteStats, setVoteStats] = useState({});
     const [popupStats, setPopupStats] = useState(false);
+    const [popupModal, setPopupModal] = useState(false);
 
     function handlePopup() {
         setPopupStats(p=>!p)
+    }
+
+    function handleModal() {
+        setPopupModal(p=>!p)
     }
 
     const tokenData = tokenHandler.getTokenData();
@@ -95,7 +103,64 @@ function Poll(props) {
     }, [])
 
     function deletePoll() {
-        setDeleted(true)
+        const loginalert = toast.loading("Usuwanie...", {
+            position: "bottom-right",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        })
+
+        fetch(`${Globals.apiUrl}/polls/delete`,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: tokenData.user, 
+                token: tokenData.token,
+                pollid: data._id,
+            })
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.status === "OK") {
+
+                toast.update(loginalert, { 
+                    render: "Sukces!", 
+                    type: "success", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
+                setDeleted(true)
+            }
+            else {
+                toast.update(loginalert, { 
+                    render: "Niepowodzenie!", 
+                    type: "error", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
+            }
+        })  
     }
 
     function unvote() {
@@ -277,6 +342,7 @@ function Poll(props) {
         {loading.user && loading.uservote && loading.votecount ? (
         <>
             {popupStats && <PollStatistics title={data.title} options={data.options} closePopup={handlePopup} pollid={data._id} />}
+            {popupModal && <PopupModal onClose={handleModal} onConfirm={deletePoll} title="Czy chcesz usunąć ankietę?" />}
             <div className={styles.heading}>
                 <div className={styles.title}>
                     <h2>{data.title}</h2>
@@ -347,7 +413,7 @@ function Poll(props) {
                     })}
                 </div>
                 <p className={styles.statistic}>
-                    {data.resultsPublic ? "Statistic not implemented jet" : "Statistics for this poll are hidden"}
+                    {data.resultsPublic ? "" : "Statistics for this poll are hidden"}
                 </p>
                 <div className={styles.buttons}>
                     {voteStats.total !== undefined && (
@@ -357,7 +423,7 @@ function Poll(props) {
                     )}
                     
                     {props.accountData !== null && (data.author === props.accountData.id || props.accountData.isAdmin) && (
-                        <div onClick={deletePoll} className={styles.button}>
+                        <div onClick={handleModal} className={styles.button}>
                             <img src={trashIcon} alt="delete" />
                         </div>
                     )}
