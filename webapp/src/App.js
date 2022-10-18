@@ -13,7 +13,6 @@ import Register from './components/pages/Register';
 import Home from './components/pages/Home';
 import PollList from './components/pages/PollList';
 import PollCreator from './components/pages/PollCreator';
-import UserPolls from './components/pages/UserPolls';
 import UserProfile from './components/pages/UserProfile';
 
 function App() {
@@ -45,7 +44,6 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/polls" element={<PollList />} />
         <Route path="/create" element={<PollCreator />} />
-        <Route path="/mypolls" element={<UserPolls />} />
         <Route path="/profile" element={<UserProfile />} />
       </Routes>
       <ToastContainer

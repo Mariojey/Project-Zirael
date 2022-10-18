@@ -5,6 +5,11 @@ import * as tokenHandler from '../../modules/TokenHandler';
 
 import styles from "./NavBar.module.css"
 import placeholder from "../../media/link.png"
+import home from "../../media/home.png"
+import poll from "../../media/poll.png"
+import create from "../../media/create.png"
+import profile from "../../media/profile.png"
+import logouticon from "../../media/log-out.png"
 import logo from "../../media/logo.png"
 
 function NavBar(props) {
@@ -27,29 +32,25 @@ function NavBar(props) {
             </div>
             <div className={styles.navItems}>
                 <div onClick={() => goTo('/home')}  className={styles.navItem}>
-                    <img src={placeholder} alt=""></img>
+                    <img src={home} alt=""></img>
                     <p>Home</p>
                 </div>
                 <div onClick={() => goTo('/polls')} className={styles.navItem}>
-                    <img src={placeholder} alt=""></img>
+                    <img src={poll} alt=""></img>
                     <p>Polls</p>
                 </div>
                 <div onClick={() => goTo('/create')} className={styles.navItem}>
-                    <img src={placeholder} alt=""></img>
+                    <img src={create} alt=""></img>
                     <p>Create</p>
-                </div>
-                <div onClick={() => goTo('/mypolls')} className={styles.navItem}>
-                    <img src={placeholder} alt=""></img>
-                    <p>My Polls</p>
                 </div>
             </div>
             <div className={styles.userOptions}>
                 <div onClick={() => goTo('/profile')} className={styles.navItem}>
-                    <img src={placeholder} alt=""></img>
+                    <img src={profile} alt=""></img>
                     <p>Profile</p>
                 </div>
                 <div onClick={logout} className={styles.navItem}>
-                    <img src={placeholder} alt=""></img>
+                    <img src={logouticon} alt=""></img>
                     <p>Log Out</p>
                 </div>
             </div>

@@ -9,7 +9,7 @@ button:active {
 .mainContainer {
     width: 100%;
     min-height: 100vh;
-    padding-top: 10vh;
+    padding: 10vh 3rem 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,12 +24,21 @@ button:active {
     flex-direction: column;
     gap: 1em;
     width: 80%;
-    padding: 1em;
+    overflow: hidden;
+    max-width: 750px;
+    padding: 1rem;
     box-sizing: border-box;
     min-height: 80vh;
     background-color: red;
     background-color: var(--rich-black-fogra-29-2);
     border-radius: 20px;
+}
+
+
+.formContainer > p {
+    color: white;
+    margin: 1rem 0 -10px;
+    font-size: 0.9rem;
 }
 
 .optionAdder {
@@ -44,14 +53,69 @@ button:active {
     box-sizing: border-box;
 }
 
+.formContainer input {
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1.2rem;
+    background-color: rgba(255,255,255,0.15);
+    outline: none;
+    border: none;
+    color: white
+}
+
+.formContainer textarea {
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: rgba(255,255,255,0.15);
+    outline: none;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.select  {
+    height: 3rem;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: rgba(255,255,255,0.15);
+}
+
+.formContainer select {
+    border-radius: 10px;
+    height: 3rem;
+    padding-left: 1rem;
+    background-color: rgba(255,255,255,0.15);
+    outline: none;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.formContainer option {
+    border-radius: 10px;
+    height: 3rem;
+    padding-left: 1rem;
+    background-color: rgba(255,255,255,0.15);
+    outline: none;
+    border: none;
+    font-size: 1.2rem;
+    color: rgb(0, 0, 0);
+}
+
+.optionAdder {
+    gap: 1rem;
+}
+
 .optionAdder button {
-    width: 20%;
+    width: auto;
+    padding-inline: 1rem;
+    border-radius: 10px;
 }
 
 .optionList {
     color: white;
     width: 100%;
-    min-height: 2em;
+    height: 21rem;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -66,6 +130,7 @@ button:active {
     flex-direction: row;
     box-sizing: border-box;
     padding: 0rem;
+    height: 3rem;
     overflow: hidden;
     background-color: rgba(255,255,255,0.1);
     border-radius: 10px;
@@ -83,13 +148,51 @@ button:active {
 }
 
 .option button {
-    width: 20%;
-    height: 2rem;
+    width: 3.5rem;
+    height: 3rem;
 }
 
 
 .option button {
     background-color: rgb(137, 38, 38);
+}
+
+.formContainer label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2rem;
+}
+
+.formContainer h1 {
+    width: calc(100% + 2rem);
+    margin: -1rem -1rem 0.5rem -1rem;
+    height: 5rem;
+    background-color: var(--indigo-dye);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.formContainer button {
+    border-radius: 10px;
+    height: 3rem;
+    font-size: 1.2rem;
+    background-color: var(--indigo-dye);
+    outline: none;
+    border: none;
+    color: white
+}
+
+.formContainer label input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2rem;
 }
 
 input { 

@@ -347,7 +347,7 @@ function Poll(props) {
                 <div className={styles.title}>
                     <h2>{data.title}</h2>
                     <div className={styles.user}>
-                        <div style={{backgroundColor: profileColor}} className={styles.userLogo}>
+                        <div style={{'--pColor': profileColor}} className={styles.userLogo}>
                             <p>{userName[0].toUpperCase()}</p>
                         </div>
                         <p>{userName}</p>

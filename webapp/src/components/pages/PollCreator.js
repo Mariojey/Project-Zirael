@@ -7,7 +7,7 @@ import Select from "react-select";
 import AsyncSelect from 'react-select/async'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
+import { toast } from 'react-toastify';
 
 import NavBar from './NavBar';
 
@@ -26,6 +26,14 @@ function PollCreator(props) {
         ]
       })
 
+    
+    const regions = [
+        { value: "local", label: "Gmina" },
+        { value: "regional", label: "Powiat" },
+        { value: "provintional", label: "Województwo" },
+        { value: "global", label: "Cała Polska" },
+      ]
+
     const [optionInput, setOptionInput] = useState("");
 
     const [formData, setFormData] = useState({
@@ -38,6 +46,15 @@ function PollCreator(props) {
         city: "",
         cityid: ""
     })
+
+    function handleRegionChange(option) {
+        setFormData(prevState => {
+            return {
+                ...prevState,
+                range: option.value
+            }
+        })
+    }
 
     function handleMultiChange(option) {
         setTags(state => {
@@ -56,8 +73,24 @@ function PollCreator(props) {
     }
 
     function handleOptionInput(event) {
-        setOptionInput(event.target.value)
-        console.log(event.target.value)
+        setOptionInput(prevState => {
+            if(event.target.value.length > 30) {
+                toast.error("Max. długość tekstu: 30 znaków", {
+                    toastId: 32324,
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                })
+
+                return prevState
+            }
+            return event.target.value
+        })
     }
 
     function handleCityChange(item) {
@@ -100,6 +133,21 @@ function PollCreator(props) {
         setFormData(prevState => {
             
             var newOptions = prevState.options
+
+            if(newOptions.length >= 5) {
+                toast.error("Nie możesz dodać więcej opcji", {
+                    toastId: 32378,
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                })
+                return {...prevState}
+            }
 
             if(newOptions.indexOf(optionInput) === -1) {
                 newOptions.push(optionInput)
@@ -173,7 +221,36 @@ function PollCreator(props) {
             )
         })
     }
-
+    const customStyles = {
+        container: (provided, state) => ({
+            ...provided,
+            padding: "none",
+        }),
+        control: (provided, state) => ({
+            ...provided,
+            height: "3rem",
+            border: "none",
+            outline: "none",
+            borderRadius: '10px',
+            backgroundColor: 'rgba(255,255,255,0.15)'
+        }),
+        valueContainer: (provided, state) => ({
+            ...provided,
+            height: "3rem",
+            padding: "none",
+            paddingLeft: "1rem",
+        }),
+        input: (provided, state) => ({
+            ...provided,
+            padding: "none",
+            color: "white",
+        }),
+        singleValue: (provided, state) => ({
+            ...provided,
+            padding: "none", 
+            color: "white",
+        }),
+      }
 
     useEffect(() => {
         verifyCredentials();
@@ -183,10 +260,15 @@ function PollCreator(props) {
         <div className={styles.mainContainer}>
             <NavBar nav={navigation} />
             <div className={styles.formContainer}>
-                <input      value={formData.title} onChange={handleChange} name="title" placeholder="title" type="text"></input>
-                <textarea   value={formData.description} onChange={handleChange} name="description"  placeholder="descirption"></textarea>
+                <h1>KREATOR ANKIET</h1>
+                <p>Tytuł ankiety</p>
+                <input      value={formData.title} onChange={handleChange} name="title" placeholder="Tytuł" type="text"></input>
+                <p>Opis ankiety</p>
+                <textarea   value={formData.description} onChange={handleChange} name="description"  placeholder="Opis"></textarea>
+                
+                <p>Opcje</p>
                 <div className={styles.optionAdder}>
-                    <input value={optionInput} onChange={handleOptionInput} type="text"></input>
+                    <input value={optionInput} placeholder="Wpisz opcję" onChange={handleOptionInput} type="text"></input>
                     <button onClick={addOption}>Dodaj</button>
                 </div>
                 <div className={styles.optionList}>
@@ -202,28 +284,33 @@ function PollCreator(props) {
                     }
                     
                 </div>
+                <p>Ankietowane miasto</p>
                 <AsyncSelect
                     placeholder='Miasto'
-                    className={styles.select}
+                    styles={customStyles}
                     loadOptions={loadOptions}
                     onChange={handleCityChange}
                 />
+                <p>Zasięg ankiety</p>
+                <Select
+                    styles={customStyles}
+                    name="regions"
+                    placeholder="Zasięg ankiety"
+                    options={regions}
+                    value={formData.range}
+                    onChange={handleRegionChange}
+                />
+                <p>Kategorie</p>
                 <Select
                     isMulti
+                    styles={customStyles}
                     name="tags"
-                    placeholder="Tags"
+                    placeholder="Tagi"
                     options={tags.filterOptions}
                     value={tags.multiValue}
                     onChange={handleMultiChange}
                 />
-                <select value={formData.region} onChange={handleChange} name="range" placeholder='Zasięg Ankiety'>
-                    <option hidden disabled selected value>--- Zasięg ankiety ---</option>
-                    <option value="local">Gmina</option>
-                    <option value="regional">Powiat</option>
-                    <option value="provintial">Województwo</option>
-                    <option value="global">Cały kraj</option>
-                </select>
-                <label><input checked={formData.resultsPublic} onChange={toggleCheckbox} name="resultsPublic" type="checkbox" /> Make statistics public </label>
+                <label><input checked={formData.resultsPublic} onChange={toggleCheckbox} name="resultsPublic" type="checkbox" />Statystyki dostępne dla wszystkich</label>
 
                 <button onClick={createForm}>Stwórz Ankietę</button>
             </div>
