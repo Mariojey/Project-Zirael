@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap');
+
+
 :root {
   --rich-black-fogra-29: #04080fff;
   --rich-black-fogra-29-2: #0e1725ff;
@@ -10,7 +17,7 @@
 }
 
 * {
-  font-family: sans-serif;
+  font-family: 'League Spartan', sans-serif;
   margin: 0;
   padding: 0;
 }

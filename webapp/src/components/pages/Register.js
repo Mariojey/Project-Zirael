@@ -1,6 +1,7 @@
 import styles from './Register.module.css';
 import logo from '../../media/logo.png'
 import AsyncSelect from 'react-select/async'
+import Select from 'react-select'
 
 import Globals from '../../modules/Globals'
 
@@ -48,6 +49,15 @@ function Register(props) {
             })
         })
     }
+
+    function handleGenderChange(option) {
+        setFormData(prevState => {
+            return ({
+                ...prevState,
+                gender: option.value
+            })
+        })
+    }
     function loadOptions(input, callback) {
         fetch(`${Globals.apiUrl}/region/find/${input}`)
             .then((response) => {
@@ -64,8 +74,44 @@ function Register(props) {
             });
     }
 
+    
 
-    function register() {
+    const customStyles = {
+        container: (provided, state) => ({
+            ...provided,
+            padding: "none",
+            width: "100%",
+        }),
+        control: (provided, state) => ({
+            ...provided,
+            height: "3rem",
+            
+            border: "none",
+            outline: "none",
+            borderRadius: '10px',
+            backgroundColor: 'rgba(255,255,255,0.15)'
+        }),
+        valueContainer: (provided, state) => ({
+            ...provided,
+            height: "3rem",
+            padding: "none",
+            paddingLeft: "1rem",
+        }),
+        input: (provided, state) => ({
+            ...provided,
+            padding: "none",
+            color: "white",
+        }),
+        singleValue: (provided, state) => ({
+            ...provided,
+            padding: "none", 
+            color: "white",
+        }),
+      }
+
+    function register(e) {
+        e.preventDefault();
+
         const loginalert = toast.loading("Logowanie...", {
             position: "bottom-right",
             autoClose: 5000,
@@ -124,33 +170,43 @@ function Register(props) {
     }
 
 
+    const genders = [
+        { value: "male", label: "Mężczyzna" },
+        { value: "female", label: "Kobieta" },
+        { value: "other", label: "Inna" },
+        { value: "hidden", label: "Wolę nie podawać" },
+    ]
+
     return (
         <div className={styles.mainContainer}>
-            <div className={styles.loginBox}>
+            <form onSUbmit={register} className={styles.loginBox}>
                 <div className={styles.logo}>
                     <img src={logo} alt="logo"></img>
-                    <h1>ZIRAEL</h1>
+                    <h1>REJESTRACJA</h1>
                 </div>
-
+                <p className={styles.label}>Login</p>
                 <input onChange={handleFormUpdate} value={formData.login} name="login" type="text" placeholder='Login'/>
+                <p className={styles.label}>Hasło</p>
                 <input onChange={handleFormUpdate} value={formData.password} name="password" type="password" placeholder='Hasło'/>
+                <p className={styles.label}>Nazwa użytkownika (wyświetlana)</p>
                 <input onChange={handleFormUpdate} value={formData.name} name="name" type="text" placeholder='Nazwa użytkownika'/>
-                    
+                <p className={styles.label}>Miasto</p>
                 <AsyncSelect
                     placeholder='Miasto'
-                    className={styles.select}
+                    styles={customStyles}
                     loadOptions={loadOptions}
                     onChange={item => handleCityUpdate(item)}
                 />
-
-                <select onChange={handleFormUpdate} name="gender" placeholder='Płeć'>
-                    <option hidden disabled selected value>--- Płeć ---</option>
-                    <option value="male">Mężczyzna</option>
-                    <option value="female">Kobieta</option>
-                    <option value="other">Inna</option>
-                    <option value="hidden">Wolę nie podawać</option>
-                </select>
-
+                <p className={styles.label}>Płeć</p>
+                <Select
+                    styles={customStyles}
+                    name="gender"
+                    placeholder="Płeć"
+                    options={genders}
+                    value={formData.gender}
+                    onChange={handleGenderChange}
+                />
+                <p className={styles.label}>Wiek</p>
                 <input onChange={handleFormUpdate} value={formData.age} name="age" type="number" placeholder='Wiek'></input>
 
                 
@@ -158,7 +214,7 @@ function Register(props) {
                 <button onClick={register}>ZAREJESTRUJ</button>
                 <hr></hr>
                 <button onClick={() => navigation("/login")}>LOGOWANIE</button>
-            </div>
+            </form>
         </div>
     );
 }

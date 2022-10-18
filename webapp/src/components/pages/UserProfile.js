@@ -8,6 +8,7 @@ import Globals from '../../modules/Globals'
 
 
 import NavBar from './NavBar';
+import Footer from './Footer';
 import Poll from '../reusables/Poll';
 
 function UserProfile(props) {
@@ -79,6 +80,7 @@ function UserProfile(props) {
 
     if(accountData === null) {
         return (
+            <>
             <div className={styles.mainContainer}>
                 <NavBar nav={navigation} />
                 <div className={styles.loading}>
@@ -87,11 +89,13 @@ function UserProfile(props) {
                 
                 
             </div>
+            <Footer />
+            </>
         )
     }
     
     return (
-        
+        <>
         <div className={styles.mainContainer}>
             <NavBar nav={navigation} />
             <div className={styles.profileContainer}>
@@ -139,6 +143,8 @@ function UserProfile(props) {
                 </div>
             </div>
         </div>
+        <Footer />
+        </>
     );
 }
 

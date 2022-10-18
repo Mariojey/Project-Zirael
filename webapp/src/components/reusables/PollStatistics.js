@@ -85,6 +85,8 @@ function PollStatistics(props) {
                 {!isLoading ? (
                     <div className={styles.statsBody}>
                         <div className={styles.header}>
+                            <h1>Statystyki Ankiety</h1>
+                            <hr ></hr>
                             <h2>{props.title}</h2><br />
                             <select onChange={changeDataset}>
                                 <option value="total">Ogółem</option>
@@ -96,7 +98,7 @@ function PollStatistics(props) {
                         <div className={styles.chartContainer}>
 
                             <Chart
-                                title="Głosy oddane w ankiecie"
+                                title=""
                                 dataSource={dataSource}
                                 className={styles.chart}
                                 id="chart"
@@ -109,22 +111,22 @@ function PollStatistics(props) {
                                 />
                                 <Series
                                     valueField="male"
-                                    name="Male"
+                                    name="Mężczyźni"
                                     color="#3F7FBF"
                                 />
                                 <Series
                                     valueField="female"
-                                    name="Female"
+                                    name="Kobiety"
                                     color="#F87CCC"
                                 />
                                 <Series
                                     valueField="other"
-                                    name="Others"
+                                    name="Inni"
                                     color="#40ff00"
                                 />
                                 <Series
                                     valueField="hidden"
-                                    name="Not Specified"
+                                    name="Nieokreślone"
                                     color="#eeff00"
                                 />
                                 <Tooltip

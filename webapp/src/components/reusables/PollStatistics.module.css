@@ -28,7 +28,7 @@
     height: calc(100% - 7rem);
     z-index: 6;
     border-radius: 20px;
-    background-color: var(--rich-black-fogra-29-2);
+    background-color: var(--oxford-blue);
 }
 
 .statsBody {
@@ -65,6 +65,26 @@
 .chart {
     height: 100%;
     width: 100%;
+}
+
+select {
+    border-radius: 10px;
+    height: 3rem;
+    padding-left: 1rem;
+    background-color: rgba(255,255,255,0.15);
+    outline: none;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+}
+
+select option {
+    color: black;
+    margin: 2rem;
+}
+
+.header hr {
+    margin: 5px 0 1.5rem;
 }
 
 @keyframes spin {

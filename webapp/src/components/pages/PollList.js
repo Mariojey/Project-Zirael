@@ -8,6 +8,7 @@ import Globals from '../../modules/Globals'
 
 
 import NavBar from './NavBar';
+import Footer from './Footer';
 import Poll from '../reusables/Poll';
 
 function PollList(props) {
@@ -77,6 +78,7 @@ function PollList(props) {
     
     if(pollList.length === 0) {
         return (
+            <>
             <div className={styles.mainContainer}>
                 <NavBar nav={navigation} />
                 <div className={styles.noPolls}>
@@ -85,11 +87,13 @@ function PollList(props) {
                 
                 
             </div>
+            <Footer />
+            </>
         )
     }
 
     return (
-        
+        <>
         <div className={styles.mainContainer}>
             <NavBar nav={navigation} />
             {pollList.map(pollData => {
@@ -101,6 +105,8 @@ function PollList(props) {
             })}
             
         </div>
+        <Footer />
+        </>
     );
 }
 

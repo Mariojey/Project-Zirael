@@ -5,16 +5,32 @@ import { StyleSheet, Text, View, Image} from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import GlobalVariables from '../modules/GlobalVariables';
+import { getTokenData } from "../modules/Tokens";
 
 export default function PollList(){
   const [polls, setPolls] = React.useState([]);
   
   function getPolls(){
-    fetch(`${GlobalVariables.apiUrl}/polls/listall`)
-        .then(response => response.json())
-        .then(res => {
-          setPolls(res)
+    getTokenData().then(tokenData => {
+      fetch(`${GlobalVariables.apiUrl}/polls/list`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          user: tokenData.user,
+          token: tokenData.token
         })
+      })
+          .then(response => response.json())
+          .then(res => {
+            if(res.status === "OK") {
+              setPolls(res.polls)
+            }
+          })
+    })
+    
   }
 
   React.useEffect(()=> {

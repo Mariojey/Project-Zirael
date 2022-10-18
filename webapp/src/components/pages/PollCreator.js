@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import NavBar from './NavBar';
+import Footer from './Footer';
 
 function PollCreator(props) {
     const navigation = useNavigate();
@@ -129,7 +130,8 @@ function PollCreator(props) {
         })
     }
 
-    function addOption() {
+    function addOption(e) {
+        e.preventDefault();
         setFormData(prevState => {
             
             var newOptions = prevState.options
@@ -159,6 +161,8 @@ function PollCreator(props) {
             }
             
         })
+
+        setOptionInput("")
     }
 
     function handleChange(event) {
@@ -201,6 +205,17 @@ function PollCreator(props) {
         
         console.log(userData)
 
+        const loginalert = toast.loading("Logowanie...", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        })
+
         fetch(`${Globals.apiUrl}/polls/create`, 
         {
             method: 'POST',
@@ -214,11 +229,35 @@ function PollCreator(props) {
             console.log(data)
             if(data.status === "OK")
             {
-                console.log("Success!")
+                toast.update(loginalert, { 
+                    render: "Sukces!", 
+                    type: "success", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
             }
-            else(
-                console.log(data.message)
-            )
+            else {
+                toast.update(loginalert, { 
+                    render: data.message, 
+                    type: "error", 
+                    isLoading: false,
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",  
+                });
+            }
         })
     }
     const customStyles = {
@@ -257,6 +296,7 @@ function PollCreator(props) {
     }, []);
     
     return (
+        <>
         <div className={styles.mainContainer}>
             <NavBar nav={navigation} />
             <div className={styles.formContainer}>
@@ -267,10 +307,10 @@ function PollCreator(props) {
                 <textarea   value={formData.description} onChange={handleChange} name="description"  placeholder="Opis"></textarea>
                 
                 <p>Opcje</p>
-                <div className={styles.optionAdder}>
+                <form onSubmit={addOption} className={styles.optionAdder}>
                     <input value={optionInput} placeholder="Wpisz opcję" onChange={handleOptionInput} type="text"></input>
                     <button onClick={addOption}>Dodaj</button>
-                </div>
+                </form>
                 <div className={styles.optionList}>
                     {
                         formData.options.map((option, index) => {
@@ -315,6 +355,8 @@ function PollCreator(props) {
                 <button onClick={createForm}>Stwórz Ankietę</button>
             </div>
         </div>
+        <Footer />
+        </>
     );
 }
 

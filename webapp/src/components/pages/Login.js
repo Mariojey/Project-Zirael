@@ -36,7 +36,9 @@ function Login(props) {
         }
     }
 
-    function login() {
+    function login(e) {
+        e.preventDefault();
+
         const loginalert = toast.loading("Logowanie...", {
             position: "bottom-right",
             autoClose: 5000,
@@ -109,14 +111,16 @@ function Login(props) {
 
     return (
         <div className={styles.mainContainer}>
-            <div className={styles.loginBox}>
+            <form onSubmit={login} className={styles.loginBox}>
                 <div className={styles.logo}>
                     <img src={logo} alt="logo"></img>
-                    <h1>ZIRAEL</h1>
+                    <h1>LOGOWANIE</h1>
                 </div>
 
-                <input onChange={handleFormUpdate} value={formData.login} name="login" type="text" />
-                <input onChange={handleFormUpdate} value={formData.password} name="password" type="password" />
+                <p className={styles.label}>Login</p>
+                <input onChange={handleFormUpdate} value={formData.login} name="login" type="text" placeholder="Login" />
+                <p className={styles.label}>Hasło</p>
+                <input onChange={handleFormUpdate} value={formData.password} name="password" type="password" placeholder="Hasło" />
                 <div onClick={toggleRemember} className={styles.checkBox}>
                     <input checked={remember} type="checkbox"></input>
                     <p>Zapamiętaj logowanie</p>
@@ -124,7 +128,7 @@ function Login(props) {
                 <button onClick={login}>Zaloguj</button>
                 <hr></hr>
                 <button onClick={() => navigation("/register")}>REJESTRACJA</button>
-            </div>
+            </form>
         </div>
     );
 }

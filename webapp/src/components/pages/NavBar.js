@@ -28,30 +28,29 @@ function NavBar(props) {
         <div className={styles.mainContainer}>
             <div onClick={() => goTo('/home')} className={styles.logo}>
                 <img src={logo} alt="logo"></img>
-                <p>ZIRAEL</p>
             </div>
             <div className={styles.navItems}>
                 <div onClick={() => goTo('/home')}  className={styles.navItem}>
                     <img src={home} alt=""></img>
-                    <p>Home</p>
+                    <p>GŁÓWNA</p>
                 </div>
                 <div onClick={() => goTo('/polls')} className={styles.navItem}>
                     <img src={poll} alt=""></img>
-                    <p>Polls</p>
+                    <p>ANKIETY</p>
                 </div>
                 <div onClick={() => goTo('/create')} className={styles.navItem}>
                     <img src={create} alt=""></img>
-                    <p>Create</p>
+                    <p>STWÓRZ</p>
                 </div>
             </div>
             <div className={styles.userOptions}>
                 <div onClick={() => goTo('/profile')} className={styles.navItem}>
                     <img src={profile} alt=""></img>
-                    <p>Profile</p>
+                    <p>PROFIL</p>
                 </div>
                 <div onClick={logout} className={styles.navItem}>
                     <img src={logouticon} alt=""></img>
-                    <p>Log Out</p>
+                    <p>Wyloguj</p>
                 </div>
             </div>
         </div>
