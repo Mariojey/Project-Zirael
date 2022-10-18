@@ -92,9 +92,9 @@ function PollList(props) {
         
         <div className={styles.mainContainer}>
             <NavBar nav={navigation} />
-
             {pollList.map(pollData => {
                 return <Poll 
+                    lighter
                     accountData={accountData}
                     data={pollData}
                 />

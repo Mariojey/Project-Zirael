@@ -16,7 +16,7 @@ button:active {
     gap: 2em;
     box-sizing: border-box;
     justify-content: center;
-    background-color: var(--rich-black-fogra-29);
+    background-color: var(--rich-black-fogra-29-2);
 }
 
 .formContainer {
@@ -30,10 +30,9 @@ button:active {
     box-sizing: border-box;
     min-height: 80vh;
     background-color: red;
-    background-color: var(--rich-black-fogra-29-2);
+    background-color: var(--oxford-blue);
     border-radius: 20px;
 }
-
 
 .formContainer > p {
     color: white;

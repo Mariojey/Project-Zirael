@@ -329,7 +329,7 @@ function Poll(props) {
 
     if(deleted) {
         return (
-            <div className={styles.mainContainer}>
+            <div style={{backgroundColor: props.lighter ? "var(--oxford-blue)" : "var(--rich-black-fogra-29-2)"}} className={styles.mainContainer}>
                 <div className={styles.loading}>
                     <h2>Ankieta usunięta</h2>
                 </div>
@@ -338,7 +338,7 @@ function Poll(props) {
     }
     else
     return (
-        <div className={styles.mainContainer}>
+        <div style={{backgroundColor: props.lighter ? "var(--oxford-blue)" : "var(--rich-black-fogra-29-2)"}} className={styles.mainContainer}>
         {loading.user && loading.uservote && loading.votecount ? (
         <>
             {popupStats && <PollStatistics title={data.title} options={data.options} closePopup={handlePopup} pollid={data._id} />}

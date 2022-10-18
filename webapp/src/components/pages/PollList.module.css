@@ -8,11 +8,15 @@
     box-sizing: border-box;
     gap: 2em;
     justify-content: center;
-    background-color: var(--rich-black-fogra-29);
+    background-color: var(--rich-black-fogra-29-2);
+}
+
+.mainContainer > * {
+    background-color: var(--oxford-blue);
 }
 
 .noPolls {
-    background-color: var(--rich-black-fogra-29-2);
+    background-color: var(--oxford-blue);
     color: white;
     display: flex;
     justify-content: center;
