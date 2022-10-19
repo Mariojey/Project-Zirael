@@ -1,10 +1,15 @@
 import  React  from "react";
 import  { useState }  from "react";
 
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
 import GlobalVariables from '../../modules/GlobalVariables';
 import { getTokenData } from "../../modules/Tokens";
+
+import trashIcon from "../../assets/trash-icon.png"
+import statsIcon from "../../assets/stats-icon.png"
+
+import PollStats from "./PollStats";
 
 export default function Poll(props){
     const data = props.data;
@@ -184,18 +189,34 @@ export default function Poll(props){
       })
     }
 
+    function handlePopup() {
+        setPopupStats(p => !p)
+    }
+
     if(loading.user && loading.uservote && loading.votecount)
     {
         return (
+            <>
+            {popupStats && <PollStats pollid={data._id} title={data.title} options={data.options} closePopup={handlePopup} />}
             <View style={styles.mainContainer}>
                 <View style={styles.heading}>
                     <View style={styles.title}>
                         <Text style={styles.titleText}>{data.title}</Text>
-                        <View style={styles.user}>
-                            <View style={styles.userLogo}>
-                                <Text>{author.name.charAt(0).toUpperCase()}</Text>
+                        <View style={styles.topBar}>
+                            <View style={styles.user}>
+                                <View style={styles.userLogo}>
+                                    <Text>{author.name[0].toUpperCase()}</Text>
+                                </View>
+                                <Text style={styles.userName}>{author.name}</Text>
                             </View>
-                            <Text style={styles.userName}>{author.name}</Text>
+                            <View style={styles.controlButtons}>
+                                <TouchableOpacity onPress={() => setPopupStats(p => !p)} style={styles.controlButton}>
+                                    <Image source={statsIcon} style={styles.controlButtonImage}></Image>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.controlButton}>
+                                    <Image source={trashIcon} style={styles.controlButtonImage}></Image>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                     <View style={styles.description}>
@@ -250,6 +271,7 @@ export default function Poll(props){
                     </Text>
                 </View>
             </View>
+            </>
         )
     }
     else {
@@ -303,9 +325,36 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontWeight: 'bold'
     },
+    topBar: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between'
+    },
+    controlButtons: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    controlButton: {
+        display: "flex",
+        width: 32,
+        height: 32,
+        borderRadius: 5,
+        padding: 4,
+        marginLeft: 10,
+        backgroundColor: "#ffffff4b",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignContent: "center"
+    },
+    controlButtonImage: {
+        width: 24,
+        height: 24
+    },
     user: {
         flex: 0,
-        width: '100%',
+        width: '50%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: "flex-start",
