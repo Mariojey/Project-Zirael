@@ -9,26 +9,47 @@ import { getTokenData } from "../modules/Tokens";
 
 export default function PollList(){
   const [polls, setPolls] = React.useState([]);
+  const [accountData, setAccountData] = React.useState(null)
   
   function getPolls(){
     getTokenData().then(tokenData => {
-      fetch(`${GlobalVariables.apiUrl}/polls/list`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({
-          user: tokenData.user,
-          token: tokenData.token
-        })
-      })
-          .then(response => response.json())
-          .then(res => {
-            if(res.status === "OK") {
-              setPolls(res.polls)
-            }
+        fetch(`${GlobalVariables.apiUrl}/polls/list`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify({
+            user: tokenData.user,
+            token: tokenData.token
           })
+        })
+        .then(response => response.json())
+        .then(res => {
+          if(res.status === "OK") {
+            setPolls(res.polls)
+          }
+        })
+
+        fetch(`${GlobalVariables.apiUrl}/user/profiledata`,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: tokenData.user, 
+                token: tokenData.token,
+            })
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.status === "OK") {
+                console.log(res)
+                setAccountData(res.accountData);
+            }
+        })
     })
     
   }
@@ -41,13 +62,13 @@ export default function PollList(){
      <Swiper 
         showsPagination={false} 
         showsButtons={false}
-        loop={true}
+        loop={false}
         index={0}
       >
       {polls.map((pollData, index) => {
           return(
             <View key={index} style={styles.container}>
-              <Poll data={pollData} />
+              <Poll accountData={accountData} data={pollData} />
             </View>
           )
       })}
@@ -68,6 +89,7 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       flexDirection: 'column',
+      paddingBottom: 10
     },
     containerText: {
       color: '#fff',

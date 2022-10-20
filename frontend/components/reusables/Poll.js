@@ -10,6 +10,7 @@ import trashIcon from "../../assets/trash-icon.png"
 import statsIcon from "../../assets/stats-icon.png"
 
 import PollStats from "./PollStats";
+import PopupModal from "./PopupModal";
 
 export default function Poll(props){
     const data = props.data;
@@ -19,6 +20,8 @@ export default function Poll(props){
     const [optionSelected, setOptionSelected] = useState(-1);
     const [voteStats, setVoteStats] = useState({});
     const [popupStats, setPopupStats] = useState(false);
+    const [modalPopup, setModalPopup] = useState(false);
+
 
     const [author, setAuthor] = React.useState({
         name: "User",
@@ -189,8 +192,70 @@ export default function Poll(props){
       })
     }
 
+    function deletePoll() {
+        getTokenData().then(tokenData => {
+        fetch(`${GlobalVariables.apiUrl}/polls/delete`,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: tokenData.user, 
+                token: tokenData.token,
+                pollid: data._id,
+            })
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.status === "OK") {
+                setDeleted(true)
+            }
+        })  
+        setModalPopup(false)
+    })
+    }
+    function invertColor(hex) {
+        if (hex.indexOf('#') === 0) {
+            hex = hex.slice(1);
+        }
+        // convert 3-digit hex to 6-digits.
+        if (hex.length === 3) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
+        if (hex.length !== 6) {
+            throw new Error('Invalid HEX color.');
+        }
+        // invert color components
+        var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+            g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+            b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+        // pad each with zeros and return
+        return '#' + padZero(r) + padZero(g) + padZero(b);
+    }
+    
+    function padZero(str, len) {
+        len = len || 2;
+        var zeros = new Array(len).join('0');
+        return (zeros + str).slice(-len);
+    }
+
     function handlePopup() {
         setPopupStats(p => !p)
+    }
+    function handleModal() {
+        setModalPopup(p => !p)
+    }
+
+    if(deleted) {
+        return (
+            <View style={styles.mainContainer}>
+                <View style={styles.centerTitle}>
+                    <Text style={styles.centerTitleText}>USUNIĘTO</Text>
+                </View>
+            </View>
+        )
     }
 
     if(loading.user && loading.uservote && loading.votecount)
@@ -198,24 +263,32 @@ export default function Poll(props){
         return (
             <>
             {popupStats && <PollStats pollid={data._id} title={data.title} options={data.options} closePopup={handlePopup} />}
+            {modalPopup && <PopupModal close={handleModal} accept={deletePoll} />}
             <View style={styles.mainContainer}>
                 <View style={styles.heading}>
                     <View style={styles.title}>
                         <Text style={styles.titleText}>{data.title}</Text>
                         <View style={styles.topBar}>
                             <View style={styles.user}>
-                                <View style={styles.userLogo}>
-                                    <Text>{author.name[0].toUpperCase()}</Text>
+                                <View style={[styles.userLogo, {
+                                    backgroundColor: props.accountData.profileColor
+                                }]}>
+                                    <Text style={{
+                                        fontWeight: "bold",
+                                        color: invertColor(props.accountData.profileColor)
+                                    }}>{author.name[0].toUpperCase()}</Text>
                                 </View>
                                 <Text style={styles.userName}>{author.name}</Text>
                             </View>
                             <View style={styles.controlButtons}>
+                                {voteStats.total !== undefined && (
                                 <TouchableOpacity onPress={() => setPopupStats(p => !p)} style={styles.controlButton}>
                                     <Image source={statsIcon} style={styles.controlButtonImage}></Image>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.controlButton}>
+                                </TouchableOpacity>)}
+                                {props.accountData !== null && (data.author === props.accountData.id || props.accountData.isAdmin) && (
+                                <TouchableOpacity onPress={handleModal} style={styles.controlButton}>
                                     <Image source={trashIcon} style={styles.controlButtonImage}></Image>
-                                </TouchableOpacity>
+                                </TouchableOpacity>)}
                             </View>
                         </View>
                     </View>
@@ -256,7 +329,12 @@ export default function Poll(props){
                 </View>
     
                 <View style={styles.footer}>
-                    <Text style={styles.tagsText}>Tags:</Text>
+                    {voteStats.total !== undefined && (
+                        <Text style={styles.statistic}>
+                            Głosów: {voteStats.total}
+                        </Text>
+                    )}
+                    <Text style={styles.tagsText}>Tagi:</Text>
                     <View style={styles.tags}>
                         {
                             data.tags.map((tag, index) => {
@@ -266,9 +344,12 @@ export default function Poll(props){
                             })
                         } 
                     </View>
-                    <Text style={styles.statistic}>
-                        Statistic not implemented jet
-                    </Text>
+                    {voteStats.total === undefined && (
+                        <Text style={styles.statistic}>
+                            Statistyki niedostępne
+                        </Text>
+                    )}
+                    
                 </View>
             </View>
             </>
@@ -277,7 +358,9 @@ export default function Poll(props){
     else {
         return (
             <View style={styles.mainContainer}>
-                
+                <View style={styles.centerTitle}>
+                    <Text style={styles.centerTitleText}>ŁADOWANIE</Text>
+                </View>
             </View>
         )
     }
@@ -294,6 +377,7 @@ const styles = StyleSheet.create({
     },
     containerText: {
       color: '#fff',
+      
       fontSize: 30,
     },
     mainContainer: {
@@ -304,6 +388,20 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 12,
         backgroundColor: '#00094a',
+    },
+    centerTitle: {
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignContent: "center"
+    },
+    centerTitleText: {
+        color: "white",
+        fontSize: 25,
+        width: "100%",
+        textAlign: "center",
+        fontWeight: "bold"
     },
     heading: {
         width: '95%',

@@ -1,5 +1,5 @@
 const GlobalVariables = {
-    apiUrl: "https://132.226.47.177:42069"
+    apiUrl: "http://132.226.47.177:42169"
 }
 
 export default GlobalVariables;
