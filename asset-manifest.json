@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/Project-Zirael/static/css/main.231313ff.css",
-    "main.js": "/Project-Zirael/static/js/main.fbd9e28a.js",
+    "main.css": "/Project-Zirael/static/css/main.a9d2e8f7.css",
+    "main.js": "/Project-Zirael/static/js/main.3f2773d0.js",
     "static/media/phone-1.png": "/Project-Zirael/static/media/phone-1.8a2e4d16a156535e8be2.png",
     "static/media/logo.png": "/Project-Zirael/static/media/logo.5fcb8930e8b316281f2e.png",
     "static/media/stats-icon.png": "/Project-Zirael/static/media/stats-icon.488e9e1d09ca9f82efc6.png",
     "static/media/link.png": "/Project-Zirael/static/media/link.ec1c971c0a66905c4fed.png",
     "static/media/trash-icon.png": "/Project-Zirael/static/media/trash-icon.fdc3293f775e85d75cad.png",
     "index.html": "/Project-Zirael/index.html",
-    "main.231313ff.css.map": "/Project-Zirael/static/css/main.231313ff.css.map",
-    "main.fbd9e28a.js.map": "/Project-Zirael/static/js/main.fbd9e28a.js.map"
+    "main.a9d2e8f7.css.map": "/Project-Zirael/static/css/main.a9d2e8f7.css.map",
+    "main.3f2773d0.js.map": "/Project-Zirael/static/js/main.3f2773d0.js.map"
   },
   "entrypoints": [
-    "static/css/main.231313ff.css",
-    "static/js/main.fbd9e28a.js"
+    "static/css/main.a9d2e8f7.css",
+    "static/js/main.3f2773d0.js"
   ]
 }
