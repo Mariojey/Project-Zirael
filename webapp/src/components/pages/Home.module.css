@@ -1,8 +1,7 @@
 .mainContainer {
     width: 100%;
-    height: 100vh;
     min-height: 100vh;
-    padding: 10vh 5rem 3rem;
+    padding: 11vh 5rem 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,7 +16,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    color:white;
+    color: white;
     align-items: center;
     height: 100%;
 }
