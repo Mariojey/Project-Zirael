@@ -9,7 +9,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 import GlobalVariables from '../../modules/GlobalVariables';
 import { getTokenData } from "../../modules/Tokens";
 
-import trashIcon from "../../assets/trash-icon.png"
+import trashIcon from "../../assets/cross.png"
 
 export default function PollStats(props){
 
@@ -109,7 +109,7 @@ export default function PollStats(props){
                         </View>
                     </View>
                     <View style={styles.description}>
-                        <Text style={styles.descriptionText}>WYBÓR OPCJI</Text>
+                        <Text style={styles.descriptionText}>WCZYTYWANIE</Text>
                     </View>
                 </View>
             </View>
@@ -137,8 +137,21 @@ export default function PollStats(props){
                     <View style={styles.description}>
                     <SelectDropdown
                         data={options}
+                        defaultValueByIndex={0}
                         onSelect={(selectedItem, index) => {
                             setOptionHandler(index)
+                        }}
+
+                        buttonStyle={{
+                            width: '100%',
+                            marginTop: 15,
+                            borderRadius: 10,
+                            height: 36,
+                            backgroundColor: "#ffffff60"
+                        }}
+                        buttonTextStyle={{
+                            width: '100%',
+                            color: '#ffffff'
                         }}
                         buttonTextAfterSelection={(selectedItem, index) => {
                             // text represented after item is selected
@@ -185,6 +198,24 @@ export default function PollStats(props){
                         contentInset={{ left: 10, right: 10 }}
                         svg={{ fontSize: 10, fill: 'white' }}
                     />
+                    <View style={styles.legend}>
+                        <View style={styles.legendItem}>
+                            <View style={[styles.legendIcon, {backgroundColor: colors[0]}]}></View>
+                            <Text style={styles.legendText}>Mężczyźni</Text>
+                        </View>
+                        <View style={styles.legendItem}>
+                            <View style={[styles.legendIcon, {backgroundColor: colors[1]}]}></View>
+                            <Text style={styles.legendText}>Kobiety</Text>
+                        </View>
+                        <View style={styles.legendItem}>
+                            <View style={[styles.legendIcon, {backgroundColor: colors[2]}]}></View>
+                            <Text style={styles.legendText}>Inni</Text>
+                        </View>
+                        <View style={styles.legendItem}>
+                            <View style={[styles.legendIcon, {backgroundColor: colors[3]}]}></View>
+                            <Text style={styles.legendText}>Nieokreślone</Text>
+                        </View>
+                    </View>
                 </View>
             </View>
         )
@@ -231,7 +262,7 @@ const styles = StyleSheet.create({
         minHeight: 48
     },
     titleText: {
-        fontSize: 25,
+        fontSize: 18,
         color: "#fff",
         fontWeight: 'bold'
     },
@@ -298,6 +329,8 @@ const styles = StyleSheet.create({
     options: {
         display: "flex",
         flexDirection: 'column',
+        flex: 3,
+        marginBottom: 30,
         width: '100%',
         height: '60%'
     },
@@ -309,6 +342,32 @@ const styles = StyleSheet.create({
         height: 42,
         borderRadius: 10,
         marginBottom: 10,
+    },
+    legend: {
+        position: "absolute",
+        bottom: -30,
+        width: '100%',
+        height: 20,
+        display: 'flex',
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    legendItem: {
+        display: 'flex',
+        flexDirection: "row",
+        alignItems: "center"
+
+    },  
+    legendIcon: {
+        width: 10,
+        height: 10,
+        backgroundColor: "#f00",
+        marginRight: 5,
+    },
+    legendText: {
+        color: "#ffffff",
+        fontSize: 10
     },
     optionSelected: {
         flex: 0,
