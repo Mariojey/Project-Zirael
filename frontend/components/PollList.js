@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     card: {
       width: '100%',
       height: '100%',
-      shadowColor: '#000000',
+      shadowColor: '#000',
       display: 'flex',
       alignItems: 'center',
       flexDirection: 'column',

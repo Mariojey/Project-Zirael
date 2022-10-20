@@ -441,7 +441,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 4,
         marginLeft: 10,
-        backgroundColor: "#ffffff4b",
+        backgroundColor: "#ffff4b",
         flexDirection: "row",
         justifyContent: "center",
         alignContent: "center"
@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         height: 42,
         borderRadius: 10,
-        backgroundColor: "#ffffff33",
+        backgroundColor: "#ffff33",
     },
     tagsText: {
         color: '#aaa',

@@ -147,7 +147,7 @@ export default function PollStats(props){
                             marginTop: 15,
                             borderRadius: 10,
                             height: 36,
-                            backgroundColor: "#ffffff60"
+                            backgroundColor: "#ffff60"
                         }}
                         buttonTextStyle={{
                             width: '100%',
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 4,
         marginLeft: 10,
-        backgroundColor: "#ffffff4b",
+        backgroundColor: "#ffff4b",
         flexDirection: "row",
         justifyContent: "center",
         alignContent: "center"
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         height: 42,
         borderRadius: 10,
-        backgroundColor: "#ffffff33",
+        backgroundColor: "#ffff33",
     },
     tagsText: {
         color: '#aaa',
