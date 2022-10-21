@@ -9,6 +9,8 @@ import { getTokenData } from "../../modules/Tokens";
 import trashIcon from "../../assets/trash-icon.png"
 import statsIcon from "../../assets/stats-icon.png"
 
+import { Toast } from "toastify-react-native"
+
 import PollStats from "./PollStats";
 import PopupModal from "./PopupModal";
 
@@ -123,6 +125,7 @@ export default function Poll(props){
         .then(response => response.json())
         .then(res => {
             if(res.status === "OK") {
+                Toast.success("Głos wycofany!")
                 setVoteStats(prevState => {
                     var temp = prevState;
                     if(temp.byOption === undefined) {
@@ -137,8 +140,10 @@ export default function Poll(props){
                     setOptionSelected(-1)
 
                     return temp
-                })   
+                }) 
+                return  
             }
+            Toast.error("Wystąpił błąd!")
         })
     })
     }
@@ -168,6 +173,7 @@ export default function Poll(props){
         .then(response => response.json())
         .then(res => {
             if(res.status === "OK") {
+                Toast.success("Głos oddany!")
                 setVoteStats(prevState => {
                     var temp = prevState;
                     if(temp.total === undefined) {
@@ -186,7 +192,9 @@ export default function Poll(props){
 
                     return temp
                 })   
+                return
             }
+            Toast.error("Wystąpił błąd!")
         })
       })
     }
@@ -209,8 +217,12 @@ export default function Poll(props){
         .then(response => response.json())
         .then(res => {
             if(res.status === "OK") {
+                Toast.success("Ankieta usunięta!")
                 setDeleted(true)
+                setModalPopup(false)
+                return
             }
+            Toast.error("Wystąpił błąd!")
         })  
         setModalPopup(false)
     })

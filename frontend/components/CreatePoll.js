@@ -6,6 +6,7 @@ import SearchableDropdown from "react-native-searchable-dropdown";
 
 import GlobalVariables from "../modules/GlobalVariables";
 import { Formik } from "formik";
+import { Toast } from "toastify-react-native"
 import {getTokenData} from '../modules/Tokens';
 
 export default function CreatePoll(){
@@ -13,7 +14,7 @@ export default function CreatePoll(){
     const [optionInput, setOptionInput] = React.useState(""); 
     const [options, setOptions] = React.useState([]);
     const [tags, setTags] = React.useState([]);
-    const [region, setRegion] = React.useState();
+    const [region, setRegion] = React.useState({});
     const [isSelected, setIsSelected] = React.useState(true)
     const [selected, setSelected] = React.useState("");
     const [data, setData] = React.useState([]);
@@ -50,8 +51,26 @@ export default function CreatePoll(){
     }
 
     function sendPoll(title, description) {
-        console.log("submit?")
-        
+        if(title.length < 3) {
+          Toast.error("Tytuł jest zbyt krótki")
+          return
+        }
+
+        if(options.length < 2) {
+          Toast.error("Zbyt mało opcji")
+          return
+        }
+
+        if(!range.id) {
+          Toast.error("Wybierz zasięg ankiety")
+          return
+        }
+
+        if(!selectedCity.id) {
+          Toast.error("Wybierz miasto")
+          return
+        }
+
         getTokenData()
         .then(tokenData => {
           const tempTags = tags.map(tag => tag.id)
@@ -79,14 +98,11 @@ export default function CreatePoll(){
           })
           .then((response) => response.json())
           .then((response) => {
-            console.log(response);
-            
-            
             if (response.status === 'OK') {
-              return (
-                  console.log('Dodano ankiete')
-              )
+              Toast.success("Dodano ankietę!")
+              return
             }
+            Toast.error("Wystąpił problem!")
           })
         })
     }
@@ -116,7 +132,7 @@ export default function CreatePoll(){
       { id: "technika",     name: "technika" },
       { id: "społeczność",  name: "społeczność" },
       { id: "finanse",      name: "finanse" },
-      { id: "kultura",  name: "kultura" },
+      { id: "kultura",      name: "kultura" },
       { id: "prawo",        name: "prawo" },
       
     ]
@@ -130,7 +146,7 @@ export default function CreatePoll(){
 
     return(
         <View style={styles.homeContainer}>
-          <ScrollView>
+          <ScrollView keyboardShouldPersistTaps="handled">
             <View style={styles.cardContainer}>
               <View style={styles.formHeader}>
                 <Text style={styles.formHeaderText}>
@@ -212,8 +228,8 @@ export default function CreatePoll(){
                         resetValue={false}
                         textInputProps={
                           {
-                            placeholder: "Zacznij pisać i wybierz element z listy",
-                            placeholderTextColor: "#ffffff99",
+                            placeholder: selectedCity.name ? selectedCity.name : "Zacznij pisać i wybierz element z listy",
+                      placeholderTextColor: selectedCity.name ? "#ffffff" : "#ffffff99",
                             underlineColorAndroid: "transparent",
                             style: {
                                 padding: 12,
@@ -234,7 +250,52 @@ export default function CreatePoll(){
                         }
                     />   
 
-                    <Text style={styles.inputTitle}>Tagi</Text>
+                    
+
+                    <Text style={styles.inputTitle}>Zasięg ankiety</Text>
+                    <SearchableDropdown
+                        onItemSelect={handleRegionChange}
+                        containerStyle={{ width: "100%", marginBottom: 20 }}
+                        onRemoveItem={(item, index) => {
+                          console.log(item)
+                        }}
+                        itemStyle={{
+                          padding: 10,
+                          marginTop: 2,
+                          backgroundColor: '#ddd',
+                          borderColor: '#bbb',
+                          borderWidth: 1,
+                          borderRadius: 5,
+                        }}
+                        itemTextStyle={{ color: '#222' }}
+                        itemsContainerStyle={{ maxHeight: 140 }}
+                        items={regionList}
+                        resetValue={false}
+                        textInputProps={
+                          {
+                            placeholder: region.name ? region.name : "Wybierz zasięg ankiety",
+                            placeholderTextColor: region.name ? "#ffffff" : "#ffffff99",
+                            underlineColorAndroid: "transparent",
+                            style: {
+                                padding: 12,
+                                height: 46,
+                                width: "100%",
+                                borderRadius: 5,
+                                borderRadius: 10,
+                                color: "white",
+                                backgroundColor: "#ffffff5e",
+                            },
+                            onTextChange: text => console.log(text)
+                          }
+                        }
+                        listProps={
+                          {
+                            nestedScrollEnabled: true,
+                          }
+                        }
+                    />
+
+<Text style={styles.inputTitle}>Tagi</Text>
                     <SearchableDropdown
                       multi={true}
                       selectedItems={tags}
@@ -283,49 +344,6 @@ export default function CreatePoll(){
                           nestedScrollEnabled: true,
                         }
                       }
-                    />
-
-                    <Text style={styles.inputTitle}>Zasięg ankiety</Text>
-                    <SearchableDropdown
-                        onItemSelect={handleRegionChange}
-                        containerStyle={{ width: "100%", marginBottom: 20 }}
-                        onRemoveItem={(item, index) => {
-                          console.log(item)
-                        }}
-                        itemStyle={{
-                          padding: 10,
-                          marginTop: 2,
-                          backgroundColor: '#ddd',
-                          borderColor: '#bbb',
-                          borderWidth: 1,
-                          borderRadius: 5,
-                        }}
-                        itemTextStyle={{ color: '#222' }}
-                        itemsContainerStyle={{ maxHeight: 140 }}
-                        items={regionList}
-                        resetValue={false}
-                        textInputProps={
-                          {
-                            placeholder: "Wybierz zasięg ankiety",
-                            placeholderTextColor: "#ffffff99",
-                            underlineColorAndroid: "transparent",
-                            style: {
-                                padding: 12,
-                                height: 46,
-                                width: "100%",
-                                borderRadius: 5,
-                                borderRadius: 10,
-                                color: "white",
-                                backgroundColor: "#ffffff5e",
-                            },
-                            onTextChange: text => console.log(text)
-                          }
-                        }
-                        listProps={
-                          {
-                            nestedScrollEnabled: true,
-                          }
-                        }
                     />
                     <TouchableOpacity onPress={() => setIsSelected(s => !s)} style={styles.checkboxContainer}>
                       <View

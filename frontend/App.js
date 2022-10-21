@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StatusBar } from 'expo-status-bar';
+import ToastManager, { Toast } from 'toastify-react-native'
 import { StyleSheet, Image, Text, View, Form, Input, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -51,6 +51,7 @@ export default function App() {
   else {
     return (
       <NavigationContainer theme={DarkTheme}>
+        
         <Stack.Navigator
          headerMode={'none'}
          screenOptions={({route}) => ({
@@ -72,8 +73,10 @@ export default function App() {
             return <Ionicons name={iconName} size={size} color={color}/>;
           },
          })}>
+          
           {isLogged ? (
             <>
+            
               <Stack.Screen 
                 name="Główna" 
                 component={HomeScreen}
@@ -210,6 +213,15 @@ export default function App() {
           )}
           
         </Stack.Navigator>
+        <ToastManager
+          position="top" 
+          theme="dark"
+          style={{
+            width: "100%",
+            height: 100,
+            marginTop: -50
+          }}
+        />
       </NavigationContainer>
     );
   }

@@ -7,10 +7,12 @@ import { storeUser, storeToken } from '../modules/Tokens';
 import GlobalVariables from '../modules/GlobalVariables';
 import { Formik } from "formik";
 
+import { Toast } from "toastify-react-native"
+
 
 function LoginScreen({route, navigation}){
     function login(user, password) {
-      console.log("submit?")
+
       fetch(`${GlobalVariables.apiUrl}/auth/signin`, {
         method: 'POST',
         headers: {
@@ -24,21 +26,20 @@ function LoginScreen({route, navigation}){
       })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
-        
         
         if (response.status === 'OK') {
           const user = response.user;
           const token = response.token;
-  
-          console.log(user);
-          console.log(token);
-  
+
           storeUser(user);
           storeToken(token);
   
+          Toast.success("Zalogowano pomyślnie")
+
           route.params.logHandler(true)
+          return
         }
+        Toast.error("Logowanie nie powiodło się")
       })
       
     }
@@ -55,7 +56,7 @@ function LoginScreen({route, navigation}){
           initialValues={{user: '', password: ''}}
           onSubmit={(values) => {
             //When f  ronend should send values from form?
-            console.log("nie dziala")
+
           }}
         >
           {(props) => (

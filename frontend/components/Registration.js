@@ -1,15 +1,52 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, TouchableOpacity, ScrollView, View, TextInput, Button, Text } from "react-native";
+import { StyleSheet, FlatList, TouchableOpacity, ScrollView, View, TextInput, Button, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import React from "react";
+import { Toast } from "toastify-react-native";
 import { Formik } from "formik";
 import GlobalVariables from "../modules/GlobalVariables"
 
-export default function RegistrationScreen(){
+export default function RegistrationScreen({navigation}){
     function register(login, password, name, age, passwordRepeat) {
-      if(password !== passwordRepeat) return
+      
+      if(login.length < 4) {
+        Toast.error("Login jest zbyt krótki")
+        return
+      }
+
+      if(password.length < 8) {
+        Toast.error("Hasło musi zawierać minimum 8 znaków")
+        return
+      }
+      
+      if(password !== passwordRepeat) {
+        Toast.error("Hasła nie są takie same")
+        return
+      }
+
+      if(name.length < 3) {
+        Toast.error("Nazwa użytkownika jest zbyt krótka")
+        return
+      }
+
+      if(!selectedCity.id) {
+        Toast.error("Należy wybrać miasto")
+        return
+      }
+
+      if(selectedGender.length < 1) {
+        Toast.error("Należy wybrać płeć")
+        return
+      }
+
+      if(age < 0 || age > 150) {
+        Toast.error("Należy podać prawidłowy wiek")
+        return
+      }
+
+
       fetch(`${GlobalVariables.apiUrl}/auth/signup`, {
         method: 'POST',
         headers: {
@@ -28,12 +65,12 @@ export default function RegistrationScreen(){
       })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
-        
-        
         if (response.status === 'OK') {
+          Toast.sukces("Zarejestrowano pomyślnie")
+          navigation.navigate("Login")
           return 
         }
+        Toast.error("Podczas rejestracji wystąpił problem")
       })
       
     }
@@ -69,6 +106,14 @@ export default function RegistrationScreen(){
     const [selectedCity, setSelectedCity] = React.useState({});
 
 
+    function genderName(gender) {
+      if(gender === "male") return "Mężczyzna"
+      if(gender === "female") return "Kobieta"
+      if(gender === "other") return "Inna"
+      if(gender === "hidden") return "Wolę nie podawać"
+      return "-"
+  }
+
     const genders = [
         {id:'male', name:'Mężczyzna'},
         {id:'female',name:'Kobieta'},
@@ -77,7 +122,8 @@ export default function RegistrationScreen(){
     ]
     return(
       <View style={styles.homeContainer}>
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="handled">
+
           <View style={styles.cardContainer}>
             <View style={styles.formHeader}>
               <Text style={styles.formHeaderText}>
@@ -149,8 +195,8 @@ export default function RegistrationScreen(){
                   resetValue={false}
                   textInputProps={
                     {
-                      placeholder: "Zacznij pisać i wybierz element z listy",
-                      placeholderTextColor: "#ffffff99",
+                      placeholder: selectedCity.name ? selectedCity.name : "Zacznij pisać i wybierz element z listy",
+                      placeholderTextColor: selectedCity.name ? "#ffffff" : "#ffffff99",
                       underlineColorAndroid: "transparent",
                       style: {
                           padding: 12,
@@ -191,8 +237,8 @@ export default function RegistrationScreen(){
                   resetValue={false}
                   textInputProps={
                     {
-                      placeholder: "Wybierz płeć z listy",
-                      placeholderTextColor: "#ffffff99",
+                      placeholder: selectedGender === "" ? `Wybierz płeć z listy` : genderName(selectedGender),
+                      placeholderTextColor: selectedGender === "" ? "#ffffff99" : "#ffffff",
                       underlineColorAndroid: "transparent",
                       style: {
                           padding: 12,

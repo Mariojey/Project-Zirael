@@ -25,9 +25,9 @@ function Splash(props){
             else {
               props.logHandler(false)
             }
+            props.loadingHandler(false)
           })
 
-          props.loadingHandler(false)
         }} />
         <StatusBar style="auto" />
     </View>
