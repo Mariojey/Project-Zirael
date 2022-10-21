@@ -54,6 +54,13 @@ export default function Poll(props){
                         name: response.name,
                         profileColor: response.profileColor
                     })
+                    console.log("------")
+                    console.log(response.profileColor)
+                    console.log(response.profileColor)
+                    console.log(response.profileColor)
+                    console.log(response.profileColor)
+                    console.log("------")
+
 
                  }
                  setLoading(prevState => ({...prevState, user: true}))
@@ -217,6 +224,10 @@ export default function Poll(props){
     })
     }
     function invertColor(hex) {
+        console.log(hex)
+        console.log(hex)
+        console.log(hex)
+        console.log(hex)
         if (hex.indexOf('#') === 0) {
             hex = hex.slice(1);
         }
@@ -225,7 +236,7 @@ export default function Poll(props){
             hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
         }
         if (hex.length !== 6) {
-            throw new Error('Invalid HEX color.');
+            throw new Error(`Invalid HEX color. ${hex}`);
         }
         // invert color components
         var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
@@ -271,11 +282,11 @@ export default function Poll(props){
                         <View style={styles.topBar}>
                             <View style={styles.user}>
                                 <View style={[styles.userLogo, {
-                                    backgroundColor: props.accountData.profileColor
+                                    backgroundColor: author.profileColor
                                 }]}>
                                     <Text style={{
                                         fontWeight: "bold",
-                                        color: invertColor(props.accountData.profileColor)
+                                        color: invertColor(author.profileColor)
                                     }}>{author.name[0].toUpperCase()}</Text>
                                 </View>
                                 <Text style={styles.userName}>{author.name}</Text>
@@ -441,7 +452,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 4,
         marginLeft: 10,
-        backgroundColor: "#ffff4b",
+        backgroundColor: "#ffffff4b",
         flexDirection: "row",
         justifyContent: "center",
         alignContent: "center"
@@ -526,7 +537,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         height: 42,
         borderRadius: 10,
-        backgroundColor: "#ffff33",
+        backgroundColor: "#ffffff33",
     },
     tagsText: {
         color: '#aaa',

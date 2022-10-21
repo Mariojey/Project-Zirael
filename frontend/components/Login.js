@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleSheet, Text, View, Form, Input, TextInput, Button } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, Form, Input, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { storeUser, storeToken } from '../modules/Tokens';
@@ -45,8 +45,12 @@ function LoginScreen({route, navigation}){
   
   
     return(
-      <View style={styles.homeContainer}>
-        <Text style={styles.homeText}>Login!</Text>
+      <View style={styles.mainContainer}>
+        <View style={styles.formHeader}>
+          <Text style={styles.formHeaderText}>
+            LOGOWANIE
+          </Text>
+        </View>
         <Formik
           initialValues={{user: '', password: ''}}
           onSubmit={(values) => {
@@ -55,25 +59,29 @@ function LoginScreen({route, navigation}){
           }}
         >
           {(props) => (
-            <View>
+            <View style={styles.formContainer}>
+              <Text style={styles.inputTitle}>Login</Text>
               <TextInput
                 style={styles.input}
-                placeholder='Wpisz nazwę użytkownika...'
+                placeholder='Podaj login'
+                placeholderTextColor="#ffffff99"
                 onChangeText={props.handleChange('user')}
                 value={props.values.user}
               />
+              <Text style={styles.inputTitle}>Hasło</Text>
               <TextInput
                 style={styles.input}
                 secureTextEntry={true}
-                placeholder='Podaj hasło...'
+                placeholder='Podaj hasło'
+                placeholderTextColor="#ffffff99"
                 onChangeText={props.handleChange('password')}
                 value={props.values.password}
               />
-              <Button onPress={() => login(props.values.user, props.values.password)} title='submit' style={styles.button}>Zaloguj się!</Button>
+              <View style={styles.separator} />
+              <TouchableOpacity onPress={() => login(props.values.user, props.values.password)} title='submit' style={styles.submitButton}><Text style={{color: "white", fontWeight:"bold"}}>Zaloguj się</Text></TouchableOpacity>
             </View>
           )}
         </Formik>
-        <Button onPress={() => navigation.navigate('Registration')} title='move' style={styles.button}>Nie mam konta!</Button>
       </View>
     )
   }
@@ -81,12 +89,34 @@ function LoginScreen({route, navigation}){
   export default LoginScreen;
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#000',
+    mainContainer: {
+      width: "100%",
+      height: "100%",
+      backgroundColor: '#00094a',
       display: 'flex',
       alignItems: 'center',
+      borderRadius: 10,
       flexDirection: 'column',
+      overflow: "hidden"
+    },
+    formContainer: {
+      width: "100%",
+      flex: 3,
+      padding: 20
+    },
+    formHeader: {
+      height: 100,
+      width: '100%',
+      backgroundColor: "#001f7c",
+      display: "flex",
+      alignContent: "center",
+      justifyContent: "center",
+    },
+    formHeaderText: {
+      color: "#ffffff",
+      fontSize: 30,
+      fontWeight: "bold",
+      textAlign: "center"
     },
     containerText: {
       color: '#fff',
@@ -99,12 +129,39 @@ function LoginScreen({route, navigation}){
       alignItems: 'center',
       flexDirection: 'column',
     },
+    separator: {
+      flex: 3,
+    },
     homeText: {
       color: '#fff',
       fontSize: 30,
     },
+    inputTitle: {
+      width: '100%',
+      color: '#ffffff',
+    },
     input: {
-      backgroundColor: '#fff',
-      color: '#000'
+      backgroundColor: '#ffffff5e',
+      color: '#ffffff',
+      width: '100%',
+      height: 46,
+      borderRadius: 10,
+      paddingLeft: 10,
+      marginBottom: 20
+    },
+    submitButton: {
+      height: 46,
+      width: "100%",
+      isplay: "flex",
+      backgroundColor: "#0073ff",
+      justifyContent: "center",
+      alignItems: "center",
+      textAlignVertical: "center",
+      textAlign: "center",
+      borderRadius: 10,
+    },
+    submitButtonText: {
+      color: "white",
+      fontWeight: "bold"
     },
   });

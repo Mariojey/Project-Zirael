@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, TextInput, Button, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, ScrollView, View, TextInput, Button, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import SearchableDropdown from 'react-native-searchable-dropdown';
@@ -77,7 +77,13 @@ export default function RegistrationScreen(){
     ]
     return(
       <View style={styles.homeContainer}>
-        <Text style={styles.homeText}>Login!</Text>
+       <ScrollView>
+         <View style={styles.cardContainer}>
+           <View style={styles.formHeader}>
+            <Text style={styles.formHeaderText}>
+              REJESTRACJA
+            </Text>
+        </View>
         <Formik
           initialValues={{login: '', password: '', name: '', city: '', cityid: '', gender: '', age: ''}}
           onSubmit={(values) => {
@@ -86,7 +92,7 @@ export default function RegistrationScreen(){
           }}
         >
           {(props) => (
-            <View>
+            <View style={styles.formContainer}>
               <TextInput
                 style={styles.input}
                 placeholder='Podaj swój login...'
@@ -192,16 +198,44 @@ export default function RegistrationScreen(){
             </View>
           )}
         </Formik>
+        </View>
+        </ScrollView>
       </View>
     )
   }
   const styles = StyleSheet.create({
-    container: {
+    cardContainer: {
+      minHeight: "100%",
+      width: "100%",
+      backgroundColor: "#00094a",
+      borderRadius: 20,
+      overflow: "hidden"
+    },
+    homeContainer: {
       flex: 1,
       backgroundColor: '#000',
       display: 'flex',
       alignItems: 'center',
       flexDirection: 'column',
+    },
+    formContainer: {
+      width: "100%",
+      flex: 3,
+      padding: 20
+    },
+    formHeader: {
+      height: 100,
+      width: '100%',
+      backgroundColor: "#001f7c",
+      display: "flex",
+      alignContent: "center",
+      justifyContent: "center",
+    },
+    formHeaderText: {
+      color: "#ffffff",
+      fontSize: 30,
+      fontWeight: "bold",
+      textAlign: "center"
     },
     containerText: {
       color: '#fff',
@@ -211,15 +245,43 @@ export default function RegistrationScreen(){
       flex: 1,
       backgroundColor: '#000',
       display: 'flex',
+      width: "100%",
       alignItems: 'center',
       flexDirection: 'column',
+    },
+    separator: {
+      flex: 3,
     },
     homeText: {
       color: '#fff',
       fontSize: 30,
     },
+    inputTitle: {
+      width: '100%',
+      color: '#ffffff',
+    },
     input: {
-      backgroundColor: '#fff',
-      color: '#000'
+      backgroundColor: '#ffffff5e',
+      color: '#ffffff',
+      width: '100%',
+      height: 46,
+      borderRadius: 10,
+      paddingLeft: 10,
+      marginBottom: 20
+    },
+    submitButton: {
+      height: 46,
+      width: "100%",
+      isplay: "flex",
+      backgroundColor: "#0073ff",
+      justifyContent: "center",
+      alignItems: "center",
+      textAlignVertical: "center",
+      textAlign: "center",
+      borderRadius: 10,
+    },
+    submitButtonText: {
+      color: "white",
+      fontWeight: "bold"
     },
   });

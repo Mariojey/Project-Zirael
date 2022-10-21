@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity  } from "react-native";
+import { StyleSheet, View, ScrollView, Text, TextInput, Button, TouchableOpacity  } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 
@@ -20,7 +20,7 @@ export default function CreatePoll(){
     const [selectedCity, setSelectedCity] = React.useState({});
 
     function handleOptionInput(text) {
-        setOptionInput(text)
+      setOptionInput(text)
     }
 
     function handleRegionChange(object) {
@@ -28,6 +28,11 @@ export default function CreatePoll(){
     }
 
     function handleAddOption() {
+      if(optionInput === "") return
+      
+      if(options.indexOf(optionInput) !== -1) return
+
+      if(options.length >= 5) return
       setOptions(prevState => {
         return [...prevState, optionInput]
       })
@@ -125,7 +130,13 @@ export default function CreatePoll(){
 
     return(
         <View style={styles.homeContainer}>
-            <Text style={styles.homeText}>Add Poll</Text>
+          <ScrollView>
+            <View style={styles.cardContainer}>
+              <View style={styles.formHeader}>
+                <Text style={styles.formHeaderText}>
+                  KREATOR ANKIET
+                </Text>
+              </View>
             <Formik
             initialValues={{token: '', user: '', title: '', description: '', tags: '', options: '', resultsPublic: '', range: '', city: '', cityid: ''}}
             onSubmit={(values) => {
@@ -133,27 +144,38 @@ export default function CreatePoll(){
             }}
             >{(props) => (
                 <View style={styles.formContainer}>
+                    <Text style={styles.inputTitle}>Tytuł ankiety</Text>
                     <TextInput 
                         style={styles.input}
+                        maxLength={40}
                         placeholder='Podaj tytuł ankiety społecznej'
+                        placeholderTextColor="#ffffff99"
                         onChangeText={props.handleChange('title')}
                         value={props.values.title}
                     />
+                    <Text style={styles.inputTitle}>Opis ankiety</Text>
                     <TextInput
                        style={styles.description} 
+                       multiline={true}
+                       maxLength={400}
+                       numberOfLines={4}
                        placeholder='Opisz ankietę, podaj czego ma dotyczyć i napisz jaki jest jej cel, (opcjonalnie podaj odnośniki prawne)...'
+                       placeholderTextColor="#ffffff99"
                        onChangeText={props.handleChange('description')}
                        value={props.values.description}
                     />
 
+                    <Text style={styles.inputTitle}>Opcje</Text>
                     <View style={styles.optionAdder}>
                       <TextInput
                         style={styles.optionInput}
                         placeholder="Dodaj opcję"
+                        placeholderTextColor="#ffffff99"
                         onChangeText={handleOptionInput}
                         value={optionInput}
+                        maxLength={30}
                       />
-                      <Button onPress={handleAddOption} style={styles.optionAddButton} title="DODAJ"/>
+                      <TouchableOpacity onPress={handleAddOption} style={styles.optionAddButton}><Text style={{color: "#ffffff"}}>DODAJ</Text></TouchableOpacity>
                     </View>
 
                     <View style={styles.optionList}>
@@ -166,9 +188,13 @@ export default function CreatePoll(){
                         )
                       })}
                     </View>
+                    <Text style={styles.inputTitle}>Miasto</Text>
                     <SearchableDropdown
                         onItemSelect={setCityHandler}
-                        containerStyle={{ padding: 5 }}
+                        containerStyle={{ 
+                          width: "100%",
+                          marginBottom: 20
+                        }}
                         onRemoveItem={(item, index) => {
                           console.log(item)
                         }}
@@ -183,17 +209,20 @@ export default function CreatePoll(){
                         itemTextStyle={{ color: '#222' }}
                         itemsContainerStyle={{ maxHeight: 140 }}
                         items={data}
-                        defaultIndex={2}
                         resetValue={false}
                         textInputProps={
                           {
-                            placeholder: "placeholder",
+                            placeholder: "Zacznij pisać i wybierz element z listy",
+                            placeholderTextColor: "#ffffff99",
                             underlineColorAndroid: "transparent",
                             style: {
                                 padding: 12,
-                                borderWidth: 1,
-                                borderColor: '#ccc',
+                                height: 46,
+                                width: "100%",
                                 borderRadius: 5,
+                                borderRadius: 10,
+                                color: "white",
+                                backgroundColor: "#ffffff5e",
                             },
                             onTextChange: text => fetchCities(text)
                           }
@@ -204,6 +233,8 @@ export default function CreatePoll(){
                           }
                         }
                     />   
+
+                    <Text style={styles.inputTitle}>Tagi</Text>
                     <SearchableDropdown
                       multi={true}
                       selectedItems={tags}
@@ -212,7 +243,7 @@ export default function CreatePoll(){
                         items.push(item)
                         setTags(items);
                       }}
-                      containerStyle={{ padding: 5 }}
+                      containerStyle={{ width: "100%", marginBottom: 20 }}
                       onRemoveItem={(item, index) => {
                         const items = tags.filter((sitem) => sitem.id !== item.id);
                         setTags(items);
@@ -224,23 +255,26 @@ export default function CreatePoll(){
                         borderColor: '#bbb',
                         borderWidth: 1,
                         borderRadius: 5,
-                      }}
+                      } }
                       itemTextStyle={{ color: '#222' }}
                       itemsContainerStyle={{ maxHeight: 140 }}
                       items={tagList}
-                      defaultIndex={2}
                       chip={true}
                       resetValue={false}
                       textInputProps={
                         {
-                          placeholder: "placeholder",
-                          underlineColorAndroid: "transparent",
-                          style: {
-                              padding: 12,
-                              borderWidth: 1,
-                              borderColor: '#ccc',
-                              borderRadius: 5,
-                          },
+                          placeholder: "Wybierz tagi, które pasują do tej ankiety",
+                            placeholderTextColor: "#ffffff99",
+                            underlineColorAndroid: "transparent",
+                            style: {
+                                padding: 12,
+                                height: 46,
+                                width: "100%",
+                                borderRadius: 5,
+                                borderRadius: 10,
+                                color: "white",
+                                backgroundColor: "#ffffff5e",
+                            },
                           onTextChange: text => console.log(text)
                         }
                       }
@@ -250,9 +284,11 @@ export default function CreatePoll(){
                         }
                       }
                     />
+
+                    <Text style={styles.inputTitle}>Zasięg ankiety</Text>
                     <SearchableDropdown
                         onItemSelect={handleRegionChange}
-                        containerStyle={{ padding: 5 }}
+                        containerStyle={{ width: "100%", marginBottom: 20 }}
                         onRemoveItem={(item, index) => {
                           console.log(item)
                         }}
@@ -267,17 +303,20 @@ export default function CreatePoll(){
                         itemTextStyle={{ color: '#222' }}
                         itemsContainerStyle={{ maxHeight: 140 }}
                         items={regionList}
-                        defaultIndex={2}
                         resetValue={false}
                         textInputProps={
                           {
-                            placeholder: "placeholder",
+                            placeholder: "Wybierz zasięg ankiety",
+                            placeholderTextColor: "#ffffff99",
                             underlineColorAndroid: "transparent",
                             style: {
                                 padding: 12,
-                                borderWidth: 1,
-                                borderColor: '#ccc',
+                                height: 46,
+                                width: "100%",
                                 borderRadius: 5,
+                                borderRadius: 10,
+                                color: "white",
+                                backgroundColor: "#ffffff5e",
                             },
                             onTextChange: text => console.log(text)
                           }
@@ -288,20 +327,29 @@ export default function CreatePoll(){
                           }
                         }
                     />
-                    <TouchableOpacity 
-                      onPress={() => setIsSelected(s => !s)}
-                      style={isSelected ? styles.checkboxSelected : styles.checkboxUnselected}
-                      
-                    />
-                    <Button 
-                      title="Stwórz ankietę"
+                    <TouchableOpacity onPress={() => setIsSelected(s => !s)} style={styles.checkboxContainer}>
+                      <View
+                        
+                        style={isSelected ? styles.checkboxSelected : styles.checkboxUnselected}
+                        
+                      />
+                      <Text style={styles.checkboxText}>Statystyki dostępne dla wszystkich</Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                      style={styles.submitButton}
                       onPress={() => sendPoll(props.values.title, props.values.description)}
-                    />
+                    >
+                      <Text style={styles.submitButtonText}>
+                        STWÓRZ ANKIETĘ
+                      </Text>
+                    </TouchableOpacity>
                 </View>
             )}
 
             </Formik>
-            
+            </View>
+          </ScrollView>
         </View>
     )
 }
@@ -312,6 +360,32 @@ const styles = StyleSheet.create({
       display: 'flex',
       alignItems: 'center',
       flexDirection: 'column',
+    },
+    cardContainer: {
+      minHeight: "100%",
+      width: "100%",
+      backgroundColor: "#00094a",
+      borderRadius: 20,
+      overflow: "hidden"
+    },
+    formHeader: {
+      height: 100,
+      width: '100%',
+      backgroundColor: "#001f7c",
+      display: "flex",
+      alignContent: "center",
+      justifyContent: "center",
+    },
+    inputTitle: {
+      width: '100%',
+      color: '#ffffff',
+    },
+
+    formHeaderText: {
+      color: "#ffffff",
+      fontSize: 30,
+      fontWeight: "bold",
+      textAlign: "center"
     },
     containerText: {
       color: '#fff',
@@ -331,34 +405,56 @@ const styles = StyleSheet.create({
     formContainer: {
       display: 'flex',
       flexDirection: 'column',
+      width: "100%",
+      padding: 20,
       alignItems: 'center'
     },
     input: {
-      backgroundColor: '#fff',
-      color: '#000'
+      backgroundColor: '#ffffff5e',
+      color: '#ffffff',
+      width: '100%',
+      height: 46,
+      borderRadius: 10,
+      paddingLeft: 10,
+      marginBottom: 20
     },
     optionAdder: {
       display: 'flex',
       flexDirection: 'row',
-      width: '95%',
+      justifyContent: "space-between",
+      height: 46,
+      width: '100%',
       marginBottom: 15,
     },
     optionInput: {
-      backgroundColor: '#fff',
-      color: '#000',
-      width: '80%',
-      height: '100%',
+      backgroundColor: '#ffffff5e',
+      color: '#ffffff',
+      width: '79%',
+      height: 46,
+      borderRadius: 10,
+      paddingLeft: 10,
     },
     optionAddButton: {
-      height: 20,
-      width: '20%',
+      height: 46,
+      width: '19%',
+      display: "flex",
+      backgroundColor: "#0073ff",
+      justifyContent: "center",
+      alignItems: "center",
+      textAlignVertical: "center",
+      textAlign: "center",
+      borderRadius: 10,
     },
     optionList: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      backgroundColor: '#222',
-      borderRadius: 10
+      paddingTop: 7,
+      width: "100%",
+      height: 230,
+      backgroundColor: '#ffffff26',
+      borderRadius: 10,
+      marginBottom: 20
     },
     optionBox: {
       display: 'flex',
@@ -368,7 +464,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       borderRadius: 10,
       width: `95%`,
-      backgroundColor: '#444',
+      backgroundColor: '#ffffff4d',
       marginBottom: 10,
     },
     optionText: {
@@ -380,16 +476,54 @@ const styles = StyleSheet.create({
       width: '20%'
     },
     description: {
-        color: '#fff',
+      backgroundColor: '#ffffff5e',
+      color: '#ffffff',
+      width: '100%',
+      maxWidth: '100%',
+      minHeight: 46,
+      borderRadius: 10,
+      padding: 10,
+      marginBottom: 20,
+      textAlignVertical: "top"
     },
     checkboxSelected: {
       width: 20,
       height: 20,
-      backgroundColor: "#66f"
+      backgroundColor: "#00d0ff",
+      marginRight: 10,
+      borderRadius: 5
     },
     checkboxUnselected: {
       width: 20,
       height: 20,
-      backgroundColor: "#fff"
-    }
+      backgroundColor: "#ffffff34",
+      marginRight: 10,
+      borderRadius: 5
+    },
+    checkboxContainer: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      marginBottom: 20
+    },
+    checkboxText: {
+      color: '#ffffff'
+    },
+    submitButton: {
+      height: 46,
+      width: "100%",
+      isplay: "flex",
+      backgroundColor: "#0073ff",
+      justifyContent: "center",
+      alignItems: "center",
+      textAlignVertical: "center",
+      textAlign: "center",
+      borderRadius: 10,
+    },
+    submitButtonText: {
+      color: "white",
+      fontWeight: "bold"
+    },
   });
