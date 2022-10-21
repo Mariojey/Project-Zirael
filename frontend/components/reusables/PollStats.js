@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     legendText: {
-        color: "#ffffff",
+        color: "#ffffffff",
         fontSize: 10
     },
     optionSelected: {
