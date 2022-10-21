@@ -8,8 +8,8 @@ import { Formik } from "formik";
 import GlobalVariables from "../modules/GlobalVariables"
 
 export default function RegistrationScreen(){
-    function register(login, password, name, age) {
-      console.log("submit?")
+    function register(login, password, name, age, passwordRepeat) {
+      if(password !== passwordRepeat) return
       fetch(`${GlobalVariables.apiUrl}/auth/signup`, {
         method: 'POST',
         headers: {
@@ -70,22 +70,22 @@ export default function RegistrationScreen(){
 
 
     const genders = [
-        {id:'male', name:'mężczyzna'},
-        {id:'female',name:'kobieta'},
-        {id:'other', name:'osoba niebinarna'},
-        {id:'hidden',name:'wolę nie podawać'}
+        {id:'male', name:'Mężczyzna'},
+        {id:'female',name:'Kobieta'},
+        {id:'other', name:'Inna'},
+        {id:'hidden',name:'Wolę nie podawać'}
     ]
     return(
       <View style={styles.homeContainer}>
-       <ScrollView>
-         <View style={styles.cardContainer}>
-           <View style={styles.formHeader}>
-            <Text style={styles.formHeaderText}>
-              REJESTRACJA
-            </Text>
-        </View>
-        <Formik
-          initialValues={{login: '', password: '', name: '', city: '', cityid: '', gender: '', age: ''}}
+        <ScrollView>
+          <View style={styles.cardContainer}>
+            <View style={styles.formHeader}>
+              <Text style={styles.formHeaderText}>
+                REJESTRACJA
+              </Text>
+            </View>
+            <Formik
+          initialValues={{login: '', password: '', passwordRepeat: '', name: '', city: '', cityid: '', gender: '', age: ''}}
           onSubmit={(values) => {
             //When f  ronend should send values from form?
             console.log("nie dziala")
@@ -93,28 +93,45 @@ export default function RegistrationScreen(){
         >
           {(props) => (
             <View style={styles.formContainer}>
+              <Text style={styles.inputTitle}>Login</Text>
               <TextInput
                 style={styles.input}
-                placeholder='Podaj swój login...'
+                placeholder='Zdefiniuj login'
+                placeholderTextColor="#ffffff99"
                 onChangeText={props.handleChange('login')}
                 value={props.values.login}
               />
+              <Text style={styles.inputTitle}>Hasło</Text>
               <TextInput
                 style={styles.input}
                 secureTextEntry={true}
-                placeholder='Podaj hasło...'
+                placeholder='Zdefiniuj Hasło'
+                placeholderTextColor="#ffffff99"
                 onChangeText={props.handleChange('password')}
                 value={props.values.password}
               />
+              <Text style={styles.inputTitle}>Powtórz hasło</Text>
               <TextInput
                 style={styles.input}
-                placeholder='Wpisz nazwę użytkownika...'
+                secureTextEntry={true}
+                placeholder='Powtórz Hasło'
+                placeholderTextColor="#ffffff99"
+                onChangeText={props.handleChange('passwordRepeat')}
+                value={props.values.passwordRepeat}
+              />
+              <Text style={styles.inputTitle}>Nazwa użytkownika (wyświetlana)</Text>
+              <TextInput
+                style={styles.input}
+                placeholder='Zdefiniuj nazwę użytkownika'
+                maxLength={20}
+                placeholderTextColor="#ffffff99"
                 onChangeText={props.handleChange('name')}
                 value={props.values.name}
               />
+              <Text style={styles.inputTitle}>Miasto</Text>
               <SearchableDropdown
                   onItemSelect={setCityHandler}
-                  containerStyle={{ padding: 5 }}
+                  containerStyle={{ width: "100%", marginBottom: 20 }}
                   onRemoveItem={(item, index) => {
                     console.log(item)
                   }}
@@ -129,17 +146,20 @@ export default function RegistrationScreen(){
                   itemTextStyle={{ color: '#222' }}
                   itemsContainerStyle={{ maxHeight: 140 }}
                   items={data}
-                  defaultIndex={2}
                   resetValue={false}
                   textInputProps={
                     {
-                      placeholder: "placeholder",
+                      placeholder: "Zacznij pisać i wybierz element z listy",
+                      placeholderTextColor: "#ffffff99",
                       underlineColorAndroid: "transparent",
                       style: {
                           padding: 12,
-                          borderWidth: 1,
-                          borderColor: '#ccc',
+                          height: 46,
+                          width: "100%",
                           borderRadius: 5,
+                          borderRadius: 10,
+                          color: "white",
+                          backgroundColor: "#ffffff5e",
                       },
                       onTextChange: text => fetchCities(text)
                     }
@@ -150,9 +170,10 @@ export default function RegistrationScreen(){
                     }
                   }
               />
+              <Text style={styles.inputTitle}>Płeć</Text>
               <SearchableDropdown
                   onItemSelect={setGenderHandler}
-                  containerStyle={{ padding: 5 }}
+                  containerStyle={{ width: "100%", marginBottom: 20 }}
                   onRemoveItem={(item, index) => {
                     console.log(item)
                   }}
@@ -167,17 +188,20 @@ export default function RegistrationScreen(){
                   itemTextStyle={{ color: '#222' }}
                   itemsContainerStyle={{ maxHeight: 140 }}
                   items={genders}
-                  defaultIndex={2}
                   resetValue={false}
                   textInputProps={
                     {
-                      placeholder: "placeholder",
+                      placeholder: "Wybierz płeć z listy",
+                      placeholderTextColor: "#ffffff99",
                       underlineColorAndroid: "transparent",
                       style: {
                           padding: 12,
-                          borderWidth: 1,
-                          borderColor: '#ccc',
+                          height: 46,
+                          width: "100%",
                           borderRadius: 5,
+                          borderRadius: 10,
+                          color: "white",
+                          backgroundColor: "#ffffff5e",
                       },
                       onTextChange: text => console.log(text)
                     }
@@ -188,40 +212,42 @@ export default function RegistrationScreen(){
                     }
                   }
               />
+              <Text style={styles.inputTitle}>Wiek</Text>
               <TextInput
                 style={styles.input}
                 placeholder='Podaj swój wiek'
+                keyboardType='numeric'
+                maxLength={3}
+                placeholderTextColor="#ffffff99"
                 onChangeText={props.handleChange('age')}
                 value={props.values.age}
               />
-              <Button onPress={() => register(props.values.login, props.values.password, props.values.name, props.values.age)} title='submit' style={styles.button}>Zaloguj się!</Button>
+              <Text style={styles.inputTitle}></Text>
+              <TouchableOpacity onPress={() => register(props.values.login, props.values.password, props.values.name, props.values.age, props.values.passwordRepeat)} style={styles.submitButton}><Text style={{color: "white"}}>Zarejestruj się</Text></TouchableOpacity>
             </View>
           )}
         </Formik>
-        </View>
+          </View>
         </ScrollView>
       </View>
     )
   }
+
   const styles = StyleSheet.create({
-    cardContainer: {
-      minHeight: "100%",
-      width: "100%",
-      backgroundColor: "#00094a",
-      borderRadius: 20,
-      overflow: "hidden"
-    },
-    homeContainer: {
+    container: {
       flex: 1,
       backgroundColor: '#000',
       display: 'flex',
       alignItems: 'center',
       flexDirection: 'column',
     },
-    formContainer: {
-      width: "100%",
-      flex: 3,
-      padding: 20
+    cardContainer: {
+      minHeight: "100%",
+      minWidth: "100%",
+      maxWidth: "100%",
+      backgroundColor: "#00094a",
+      borderRadius: 20,
+      overflow: "hidden"
     },
     formHeader: {
       height: 100,
@@ -231,6 +257,11 @@ export default function RegistrationScreen(){
       alignContent: "center",
       justifyContent: "center",
     },
+    inputTitle: {
+      width: '100%',
+      color: '#ffffff',
+    },
+
     formHeaderText: {
       color: "#ffffff",
       fontSize: 30,
@@ -242,23 +273,21 @@ export default function RegistrationScreen(){
       fontSize: 30,
     },
     homeContainer: {
-      flex: 1,
-      backgroundColor: '#000',
       display: 'flex',
       width: "100%",
       alignItems: 'center',
       flexDirection: 'column',
     },
-    separator: {
-      flex: 3,
-    },
     homeText: {
       color: '#fff',
       fontSize: 30,
     },
-    inputTitle: {
-      width: '100%',
-      color: '#ffffff',
+    formContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: "100%",
+      padding: 20,
+      alignItems: 'center'
     },
     input: {
       backgroundColor: '#ffffff5e',
@@ -268,6 +297,99 @@ export default function RegistrationScreen(){
       borderRadius: 10,
       paddingLeft: 10,
       marginBottom: 20
+    },
+    optionAdder: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: "space-between",
+      height: 46,
+      width: '100%',
+      marginBottom: 15,
+    },
+    optionInput: {
+      backgroundColor: '#ffffff5e',
+      color: '#ffffff',
+      width: '79%',
+      height: 46,
+      borderRadius: 10,
+      paddingLeft: 10,
+    },
+    optionAddButton: {
+      height: 46,
+      width: '19%',
+      display: "flex",
+      backgroundColor: "#0073ff",
+      justifyContent: "center",
+      alignItems: "center",
+      textAlignVertical: "center",
+      textAlign: "center",
+      borderRadius: 10,
+    },
+    optionList: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      paddingTop: 7,
+      width: "100%",
+      height: 230,
+      backgroundColor: '#ffffff26',
+      borderRadius: 10,
+      marginBottom: 20
+    },
+    optionBox: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      overflow: 'hidden',
+      alignItems: 'center',
+      borderRadius: 10,
+      width: `95%`,
+      backgroundColor: '#ffffff4d',
+      marginBottom: 10,
+    },
+    optionText: {
+      width: '80%',
+      color: '#fff',
+      paddingLeft: 10
+    },
+    optionRemove: {
+      width: '20%'
+    },
+    description: {
+      backgroundColor: '#ffffff5e',
+      color: '#ffffff',
+      width: '100%',
+      maxWidth: '100%',
+      minHeight: 46,
+      borderRadius: 10,
+      padding: 10,
+      marginBottom: 20,
+      textAlignVertical: "top"
+    },
+    checkboxSelected: {
+      width: 20,
+      height: 20,
+      backgroundColor: "#00d0ff",
+      marginRight: 10,
+      borderRadius: 5
+    },
+    checkboxUnselected: {
+      width: 20,
+      height: 20,
+      backgroundColor: "#ffffff34",
+      marginRight: 10,
+      borderRadius: 5
+    },
+    checkboxContainer: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      marginBottom: 20
+    },
+    checkboxText: {
+      color: '#ffffff'
     },
     submitButton: {
       height: 46,

@@ -54,14 +54,6 @@ export default function Poll(props){
                         name: response.name,
                         profileColor: response.profileColor
                     })
-                    console.log("------")
-                    console.log(response.profileColor)
-                    console.log(response.profileColor)
-                    console.log(response.profileColor)
-                    console.log(response.profileColor)
-                    console.log("------")
-
-
                  }
                  setLoading(prevState => ({...prevState, user: true}))
              })
@@ -224,10 +216,6 @@ export default function Poll(props){
     })
     }
     function invertColor(hex) {
-        console.log(hex)
-        console.log(hex)
-        console.log(hex)
-        console.log(hex)
         if (hex.indexOf('#') === 0) {
             hex = hex.slice(1);
         }
