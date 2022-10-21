@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 4,
         marginLeft: 10,
-        backgroundColor: "#ffff4b",
+        backgroundColor: "#ffffff4b",
         flexDirection: "row",
         justifyContent: "center",
         alignContent: "center"
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     legendText: {
-        color: "#ffffff",
+        color: "#ffffffff",
         fontSize: 10
     },
     optionSelected: {
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         height: 42,
         borderRadius: 10,
-        backgroundColor: "#ffff33",
+        backgroundColor: "#ffffff33",
     },
     tagsText: {
         color: '#aaa',
