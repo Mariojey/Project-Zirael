@@ -56,17 +56,17 @@ export default function App() {
          screenOptions={({route}) => ({
           tabBarIcon: ({focused, size, color}) => {
             let iconName;
-            if (route.name === 'Home') {
+            if (route.name === 'Główna') {
               iconName = focused ? 'home' : 'home-outline';
-            } else if (route.name === "Polls"){
+            } else if (route.name === "Ankiety"){
               iconName = focused ? 'podium':'podium-outline';
             } else if (route.name === 'Login'){
               iconName = focused ? 'ios-arrow-redo-circle-sharp':'ios-arrow-redo-circle-outline';
             } else if (route.name === 'Registration'){
               iconName = focused ? 'ios-person-add':'ios-person-add-outline';
-            } else if(route.name === 'Creator'){
+            } else if(route.name === 'Dodaj'){
               iconName = focused ? 'ios-add-circle' : 'ios-add';
-            } else if(route.name === 'MyAccount'){
+            } else if(route.name === 'Moje Konto'){
               iconName = focused ? 'person-sharp':'person-outline';
             }
             return <Ionicons name={iconName} size={size} color={color}/>;
@@ -75,7 +75,7 @@ export default function App() {
           {isLogged ? (
             <>
               <Stack.Screen 
-                name="Home" 
+                name="Główna" 
                 component={HomeScreen}
                 options={{
                   headerTitle: () => (
@@ -99,7 +99,7 @@ export default function App() {
               }}/>
 
               <Stack.Screen 
-                name="Polls" 
+                name="Ankiety" 
                 component={PollList}
                 options={{
                   headerTitle: () => (
@@ -123,7 +123,7 @@ export default function App() {
                     ),
               }}/>
               <Stack.Screen 
-                name="Creator" 
+                name="Dodaj" 
                 component={CreatePoll}
                 options={{
                   headerTitle: () => (
@@ -146,7 +146,7 @@ export default function App() {
                   ),
               }}/>
               <Stack.Screen
-                name="MyAccount"
+                name="Moje Konto"
                 component={Account}
                 options={{
                   headerTitle: () => (
