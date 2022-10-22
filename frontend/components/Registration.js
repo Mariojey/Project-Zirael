@@ -270,10 +270,13 @@ export default function RegistrationScreen({navigation}){
                 value={props.values.age}
               />
               <Text style={styles.inputTitle}></Text>
+              <Text style={styles.rodoText}>Kilkając przycisk zarejestruj się wyrażasz zgodę na przetwarzanie twoich danych osobowych na potrzeby wyświetlenia statystyk w aplikacji. </Text>
+
               <TouchableOpacity onPress={() => register(props.values.login, props.values.password, props.values.name, props.values.age, props.values.passwordRepeat)} style={styles.submitButton}><Text style={{color: "white"}}>Zarejestruj się</Text></TouchableOpacity>
             </View>
           )}
         </Formik>
+      
           </View>
         </ScrollView>
       </View>
@@ -308,7 +311,12 @@ export default function RegistrationScreen({navigation}){
       width: '100%',
       color: '#ffffff',
     },
-
+    rodoText: {
+      width: '90%',
+      fontSize: 12,
+      color: '#fff',
+      paddingBottom: 7,
+    },
     formHeaderText: {
       color: "#ffffff",
       fontSize: 30,

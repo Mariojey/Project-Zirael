@@ -7,6 +7,9 @@ function HomeScreen(){
         <View style={styles.container}>
             <Text style={styles.containerText}>Hello Citizen!</Text>
             <Text style={styles.mainText}>Dzięki tej aplikacji możesz przeprowadzac ankiety i referenda w celu pozyskania opinii społeczności na różne tematy. Jaskółka zapewnia dostęp do danyh statystycznych dla każdej z ankiet. Twórz własne ankiety oraz udzielaj się w tych już istniejących. Pamiętaj jako obywatel masz prawo do decydowania o swoim państwie!</Text>
+            <View style={styles.break}>
+
+            </View>
         </View>
     )
 }
@@ -29,8 +32,13 @@ const styles = StyleSheet.create({
     width: '90%',
     padding: 40,
     color: '#fff',
-    fontSize: 20,
+    fontSize: 14,
   },
+  break: {
+    width: '90%',
+    height: 2,
+    backgroundColor: '#00094a',
+  }
 });
 
 export default HomeScreen
