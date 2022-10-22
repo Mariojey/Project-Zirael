@@ -1,21 +1,22 @@
 .mainContainer {
     width: 100%;
-    min-height: 100vh;
-    padding: 11vh 5rem 3rem;
+    min-height: calc(100vh - 10rem);
+    padding: 3rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2em;
     box-sizing: border-box;
-    justify-content: space-between;
+    justify-content: space;
     background-color: var(--rich-black-fogra-29-2);
 }
 
 .content {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
     color: white;
     align-items: center;
     height: 100%;
@@ -23,9 +24,9 @@
 
 .phone {
     transform: scale(0.9);
-    width: 40%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 3rem;
     justify-content: center;
     align-items: center;
@@ -37,10 +38,11 @@
 }
 
 .pageContent {
-    width: 40%;
+    width: min(100%, 400px);
     display: flex;
     flex-direction: column;
     font-size: 1.5rem;
+    word-wrap: break-word;
 }
 
 .spacer {
@@ -52,7 +54,7 @@
 }
 
 .downloadButton {
-    width: 18rem;
+    width: min(18rem, 100%);
     padding-inline: 1rem;
     border-radius: 20px;
     height: 4rem;

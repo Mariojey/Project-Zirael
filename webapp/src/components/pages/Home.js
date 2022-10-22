@@ -4,6 +4,7 @@ import * as tokenHandler from '../../modules/TokenHandler';
 import Globals from '../../modules/Globals'
 
 import phone from '../../media/phone-1.png'
+import androidLogo from "../../media/android.png"
 
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -56,6 +57,11 @@ function Home(props) {
                 </div>
                 <div className={styles.phone}>
                     <img src={phone} alt="phone" />
+                    <a className={styles.downloadButton} href="#" target="_blank">
+                        <img src={androidLogo} alt="android logo"></img>
+                        <p>Pobierz aplikację mobilną</p>
+                    </a>
+                    
                 </div>
             </div> 
         </div>

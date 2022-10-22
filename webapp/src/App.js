@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import MobileDetected from './components/pages/MobileDetected';
 import Login from './components/pages/Login'
 import Register from './components/pages/Register';
 import Home from './components/pages/Home';
@@ -17,6 +18,24 @@ import UserProfile from './components/pages/UserProfile';
 
 function App() {
   const navigation = useNavigate();
+
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+
+  function getWindowSize() {
+    const {innerWidth, innerHeight} = window;
+    return {innerWidth, innerHeight};
+  }
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
   function verifyCredentials() {
       tokenHandler.verifyCredentials()
       .then(data => {
@@ -35,6 +54,12 @@ function App() {
       verifyCredentials();
 
     }, [])
+
+  if(windowSize.innerWidth <= 800 || windowSize.innerHeight <= 400) {
+    return (
+      <MobileDetected />
+    )
+  }
 
   return (
     <>

@@ -42,7 +42,6 @@ export default function CreatePoll(){
     }
 
     function handleRemoveOption(index) {
-      console.log(index)
       setOptions(prevState => {
         prevState.splice(index, 1)
         return [...prevState]
@@ -156,7 +155,6 @@ export default function CreatePoll(){
             <Formik
             initialValues={{token: '', user: '', title: '', description: '', tags: '', options: '', resultsPublic: '', range: '', city: '', cityid: ''}}
             onSubmit={(values) => {
-                console.log("może działa");
             }}
             >{(props) => (
                 <View style={styles.formContainer}>
@@ -212,7 +210,6 @@ export default function CreatePoll(){
                           marginBottom: 20
                         }}
                         onRemoveItem={(item, index) => {
-                          console.log(item)
                         }}
                         itemStyle={{
                           padding: 10,
@@ -257,7 +254,6 @@ export default function CreatePoll(){
                         onItemSelect={handleRegionChange}
                         containerStyle={{ width: "100%", marginBottom: 20 }}
                         onRemoveItem={(item, index) => {
-                          console.log(item)
                         }}
                         itemStyle={{
                           padding: 10,

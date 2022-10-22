@@ -15,6 +15,7 @@ function Register(props) {
     const [formData, setFormData] = useState({
         login: "",
         password: "",
+        passwordRepeat: "",
         name: "",
         city: "",
         cityid: "",
@@ -112,6 +113,104 @@ function Register(props) {
     function register(e) {
         e.preventDefault();
 
+        if(formData.login.length < 4) {
+            toast.error("Login jest zbyt krótki", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
+            return;
+        }
+
+        if(formData.password.length < 8) {
+            toast.error("Hasło musi mieć minimum 8 znaków", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
+            return;
+        }
+
+        if(formData.password !== formData.passwordRepeat) {
+            toast.error("Hasła nie są identyczne", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
+            return;
+        }
+
+        if(formData.name.length < 3) {
+            toast.error("Nazwa użytkownika jest zbyt krótka", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
+            return;
+        }
+
+        if(formData.cityid === "") {
+            toast.error("Wybierz miasto", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
+            return;
+        }
+
+        if(formData.age < 0 || formData.age > 150) {
+            toast.error("Podaj prawidłowy wiek", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
+            return;
+        }
+
+        if(formData.gender === "") {
+            toast.error("Wybierz płeć", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
+            return;
+        }
+
         const loginalert = toast.loading("Logowanie...", {
             position: "bottom-right",
             autoClose: 5000,
@@ -188,6 +287,8 @@ function Register(props) {
                 <input onChange={handleFormUpdate} value={formData.login} name="login" type="text" placeholder='Login'/>
                 <p className={styles.label}>Hasło</p>
                 <input onChange={handleFormUpdate} value={formData.password} name="password" type="password" placeholder='Hasło'/>
+                <p className={styles.label}>Powtórz hasło</p>
+                <input onChange={handleFormUpdate} value={formData.passwordRepeat} name="passwordRepeat" type="password" placeholder='Powtórz hasło'/>
                 <p className={styles.label}>Nazwa użytkownika (wyświetlana)</p>
                 <input onChange={handleFormUpdate} value={formData.name} name="name" type="text" placeholder='Nazwa użytkownika'/>
                 <p className={styles.label}>Miasto</p>
