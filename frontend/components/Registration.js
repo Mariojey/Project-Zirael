@@ -64,8 +64,9 @@ export default function RegistrationScreen({navigation}){
         })
       })
       .then((response) => response.json())
-      .then((response) => {
-        if (response.status === 'OK') {
+      .then((res) => {
+        if (res.status === 'OK') {
+          console.log(res)
           Toast.sukces("Zarejestrowano pomyślnie")
           navigation.navigate("Login")
           return 

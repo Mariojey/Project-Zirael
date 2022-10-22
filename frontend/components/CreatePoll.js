@@ -61,7 +61,7 @@ export default function CreatePoll(){
           return
         }
 
-        if(!range.id) {
+        if(!region.id) {
           Toast.error("Wybierz zasięg ankiety")
           return
         }
