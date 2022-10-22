@@ -1,33 +1,39 @@
 {
-    "expo": {
-        "name": "Jakółka",
-        "slug": "frontend",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/favicon.ico",
-        "userInterfaceStyle": "light",
-        "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#000000"
-        },
-        "updates": {
-            "fallbackToCacheTimeout": 0
-        },
-        "assetBundlePatterns": [
-            "**/*"
-        ],
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
-                "backgroundColor": "#FFFFFF"
-            }
-        },
-        "web": {
-            "favicon": "./assets/favicon.png"
-        }
+  "expo": {
+    "name": "Jakółka",
+    "slug": "frontend",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/favicon.ico",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#2A4366"
+      },
+      "package": "com.zongi.frontend"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9eea3909-dfbf-49ce-a908-6a7a6cb2162e"
+      }
     }
+  }
 }
