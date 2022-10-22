@@ -40,11 +40,13 @@ router.post('/profiledata', async (req, res) => {
         id: userData.id,
         name: userData.name,
         isAdmin: userData.isAdmin,
+        profileColor: userData.profileColor,
         city: userData.city,
         cityid: userData.cityid,
         gender: userData.gender,
         age: userData.age,
         description: userData.description,
+        timestamp: userData.created
     }
 
     res.json({status: "OK", message: "User data fetched", accountData: results});

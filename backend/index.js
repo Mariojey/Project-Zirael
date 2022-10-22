@@ -1,4 +1,7 @@
-const express = require('express');
+var fs = require('fs'),
+    http = require('http'),
+    https = require('https'),
+    express = require('express');
 const cors = require('cors');
 const db = require('./db/conn');
 const bodyparser = require('body-parser');
@@ -9,7 +12,12 @@ const userRoute = require('./routes/user');
 const pollsRoute = require('./routes/polls');
 const votesRoute = require('./routes/votes')
 
-const port = 3001;
+var options = {
+    key: fs.readFileSync('./ssl/private.key'),
+    cert: fs.readFileSync('./ssl/certificate.crt'),
+};
+
+const port = 42069;
 const app = express();
 
 
@@ -26,6 +34,10 @@ app.use('/user', userRoute);
 app.use('/polls', pollsRoute);
 app.use('/votes', votesRoute);
 
-app.listen(port, ()=> {
+http.createServer(app).listen(42169, '0.0.0.0', ()=> {
+    console.log(`Listening on port ${port}`);
+})
+
+https.createServer(options, app).listen(port, '0.0.0.0', ()=> {
     console.log(`Listening on port ${port}`);
 })
