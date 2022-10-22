@@ -1,7 +1,7 @@
 import React from "react";
 
 import ToastManager, { Toast } from 'toastify-react-native'
-import { StyleSheet, Image, Text, View, Form, Input, TextInput, Button } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity ,Text, View, Form, Input, TextInput, Button, Touchable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {DarkTheme} from '@react-navigation/native'; 
@@ -17,6 +17,7 @@ import CreatePoll from './components/CreatePoll'
 import Account from "./components/Account";
 
 import logo from "./assets/logo.png"
+import logoutIcon from "./assets/log-out.png"
 
 import { storeUser, storeToken, clearData } from './modules/Tokens';
 import GlobalVariables from './modules/GlobalVariables';
@@ -93,11 +94,13 @@ export default function App() {
                     />
                   ),
                 headerRight: () => (
-                    <Button
+                    <TouchableOpacity
                       onPress={() => logOut()}
-                      title="Log Out"
-                      color="#000"
-                    />
+                      style={styles.logoutButton}
+                    >
+                      <Image style={styles.logoutImage} source={logoutIcon}></Image>
+                      <Text style={styles.logoutText}>WYLOGUJ</Text>
+                    </TouchableOpacity>
                   ),
               }}/>
 
@@ -117,12 +120,13 @@ export default function App() {
                     />
                   ),
                   headerRight: () => (
-                      <Button
-                        onPress={() => logOut()}
-                        title="Log Out"
-                        //name="LogOut"
-                        color="#000"
-                      />
+                    <TouchableOpacity
+                      onPress={() => logOut()}
+                      style={styles.logoutButton}
+                    >
+                      <Image style={styles.logoutImage} source={logoutIcon}></Image>
+                      <Text style={styles.logoutText}>WYLOGUJ</Text>
+                    </TouchableOpacity>
                     ),
               }}/>
               <Stack.Screen 
@@ -141,11 +145,13 @@ export default function App() {
                     />
                   ),
                 headerRight: () => (
-                    <Button
+                    <TouchableOpacity
                       onPress={() => logOut()}
-                      title="Log Out"
-                      color="#000"
-                    />
+                      style={styles.logoutButton}
+                    >
+                      <Image style={styles.logoutImage} source={logoutIcon}></Image>
+                      <Text style={styles.logoutText}>WYLOGUJ</Text>
+                    </TouchableOpacity>
                   ),
               }}/>
               <Stack.Screen
@@ -164,11 +170,13 @@ export default function App() {
                     />
                   ),
                   headerRight: () => (
-                    <Button
+                    <TouchableOpacity
                       onPress={() => logOut()}
-                      title="Log Out"
-                      color="#000"
-                    />
+                      style={styles.logoutButton}
+                    >
+                      <Image style={styles.logoutImage} source={logoutIcon}></Image>
+                      <Text style={styles.logoutText}>WYLOGUJ</Text>
+                    </TouchableOpacity>
                   ),
                 }}
               />
@@ -254,4 +262,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     color: '#000'
   },
+  logoutButton: {
+    width: 60,
+    marginRight: 10,
+    height: 40,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  logoutImage: {
+    width: 30,
+    height: 30,
+  },
+  logoutText: {
+    color: "#ffffff",
+    fontSize: 10,
+    width: "100%",
+    textAlign: "center"
+  }
 });

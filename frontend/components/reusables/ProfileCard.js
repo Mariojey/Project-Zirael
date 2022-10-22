@@ -99,7 +99,7 @@ export default function ProfileCard(props){
             <Text style={styles.statsText}>Typ konta: <Text style={styles.inline}>{accountData !== null && accountData.isAdmin ? "Administrator" : "Uzytkownik"}</Text></Text>
             <Text style={styles.statsText}>Zarejestrowano: <Text style={styles.inline}>{accountData !== null ? new Date(accountData.timestamp).toLocaleDateString() : "-"}</Text></Text>
             
-            <Text style={styles.footerText}>(Przesuń, by zobaczyć swoje ankiety)</Text>
+            {props.pollCount > 0 && <Text style={styles.footerText}>(Przesuń, by zobaczyć swoje ankiety)</Text>}
         </View>
     )
 }
