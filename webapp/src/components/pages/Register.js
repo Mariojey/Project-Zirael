@@ -208,7 +208,7 @@ function Register(props) {
                 />
                 <p className={styles.label}>Wiek</p>
                 <input onChange={handleFormUpdate} value={formData.age} name="age" type="number" placeholder='Wiek'></input>
-                <p className={styles.rodoText}>Kilkając przycisk zarejestruj się wyrażasz zgodę na przetwarzanie twoich danych osobowych na potrzeby wyświetlenia statystyk w aplikacji. </p>
+                <p className={styles.rodoText}>Kilkając przycisk "zarejestruj" wyrażasz zgodę na przetwarzanie twoich danych osobowych na potrzeby wyświetlenia statystyk w aplikacji. </p>
 
                 
 
