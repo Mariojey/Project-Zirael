@@ -63,7 +63,7 @@ function App() {
 
   return (
     <>
-      <Routes>
+      <Routes basename="https://mariojey.github.io/Project-Zirael/">
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />

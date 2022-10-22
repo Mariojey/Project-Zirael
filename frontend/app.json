@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Jakółka",
+    "name": "Jaskółka",
     "slug": "frontend",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/favicon.ico",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2A4366"
       },
-      "package": "com.zongi.frontend"
+      "package": "com.proximacode.frontend"
     },
     "web": {
       "favicon": "./assets/favicon.png"
