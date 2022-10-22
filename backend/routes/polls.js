@@ -51,7 +51,7 @@ router.post('/list', async (req, res) => {
     
     if(Array.isArray(provintionalRegions)) {
         const provintionRegions = provintionalRegions.map(reg => mongoose.Types.ObjectId(reg.id));
-        const provintionalPolls = await PollModel.find({_id: {$in: provintionRegions}, region: 'provintional'})
+        const provintionalPolls = await PollModel.find({_id: {$in: provintionRegions}, range: 'provintional'})
         data.push(...provintionalPolls);
     }
 
@@ -68,13 +68,13 @@ router.post('/list', async (req, res) => {
     
     if(Array.isArray(regionRegions)) {
         const regionalRegions = regionRegions.map(reg => mongoose.Types.ObjectId(reg.id));
-        const regionalPolls = await PollModel.find({_id: {$in: regionalRegions}, region: 'regional'})
+        const regionalPolls = await PollModel.find({_id: {$in: regionalRegions}, range: 'regional'})
         data.push(...regionalPolls);
     }
     
 
     //local
-    const localPolls = await PollModel.find({cityid: userModel.cityid})
+    const localPolls = await PollModel.find({cityid: userModel.cityid, range: "local"})
     data.push(...localPolls);
 
     data.sort((a,b) => {

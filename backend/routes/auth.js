@@ -82,7 +82,7 @@ router.post('/signup', async(req, res) => {
         cityid: req.body.cityid,
         gender: req.body.gender,
         age: req.body.age,
-        profileColor: `#${Math.floor(Math.random()*16777215).toString(16)}`
+        profileColor: `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, 0)}`
     })
 
     try {
