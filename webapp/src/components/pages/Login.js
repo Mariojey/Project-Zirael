@@ -103,7 +103,7 @@ function Login(props) {
                     theme: "dark", 
                 }
                 );
-                console.log(data.message)
+                //console.log(data.message)
             }
         })
     }

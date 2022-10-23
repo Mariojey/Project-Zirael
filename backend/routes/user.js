@@ -66,7 +66,7 @@ router.post('/byid', async (req, res) => {
     const id = body.id;
 
     const userData = await UserModel.findById(id)
-    console.log(id)
+    //console.log(id)
 
     if(userData === null) {
         res.status(401).json({status: "fail", message: 'User not found'});
@@ -113,7 +113,7 @@ router.post('/changedata', async (req, res) => {
         data = {...data, description: body.description}
     }
 
-    console.log(Object.keys(data).length);
+    //console.log(Object.keys(data).length);
     if(Object.keys(data).length === 0) {
         res.status(400).json({status: "failed", message: "No data changed"})
         return;

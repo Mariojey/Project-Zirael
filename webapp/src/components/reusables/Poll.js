@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 function Poll(props) {
     const data = props.data
 
-    console.log(props.accountData)
+    //console.log(props.accountData)
 
 
     const [deleted, setDeleted] = useState(false)

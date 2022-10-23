@@ -33,17 +33,17 @@ export async function getTokenData() {
 }
 
 export async function verifyToken() {
-    console.log("funkcja wywołana")
+    //console.log("funkcja wywołana")
     try {
         const token = await AsyncStorage.getItem('TOKEN') ?? "";
         const user = await AsyncStorage.getItem('USER') ?? "";
-        console.log(token)
-        console.log(user)
+        //console.log(token)
+        //console.log(user)
 
         const body = { user, token }
 
-        console.log(body)
-        console.log(JSON.stringify(body))
+        //console.log(body)
+        //console.log(JSON.stringify(body))
 
         //fetch /auth/verifytoken
         //w body dajesz token i user
@@ -62,8 +62,8 @@ export async function verifyToken() {
             })
             .then((response) => response.json())
             .then((response) => {
-                console.log("test")
-                console.log(response)
+                //console.log("test")
+                //console.log(response)
                 if (response.status === "OK") {
                     return true;
                 }

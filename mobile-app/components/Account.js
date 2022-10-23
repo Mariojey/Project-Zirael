@@ -47,7 +47,6 @@ export default function Account(){
             .then(response => response.json())
             .then(res => {
                 if(res.status === "OK") {
-                    console.log(res)
                     setAccountData(res.accountData);
                 }
             })
@@ -86,7 +85,7 @@ export default function Account(){
 <View style={styles.container}>
       <CardsSwipe
         cards={cardsData}
-        onSwipeStart={() => console.log("SWIPE")}
+        onSwipeStart={() => //console.log("SWIPE")}
         cardContainerStyle={styles.cardContainer}
         renderCard={(card) => card.src}
       />

@@ -203,7 +203,7 @@ function PollCreator(props) {
     function createForm() {
         const userData = tokenHandler.getTokenData();
         
-        console.log(userData)
+        //console.log(userData)
 
         const loginalert = toast.loading("Logowanie...", {
             position: "bottom-right",
@@ -226,7 +226,7 @@ function PollCreator(props) {
             body: JSON.stringify({...formData, user: userData.user, token: userData.token})
         }).then(response => response.json())
         .then(data => {
-            console.log(data)
+            //console.log(data)
             if(data.status === "OK")
             {
                 toast.update(loginalert, { 

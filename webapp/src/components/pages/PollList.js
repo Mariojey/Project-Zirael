@@ -70,7 +70,7 @@ function PollList(props) {
         .then(response => response.json())
         .then(res => {
             if(res.status === "OK") {
-                console.log(res)
+                //console.log(res)
                 setAccountData(res.accountData);
             }
         })

@@ -232,7 +232,7 @@ function Register(props) {
             body: JSON.stringify(formData)
         }).then(response => response.json())
         .then(data => {
-            console.log(data)
+            //console.log(data)
             if(data.status === "OK")
             {
                 toast.update(loginalert, { 

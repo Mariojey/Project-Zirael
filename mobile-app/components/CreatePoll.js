@@ -281,7 +281,7 @@ export default function CreatePoll(){
                                 color: "white",
                                 backgroundColor: "#ffffff5e",
                             },
-                            onTextChange: text => console.log(text)
+                            onTextChange: text => //console.log(text)
                           }
                         }
                         listProps={
@@ -332,7 +332,7 @@ export default function CreatePoll(){
                                 color: "white",
                                 backgroundColor: "#ffffff5e",
                             },
-                          onTextChange: text => console.log(text)
+                          onTextChange: text => //console.log(text)
                         }
                       }
                       listProps={

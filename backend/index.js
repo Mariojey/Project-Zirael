@@ -35,9 +35,9 @@ app.use('/polls', pollsRoute);
 app.use('/votes', votesRoute);
 
 http.createServer(app).listen(42169, '0.0.0.0', ()=> {
-    console.log(`Listening on port ${port}`);
+    //console.log(`Listening on port ${port}`);
 })
 
 https.createServer(options, app).listen(port, '0.0.0.0', ()=> {
-    console.log(`Listening on port ${port}`);
+    //console.log(`Listening on port ${port}`);
 })

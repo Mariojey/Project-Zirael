@@ -66,7 +66,6 @@ export default function RegistrationScreen({navigation}){
       .then((response) => response.json())
       .then((res) => {
         if (res.status === 'OK') {
-          console.log(res)
           Toast.success("Zarejestrowano pomyślnie")
           navigation.navigate("Login")
           return 
@@ -135,7 +134,6 @@ export default function RegistrationScreen({navigation}){
           initialValues={{login: '', password: '', passwordRepeat: '', name: '', city: '', cityid: '', gender: '', age: ''}}
           onSubmit={(values) => {
             //When f  ronend should send values from form?
-            console.log("nie dziala")
           }}
         >
           {(props) => (
@@ -180,7 +178,6 @@ export default function RegistrationScreen({navigation}){
                   onItemSelect={setCityHandler}
                   containerStyle={{ width: "100%", marginBottom: 20 }}
                   onRemoveItem={(item, index) => {
-                    console.log(item)
                   }}
                   itemStyle={{
                     padding: 10,
@@ -222,7 +219,6 @@ export default function RegistrationScreen({navigation}){
                   onItemSelect={setGenderHandler}
                   containerStyle={{ width: "100%", marginBottom: 20 }}
                   onRemoveItem={(item, index) => {
-                    console.log(item)
                   }}
                   itemStyle={{
                     padding: 10,
@@ -250,7 +246,7 @@ export default function RegistrationScreen({navigation}){
                           color: "white",
                           backgroundColor: "#ffffff5e",
                       },
-                      onTextChange: text => console.log(text)
+                      onTextChange: text => //console.log(text)
                     }
                   }
                   listProps={

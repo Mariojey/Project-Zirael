@@ -63,12 +63,12 @@ function PollStatistics(props) {
         })
         .then(response => response.json())
         .then(res => {
-            console.log(res)
+            //console.log(res)
             if(res.status === "OK") {
                 setFetchData(res.statistics)
                 setDataSource(res.statistics.total.chartdata)
                 setIsLoading(false)
-                console.log(res.statistics.total)
+                //console.log(res.statistics.total)
             }else {
                 props.closePopup()
 

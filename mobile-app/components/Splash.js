@@ -14,11 +14,10 @@ function Splash(props){
         loop={false} 
         speed={0.5}
         onAnimationFinish = {()=>{
-          //console.log('Animation Finished');
+          ////console.log('Animation Finished');
           
 
           verifyToken().then((value) => {
-            console.log(value)
             if (value) {
               props.logHandler(true)
             }
