@@ -18,15 +18,20 @@ function PollCreator(props) {
     const [tags, setTags] = useState({
         multiValue: [],
         filterOptions: [
-          { value: "lifestyle", label: "lifestyle" },
-          { value: "polityka", label: "polityka" },
-          { value: "rozrywka", label: "rozrywka" },
-          { value: "nauka", label: "nauka" },
-          { value: "technika", label: "technika" },
-          { value: "społeczność", label: "społeczność" },
+            { value: "lifestyle",   label: "lifestyle"    },
+            { value: "polityka",    label: "polityka"     },
+            { value: "rozrywka",    label: "rozrywka"     },
+            { value: "nauka",       label: "nauka"        },
+            { value: "technika",    label: "technika"     },
+            { value: "społeczność", label: "społeczność" },
+            { value: "finanse",     label: "finanse"      },
+            { value: "kultura",     label: "kultura"      },
+            { value: "prawo",       label: "prawo"        },
         ]
       })
 
+
+        
     
     const regions = [
         { value: "local", label: "Gmina" },
