@@ -22,7 +22,7 @@ function MobileDetected(props) {
                 </div>
                 <div className={styles.phone}>
                     {/* <img src={phone} alt="phone" /> */}
-                    <a className={styles.downloadButton} href="#" target="_blank">
+                    <a className={styles.downloadButton} rel="noreferrer" href="https://drive.google.com/file/d/1V0OgfON8y5g36bcD97onEmYaH5fiCJxo/view?usp=sharing" target="_blank">
                         <img src={androidLogo} alt="android logo"></img>
                         <p>Pobierz aplikację mobilną</p>
                     </a>
