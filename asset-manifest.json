@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Project-Zirael/static/css/main.6d0032b9.css",
-    "main.js": "/Project-Zirael/static/js/main.daa8da35.js",
+    "main.js": "/Project-Zirael/static/js/main.f22b10cf.js",
     "static/media/phone-1.png": "/Project-Zirael/static/media/phone-1.03f52be2c6efece034df.png",
     "static/media/logo.png": "/Project-Zirael/static/media/logo.5fcb8930e8b316281f2e.png",
     "static/media/stats-icon.png": "/Project-Zirael/static/media/stats-icon.488e9e1d09ca9f82efc6.png",
@@ -9,10 +9,10 @@
     "static/media/trash-icon.png": "/Project-Zirael/static/media/trash-icon.fdc3293f775e85d75cad.png",
     "index.html": "/Project-Zirael/index.html",
     "main.6d0032b9.css.map": "/Project-Zirael/static/css/main.6d0032b9.css.map",
-    "main.daa8da35.js.map": "/Project-Zirael/static/js/main.daa8da35.js.map"
+    "main.f22b10cf.js.map": "/Project-Zirael/static/js/main.f22b10cf.js.map"
   },
   "entrypoints": [
     "static/css/main.6d0032b9.css",
-    "static/js/main.daa8da35.js"
+    "static/js/main.f22b10cf.js"
   ]
 }
